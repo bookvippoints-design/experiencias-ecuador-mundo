@@ -23,7 +23,7 @@ function invitationHtml(name: string, companyName: string, logoUrl: string | nul
   return `${logoUrl ? `<p><img src="${logoUrl}" alt="${escapeHtml(companyName)}" style="max-width:160px;max-height:60px"></p>` : ""}
     <h2 style="margin:0 0 8px;color:#c4520a">¡Hola, ${escapeHtml(name)}!</h2>
     <p><strong>${escapeHtml(companyName)}</strong> te da acceso a ${APP_NAME}, un catálogo privado de experiencias de viaje para disfrutar y regalar: escapadas en Ecuador, invitaciones hoteleras en más de 130 destinos del mundo y puntos para ahorrar en hoteles.</p>
-    <p>Tu acceso no tiene costo. Activa tu cuenta creando tu contraseña:</p>`;
+    <p>Tu acceso ya está habilitado. Activa tu cuenta creando tu contraseña:</p>`;
 }
 
 export async function createUserAction(_prev: CreateUserState, formData: FormData): Promise<CreateUserState> {

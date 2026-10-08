@@ -15,7 +15,7 @@ export default function TerminosPage() {
       <h2>1. El programa</h2>
       <p>
         {APP_NAME} es un catálogo privado de experiencias de viaje al que acceden los clientes y colaboradores
-        de las empresas afiliadas. La empresa paga el acceso de cada cuenta; las experiencias se compran por separado.
+        de las empresas afiliadas. El acceso a la plataforma lo habilita la empresa; las experiencias se compran por separado.
       </p>
 
       <h2>2. Paquetes y vigencia</h2>
