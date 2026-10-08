@@ -2384,3 +2384,31 @@ body { background: #f3f8fc; }
 .tabs a[aria-current="page"] { background: var(--azul); color: #fff; border-color: var(--azul); }
 .inline-form { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
 .inline-form input, .inline-form select { padding: .45rem .6rem; border: 1px solid #bfdff3; border-radius: 8px; font-size: .85rem; }
+
+/* ---------- Celular ---------- */
+.mobile-only { display: none; }
+@media (max-width: 700px) {
+  .mobile-only { display: block; }
+  .portal-content { padding: 1rem; }
+  /* Barra superior más compacta: solo iniciales */
+  .topbar__user-text { display: none; }
+  /* Tablas como tarjetas apiladas, con la etiqueta de cada dato */
+  .table-card { overflow-x: visible; background: transparent; border: none; }
+  .simple-table, .simple-table tbody, .simple-table tr, .simple-table td { display: block; width: 100%; }
+  .simple-table thead { display: none; }
+  .simple-table tr { background: #fff; border: 1px solid #e3eef6; border-radius: 12px; padding: .5rem .85rem; margin-bottom: .75rem; }
+  .simple-table td { border-bottom: 1px solid #f1f5f8; padding: .45rem 0; }
+  .simple-table td:last-child { border-bottom: none; }
+  .simple-table td[data-label]:not([data-label=""])::before { content: attr(data-label); display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #6b7280; margin-bottom: .1rem; }
+  .simple-table td:empty { display: none; }
+  .simple-table td.empty-state::before { content: none; }
+  /* Comparación: la primera columna queda fija al deslizar */
+  .compare-table th:first-child, .compare-table td:first-child { position: sticky; left: 0; background: #fff; z-index: 1; min-width: 130px; }
+  .compare-table thead th:first-child { background: var(--celeste); }
+  /* Detalle de producto: la caja de compra primero */
+  .detail-layout > .buy-box { order: -1; position: static; }
+  .detail-photo { height: 200px; }
+  .hero { min-height: 200px; }
+  .hero__content { padding: 1.25rem; }
+  .btn-row > * { flex: 1 1 auto; }
+}

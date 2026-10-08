@@ -1,5 +1,6 @@
 import type { AppRole } from "@/lib/auth/identity";
 import { Sidebar } from "./Sidebar";
+import { ResponsiveTables } from "./ResponsiveTables";
 
 export function PortalShell({ role, children }: { role: AppRole; children: React.ReactNode }) {
   return (
@@ -8,6 +9,7 @@ export function PortalShell({ role, children }: { role: AppRole; children: React
       <Sidebar role={role} />
       <label htmlFor="mobile-nav-toggle" className="sidebar-backdrop" aria-hidden="true"></label>
       <div className="content-area">{children}</div>
+      <ResponsiveTables />
     </div>
   );
 }

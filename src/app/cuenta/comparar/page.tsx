@@ -26,6 +26,7 @@ export default async function Comparar() {
     <>
       <TopBar profile={profile} eyebrow="CATÁLOGO" title="Compara los paquetes" />
       <main className="portal-content">
+        <p className="mobile-only field-hint">Desliza la tabla hacia la izquierda para ver los tres paquetes →</p>
         <div className="compare-wrap">
           <table className="compare-table">
             <thead>
