@@ -28,9 +28,8 @@ export default async function EmpresaUsuarios() {
         <section className="panel">
           <h2>Crear usuario</h2>
           <p className="content-lead">
-            Tu cliente o colaborador recibe un correo para activar su cuenta y crear su contraseña. Cada cuenta usa un cupo;
-            las experiencias se compran por separado. El correo no menciona precios, así que puedes entregar el acceso como
-            beneficio o venderlo.
+            Regala a tus clientes o colaboradores el acceso al catálogo privado de experiencias. Cada persona recibe un correo
+            para activar su cuenta y crear su contraseña. Cada cuenta usa un cupo.
           </p>
           <CreateUserForm available={d?.available ?? 0} enabled={d?.access_status === "active"} />
         </section>
