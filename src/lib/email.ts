@@ -1,5 +1,14 @@
 import nodemailer from "nodemailer";
 import { APP_NAME, APP_SLOGAN, BRAND, appUrl } from "@/lib/brand";
+import { createAdminClient } from "@/lib/supabase/admin";
+
+async function logEmail(row: { to_email: string; subject: string; status: "sent" | "failed"; smtp_response?: string; error?: string }) {
+  try {
+    await createAdminClient().from("email_log").insert(row);
+  } catch (e) {
+    console.error("email_log", e);
+  }
+}
 
 /**
  * Todos los correos de la plataforma (invitaciones, regalos, recuperación de
@@ -25,14 +34,31 @@ export async function sendMail(options: {
   html: string;
   attachments?: { filename: string; content: Buffer }[];
 }) {
-  const transporter = createMailer();
-  await transporter.sendMail({
-    from: `"${APP_NAME}" <${process.env.SMTP_USER}>`,
-    to: options.to,
-    subject: options.subject,
-    html: options.html,
-    attachments: options.attachments,
-  });
+  try {
+    const transporter = createMailer();
+    const info = await transporter.sendMail({
+      from: `"${APP_NAME}" <${process.env.SMTP_USER}>`,
+      to: options.to,
+      subject: options.subject,
+      html: options.html,
+      attachments: options.attachments,
+    });
+    const rejected = (info.rejected ?? []).map(String);
+    await logEmail({
+      to_email: options.to,
+      subject: options.subject,
+      status: rejected.length ? "failed" : "sent",
+      smtp_response: `${info.response ?? ""} · id ${info.messageId ?? ""}`,
+      error: rejected.length ? `Rechazado: ${rejected.join(", ")}` : undefined,
+    });
+    if (rejected.length) throw new Error(`El servidor de correo rechazó: ${rejected.join(", ")}`);
+  } catch (e) {
+    const message = e instanceof Error ? e.message : String(e);
+    if (!message.startsWith("El servidor de correo rechazó")) {
+      await logEmail({ to_email: options.to, subject: options.subject, status: "failed", error: message });
+    }
+    throw e;
+  }
 }
 
 export function escapeHtml(value: string | null | undefined): string {
