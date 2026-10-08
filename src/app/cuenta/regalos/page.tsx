@@ -77,7 +77,7 @@ export default async function MisRegalos() {
           <a className="btn-orange btn-small" href={`/cuenta/regalos/${g.id}/tarjeta`} target="_blank" rel="noreferrer">
             Tarjeta de regalo (PDF)
           </a>
-          {side === "received" && <Link className="btn-blue btn-small" href="/cuenta/experiencias">Usar mis experiencias</Link>}
+          {side === "received" && <Link className="btn-blue btn-small" href="/cuenta/experiencias">Canjear mis experiencias</Link>}
         </div>
       </div>
     </article>

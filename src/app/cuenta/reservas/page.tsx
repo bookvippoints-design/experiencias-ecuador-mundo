@@ -14,7 +14,7 @@ export default async function MisReservas() {
 
   return (
     <>
-      <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis reservas" />
+      <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis canjes y reservas" />
       <main className="portal-content">
         <p className="content-lead">
           Solicita tus reservas desde <Link href="/cuenta/experiencias" style={{ color: "var(--naranja-oscuro)" }}>Mis experiencias</Link>. Aquí ves en qué estado está cada una.
@@ -29,7 +29,7 @@ export default async function MisReservas() {
                 {(bookings ?? []).map((b) => (
                   <tr key={b.id}>
                     <td>{shortDate(b.created_at)}</td>
-                    <td>{b.kind === "national" ? "Escapada nacional" : "Invitación internacional"}<div className="exp-card__meta">{(b.entitlements as unknown as { code: string } | null)?.code}</div></td>
+                    <td>{b.kind === "national" ? "Escapada nacional" : b.kind === "international" ? "Invitación internacional" : "Canje de puntos"}<div className="exp-card__meta">{(b.entitlements as unknown as { code: string } | null)?.code}</div></td>
                     <td><strong>{b.destination}</strong>{b.preferred_dates && <div className="exp-card__meta">{b.preferred_dates}</div>}</td>
                     <td>{BOOKING_STATUS_LABEL[b.status]}</td>
                     <td>{b.admin_message ?? "—"}</td>

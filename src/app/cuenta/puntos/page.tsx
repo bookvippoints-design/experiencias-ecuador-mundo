@@ -22,7 +22,10 @@ export default async function MisPuntos() {
             <div className="points-hero__value">{total.toLocaleString("es-EC")}</div>
             <div style={{ fontSize: ".85rem" }}>{credited.toLocaleString("es-EC")} ya acreditados en BookVipPoints</div>
           </div>
-          <Link href="/cuenta/catalogo" className="btn-orange">Comprar tarjetas de puntos</Link>
+          <div className="btn-row">
+            <Link href="/cuenta/experiencias" className="btn-orange">Canjear mis puntos</Link>
+            <Link href="/cuenta/catalogo" className="btn-ghost">Comprar tarjetas de puntos</Link>
+          </div>
         </section>
 
         <section className="panel">
@@ -31,7 +34,7 @@ export default async function MisPuntos() {
             <li>Te dan un <strong>ahorro parcial</strong> al reservar hospedaje.</li>
             <li>No son efectivo ni saldo para pagar una reserva completa.</li>
             <li><strong>No caducan</strong>, a diferencia de la vigencia de las experiencias.</li>
-            <li>Los acreditamos manualmente en tu cuenta BookVipPoints después de confirmar el pago.</li>
+            <li>Para usarlos, pulsa &quot;Canjear mis puntos&quot; y los acreditamos en tu cuenta BookVipPoints.</li>
             <li>Puedes regalarlos completos mientras no estén acreditados.</li>
           </ul>
         </section>
@@ -46,7 +49,7 @@ export default async function MisPuntos() {
                   <td>{r.product_name}{r.gift_id ? " · regalo" : ""}</td>
                   <td>{r.code}</td>
                   <td><strong>{(r.points ?? 0).toLocaleString("es-EC")}</strong></td>
-                  <td>{r.points_credited_at ? `Acreditados el ${shortDate(r.points_credited_at)}` : "Por acreditar"}</td>
+                  <td>{r.points_credited_at ? `Acreditados el ${shortDate(r.points_credited_at)}` : r.status === "requested" ? "Canje solicitado" : "Disponibles para canjear"}</td>
                 </tr>
               ))}
             </tbody>

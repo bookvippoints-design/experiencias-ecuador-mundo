@@ -28,7 +28,7 @@ export default async function AdminReservas({ searchParams }: { searchParams: Pr
           <Link href="/admin/reservas?f=cerradas" aria-current={f !== "abiertas" ? "page" : undefined}>Confirmadas y canceladas</Link>
         </nav>
         <p className="field-hint">
-          Confirmar una escapada nacional la marca como utilizada. Para invitaciones internacionales registra la emisión
+          Confirmar una escapada nacional la marca como utilizada. Confirmar un canje de puntos los marca como acreditados (hazlo después de acreditarlos en BookVipPoints). Para invitaciones internacionales registra la emisión
           y la activación en &quot;Beneficios&quot;. Cancelar devuelve el beneficio a disponible.
         </p>
         <div className="table-card">
@@ -53,11 +53,11 @@ export default async function AdminReservas({ searchParams }: { searchParams: Pr
                     <td>{shortDate(b.created_at)}</td>
                     <td>{person?.full_name}<div className="exp-card__meta">{person?.email}</div></td>
                     <td>
-                      {b.kind === "national" ? "Escapada nacional" : "Invitación internacional"}
+                      {b.kind === "national" ? "Escapada nacional" : b.kind === "international" ? "Invitación internacional" : "Canje de puntos"}
                       <div className="exp-card__meta">{ent?.code} · vence {shortDate(ent?.valid_until)}</div>
                     </td>
                     <td>
-                      <strong>{b.destination}</strong>
+                      {b.kind === "points" ? <>Acreditar en BookVipPoints: <strong>{b.destination}</strong></> : <strong>{b.destination}</strong>}
                       {b.preferred_dates && <div className="exp-card__meta">Fechas: {b.preferred_dates}</div>}
                       {b.travelers && <div className="exp-card__meta">Viajeros: {b.travelers}</div>}
                       {b.notes && <div className="exp-card__meta">Notas: {b.notes}</div>}

@@ -30,7 +30,7 @@ function giftable(e: BoardItem) {
   return true;
 }
 
-export function ExperienceBoard({ items, readOnly = false }: { items: BoardItem[]; readOnly?: boolean }) {
+export function ExperienceBoard({ items, readOnly = false, userEmail = "" }: { items: BoardItem[]; readOnly?: boolean; userEmail?: string }) {
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [giftOpen, setGiftOpen] = useState(false);
@@ -79,7 +79,11 @@ export function ExperienceBoard({ items, readOnly = false }: { items: BoardItem[
 
                 {e.kind === "points" ? (
                   <div className="exp-card__countdown">
-                    Los puntos no caducan. {e.points_credited_at ? "Ya están acreditados en tu cuenta BookVipPoints." : "Los acreditaremos en BookVipPoints."}
+                    {e.points_credited_at
+                      ? "Ya están acreditados en tu cuenta BookVipPoints. Úsalos al reservar tu hotel."
+                      : status === "requested"
+                        ? "Recibimos tu solicitud de canje. Te avisaremos cuando estén acreditados en BookVipPoints."
+                        : "Los puntos no caducan. Canjéalos para acreditarlos en tu cuenta BookVipPoints."}
                   </div>
                 ) : status === "available" || status === "requested" ? (
                   <div className="exp-card__countdown">
@@ -95,9 +99,9 @@ export function ExperienceBoard({ items, readOnly = false }: { items: BoardItem[
 
                 {!selecting && (
                   <div className="exp-card__actions">
-                    {status === "available" && e.kind !== "points" && (
+                    {status === "available" && !(e.kind === "points" && e.points_credited_at) && (
                       <button className="btn-blue btn-small" onClick={() => setBooking(e)}>
-                        {e.kind === "national" ? "Solicitar reserva" : "Solicitar invitación"}
+                        {e.kind === "national" ? "Canjear: reservar escapada" : e.kind === "international" ? "Canjear: pedir invitación" : "Canjear mis puntos"}
                       </button>
                     )}
                     {canGift && (
@@ -118,7 +122,7 @@ export function ExperienceBoard({ items, readOnly = false }: { items: BoardItem[
           onDone={(m) => { setGiftOpen(false); setSelecting(false); setSelected([]); setFlash(m); }}
         />
       )}
-      {booking && <BookingDialog item={booking} onClose={() => setBooking(null)} onDone={(m) => { setBooking(null); setFlash(m); }} />}
+      {booking && <BookingDialog item={booking} userEmail={userEmail} onClose={() => setBooking(null)} onDone={(m) => { setBooking(null); setFlash(m); }} />}
     </>
   );
 }
@@ -194,8 +198,9 @@ function GiftDialog({ items, onClose, onDone }: { items: BoardItem[]; onClose: (
   );
 }
 
-function BookingDialog({ item, onClose, onDone }: { item: BoardItem; onClose: () => void; onDone: (m: string) => void }) {
-  const [destination, setDestination] = useState("");
+function BookingDialog({ item, userEmail, onClose, onDone }: { item: BoardItem; userEmail: string; onClose: () => void; onDone: (m: string) => void }) {
+  const isPoints = item.kind === "points";
+  const [destination, setDestination] = useState(isPoints ? userEmail : "");
   const [dates, setDates] = useState("");
   const [travelers, setTravelers] = useState("");
   const [notes, setNotes] = useState("");
@@ -219,12 +224,37 @@ function BookingDialog({ item, onClose, onDone }: { item: BoardItem; onClose: ()
     setLoading(false);
     if (e) return setError(e.message);
     router.refresh();
-    onDone("Recibimos tu solicitud. Te escribiremos para coordinar los detalles; puedes seguirla en \"Mis reservas\".");
+    onDone(
+      isPoints
+        ? "Recibimos tu solicitud de canje. Acreditaremos tus puntos en BookVipPoints y te avisaremos."
+        : "Recibimos tu solicitud. Te escribiremos para coordinar los detalles; puedes seguirla en \"Mis reservas\"."
+    );
+  }
+
+  if (isPoints) {
+    return (
+      <Modal open onClose={onClose} wide labelledBy="bk-title">
+        <h2 id="bk-title">Canjear {entitlementTitle(item)}</h2>
+        <p className="modal__subtitle">Acreditaremos tus puntos en tu cuenta BookVipPoints para que obtengas un ahorro parcial al reservar hoteles.</p>
+        <div className="field">
+          <label htmlFor="bk-email">Correo de tu cuenta BookVipPoints</label>
+          <input id="bk-email" type="email" value={destination} onChange={(e) => setDestination(e.target.value)} />
+          <span className="field-hint">Si aún no tienes cuenta en BookVipPoints, la crearemos con este correo.</span>
+        </div>
+        <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
+        <p className="info-box">Los puntos no son efectivo ni saldo para pagar una reserva completa, y no caducan. Una vez acreditados ya no se pueden regalar.</p>
+        {error && <p className="field-error">{error}</p>}
+        <div className="modal-actions">
+          <button className="btn-ghost" onClick={onClose}>Cancelar</button>
+          <button className="btn-orange" onClick={send} disabled={loading || !destination.trim()}>{loading ? "Enviando..." : "Solicitar canje"}</button>
+        </div>
+      </Modal>
+    );
   }
 
   return (
     <Modal open onClose={onClose} wide labelledBy="bk-title">
-      <h2 id="bk-title">{intl ? "Solicitar invitación hotelera internacional" : "Solicitar reserva nacional"}</h2>
+      <h2 id="bk-title">{intl ? "Canjear: invitación hotelera internacional" : "Canjear: reservar escapada nacional"}</h2>
       <p className="modal__subtitle">{entitlementTitle(item)} · vence el {longDate(item.valid_until)}</p>
       <div className="field">
         <label htmlFor="bk-dest">Destino</label>

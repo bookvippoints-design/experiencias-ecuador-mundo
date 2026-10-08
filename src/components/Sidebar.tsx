@@ -35,7 +35,7 @@ const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
     { href: "/cuenta/experiencias", label: "Mis experiencias" },
     { href: "/cuenta/regalos", label: "Regalos", gift: true },
     { href: "/cuenta/puntos", label: "Mis puntos" },
-    { href: "/cuenta/reservas", label: "Mis reservas" },
+    { href: "/cuenta/reservas", label: "Mis canjes y reservas" },
     { href: "/cuenta/pedidos", label: "Mis pedidos" },
   ],
 };

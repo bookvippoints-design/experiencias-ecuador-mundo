@@ -22,11 +22,18 @@ export default async function MisExperiencias() {
           </div>
         ) : (
           <>
-            <p className="content-lead">
-              Cada experiencia muestra cuánto tiempo te queda. Puedes usarla o regalarla mientras esté disponible; un regalo es
-              definitivo y no cambia la fecha de vencimiento.
-            </p>
-            <ExperienceBoard items={active} />
+            <section className="panel">
+              <h2>Cómo canjear tus experiencias</h2>
+              <ol style={{ margin: 0, paddingLeft: "1.2rem", lineHeight: 1.7 }}>
+                <li><strong>Escapada nacional:</strong> pulsa &quot;Canjear: reservar escapada&quot;, elige ciudad y fechas preferidas. Te confirmamos hotel y fechas.</li>
+                <li><strong>Invitación internacional:</strong> pulsa &quot;Canjear: pedir invitación&quot; y elige destino. Te emitimos la invitación; la registras en 30 días y pagas impuestos y tasas en 7 días.</li>
+                <li><strong>Puntos:</strong> pulsa &quot;Canjear mis puntos&quot; y los acreditamos en tu cuenta BookVipPoints.</li>
+              </ol>
+              <p className="field-hint" style={{ marginBottom: 0 }}>
+                Cada experiencia muestra cuánto tiempo te queda. También puedes regalarla mientras esté disponible; un regalo es definitivo.
+              </p>
+            </section>
+            <ExperienceBoard items={active} userEmail={profile.email} />
             {past.length > 0 && (
               <>
                 <div className="section-title"><h2>Utilizadas y vencidas</h2></div>
