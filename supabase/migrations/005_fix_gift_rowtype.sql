@@ -1,0 +1,2 @@
+-- La versión corregida de gift_entitlements está en 002_functions.sql
+-- (variable r declarada como public.entitlements%rowtype).

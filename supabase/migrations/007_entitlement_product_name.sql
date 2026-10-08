@@ -1,0 +1,2 @@
+-- Ya incluido en 001_schema.sql y 002_functions.sql para instalaciones nuevas.
+-- En la base existente se aplicó: alter table public.entitlements add column product_name text;
