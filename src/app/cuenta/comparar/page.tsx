@@ -26,8 +26,30 @@ export default async function Comparar() {
     <>
       <TopBar profile={profile} eyebrow="CATÁLOGO" title="Compara los paquetes" />
       <main className="portal-content">
-        <p className="mobile-only field-hint">Desliza la tabla hacia la izquierda para ver los tres paquetes →</p>
-        <div className="compare-wrap">
+        <div className="compare-mobile mobile-only">
+          <div className="compare-mobile__head" style={{ gridTemplateColumns: `repeat(${ps.length}, 1fr)` }}>
+            {ps.map((p) => (
+              <div key={p.id} className={`compare-mobile__name${p.highlight ? " is-featured" : ""}`}>{p.name}</div>
+            ))}
+          </div>
+          {rows.map((r) => (
+            <div key={r.label} className="compare-mobile__row">
+              <div className="compare-mobile__label">{r.label}</div>
+              <div className="compare-mobile__values" style={{ gridTemplateColumns: `repeat(${ps.length}, 1fr)` }}>
+                {ps.map((p) => <div key={p.id} className={p.highlight ? "is-featured" : undefined}>{r.value(p)}</div>)}
+              </div>
+            </div>
+          ))}
+          <div className="compare-mobile__values compare-mobile__actions" style={{ gridTemplateColumns: `repeat(${ps.length}, 1fr)` }}>
+            {ps.map((p) => (
+              <div key={p.id}>
+                <Link href={`/cuenta/catalogo/${p.slug}?modo=self`} className="btn-blue btn-small">Para mí</Link>
+                <Link href={`/cuenta/catalogo/${p.slug}?modo=gift`} className="btn-orange btn-small">Regalarlo</Link>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="compare-wrap desktop-only">
           <table className="compare-table">
             <thead>
               <tr>

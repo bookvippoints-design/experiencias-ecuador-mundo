@@ -2403,8 +2403,7 @@ body { background: #f3f8fc; }
   .simple-table td:empty { display: none; }
   .simple-table td.empty-state::before { content: none; }
   /* Comparación: la primera columna queda fija al deslizar */
-  .compare-table th:first-child, .compare-table td:first-child { position: sticky; left: 0; background: #fff; z-index: 1; min-width: 130px; }
-  .compare-table thead th:first-child { background: var(--celeste); }
+  .desktop-only { display: none !important; }
   /* Detalle de producto: la caja de compra primero */
   .detail-layout > .buy-box { order: -1; position: static; }
   .detail-photo { height: 200px; }
@@ -2412,3 +2411,17 @@ body { background: #f3f8fc; }
   .hero__content { padding: 1.25rem; }
   .btn-row > * { flex: 1 1 auto; }
 }
+
+/* Comparar paquetes en celular: los tres paquetes lado a lado */
+.compare-mobile { background: #fff; border: 1px solid #e3eef6; border-radius: 14px; overflow: clip; }
+.compare-mobile__head { display: grid; gap: 4px; position: sticky; top: 0; z-index: 2; background: #fff; padding: 6px; border-bottom: 1px solid #e3eef6; }
+.compare-mobile__name { background: var(--celeste); color: var(--azul); font-weight: 700; font-size: .82rem; text-align: center; padding: .55rem .25rem; border-radius: 8px; line-height: 1.2; }
+.compare-mobile__name.is-featured { background: var(--naranja); color: #fff; }
+.compare-mobile__row { border-bottom: 1px solid #eef3f7; padding: .55rem 6px; }
+.compare-mobile__label { font-size: .75rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .02em; margin-bottom: .3rem; text-align: center; }
+.compare-mobile__values { display: grid; gap: 4px; }
+.compare-mobile__values > div { text-align: center; font-size: .9rem; font-weight: 600; color: #1f2937; padding: .2rem; border-radius: 6px; }
+.compare-mobile__values > div.is-featured { background: #fff4ec; }
+.compare-mobile__actions { padding: .6rem 6px; }
+.compare-mobile__actions > div { display: flex; flex-direction: column; gap: .35rem; }
+.compare-mobile__actions .btn-small { padding: .45rem .3rem; font-size: .78rem; text-align: center; }
