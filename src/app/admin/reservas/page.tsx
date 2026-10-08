@@ -12,7 +12,7 @@ export default async function AdminReservas({ searchParams }: { searchParams: Pr
   const supabase = await createClient();
   let query = supabase
     .from("booking_requests")
-    .select("id, kind, destination, preferred_dates, travelers, notes, status, admin_message, created_at, user_id, entitlements(code, valid_until)")
+    .select("id, kind, destination, preferred_dates, travelers, notes, status, admin_message, created_at, user_id, entitlements(code, valid_until, points, product_name)")
     .order("created_at", { ascending: false });
   query = f === "abiertas" ? query.in("status", ["requested", "in_progress"]) : query.in("status", ["confirmed", "cancelled"]);
   const { data: bookings } = await query;
@@ -46,7 +46,7 @@ export default async function AdminReservas({ searchParams }: { searchParams: Pr
             <tbody>
               {(bookings ?? []).length === 0 && <tr><td colSpan={6} className="empty-state">No hay solicitudes en esta vista.</td></tr>}
               {(bookings ?? []).map((b) => {
-                const ent = b.entitlements as unknown as { code: string; valid_until: string } | null;
+                const ent = b.entitlements as unknown as { code: string; valid_until: string | null; points: number | null; product_name: string | null } | null;
                 const person = byId.get(b.user_id);
                 return (
                   <tr key={b.id}>
@@ -54,7 +54,14 @@ export default async function AdminReservas({ searchParams }: { searchParams: Pr
                     <td>{person?.full_name}<div className="exp-card__meta">{person?.email}</div></td>
                     <td>
                       {b.kind === "national" ? "Escapada nacional" : b.kind === "international" ? "Invitación internacional" : "Canje de puntos"}
-                      <div className="exp-card__meta">{ent?.code} · vence {shortDate(ent?.valid_until)}</div>
+                      {b.kind === "points" && (
+                        <div style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--naranja-oscuro)" }}>
+                          {(ent?.points ?? 0).toLocaleString("es-EC")} puntos
+                        </div>
+                      )}
+                      <div className="exp-card__meta">
+                        {ent?.product_name ? `${ent.product_name} · ` : ""}{ent?.code} · {b.kind === "points" ? "no caducan" : `vence ${shortDate(ent?.valid_until)}`}
+                      </div>
                     </td>
                     <td>
                       {b.kind === "points" ? <>Acreditar en BookVipPoints: <strong>{b.destination}</strong></> : <strong>{b.destination}</strong>}
@@ -73,8 +80,10 @@ export default async function AdminReservas({ searchParams }: { searchParams: Pr
                             <RpcButton fn="admin_update_booking" args={{ p_booking_id: b.id, p_status: "in_progress" }} label="En gestión" variant="btn-ghost"
                               askNote={{ param: "p_message", question: "Mensaje para el viajero (opcional)" }} />
                           )}
-                          <RpcButton fn="admin_update_booking" args={{ p_booking_id: b.id, p_status: "confirmed" }} label="Confirmar" variant="btn-orange"
-                            askNote={{ param: "p_message", question: "Detalle de la confirmación para el viajero (hotel, fechas)" }} />
+                          <RpcButton fn="admin_update_booking" args={{ p_booking_id: b.id, p_status: "confirmed" }}
+                            label={b.kind === "points" ? `Confirmar: ${(ent?.points ?? 0).toLocaleString("es-EC")} puntos acreditados` : "Confirmar"} variant="btn-orange"
+                            confirm={b.kind === "points" ? `¿Ya acreditaste ${(ent?.points ?? 0).toLocaleString("es-EC")} puntos en la cuenta BookVipPoints ${b.destination}?` : undefined}
+                            askNote={{ param: "p_message", question: b.kind === "points" ? "Mensaje para el cliente (opcional)" : "Detalle de la confirmación para el viajero (hotel, fechas)" }} />
                           <RpcButton fn="admin_update_booking" args={{ p_booking_id: b.id, p_status: "cancelled" }} label="Cancelar" variant="btn-ghost"
                             askNote={{ param: "p_message", question: "Motivo de la cancelación (lo verá el viajero)", required: true }} />
                         </div>
