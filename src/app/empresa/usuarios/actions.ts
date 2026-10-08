@@ -37,7 +37,10 @@ export async function createUserAction(_prev: CreateUserState, formData: FormDat
 
   // 1. Validar sin efectos: correo único, saldo, empresa activa
   const { error: checkError } = await supabase.rpc("company_check_new_user", { p_name: name, p_email: email });
-  if (checkError) return { error: checkError.message, success: null };
+  if (checkError) {
+    if (checkError.message.includes("ya está registrado")) return await notifyExistingAccount(profile.companyId, email);
+    return { error: checkError.message, success: null };
+  }
 
   // 2. Crear la cuenta y descontar exactamente un cupo (la función bloquea y revalida)
   const admin = createAdminClient();
@@ -100,4 +103,42 @@ export async function resendInvitationAction(userId: string): Promise<{ error: s
     return { error: e instanceof Error ? e.message : "No se pudo reenviar" };
   }
   return { error: null };
+}
+
+/**
+ * El correo ya tiene cuenta (por ejemplo, se la creó otra empresa o recibió un
+ * regalo, y la persona no lo recuerda). No se crea otra cuenta ni se usa cupo:
+ * se le avisa a la persona cómo entrar a la cuenta que ya tiene.
+ */
+async function notifyExistingAccount(companyId: string, email: string): Promise<CreateUserState> {
+  const admin = createAdminClient();
+  const { data: existing } = await admin.from("profiles").select("full_name, role").eq("email", email).maybeSingle();
+  if (existing && existing.role !== "user") {
+    return { error: "Ese correo pertenece a una cuenta de empresa o administración. Usa otro correo.", success: null };
+  }
+  try {
+    const company = await companyInfo(companyId);
+    const link = await ensureAccountAndLink(email, existing?.full_name ?? "");
+    const greeting = existing?.full_name ? `¡Hola, ${escapeHtml(existing.full_name)}!` : "¡Hola!";
+    await sendMail({
+      to: email,
+      subject: `${company?.name ?? "Una empresa"} quiere darte acceso a ${APP_NAME}`,
+      html: emailLayout(
+        `${company?.logo_url ? `<p><img src="${company.logo_url}" alt="${escapeHtml(company?.name ?? "")}" style="max-width:160px;max-height:60px"></p>` : ""}
+         <h2 style="margin:0 0 8px;color:#c4520a">${greeting}</h2>
+         <p><strong>${escapeHtml(company?.name ?? "")}</strong> quiso darte acceso a ${APP_NAME}, y encontramos que <strong>ya tienes una cuenta</strong> con este correo. No necesitas otra: con tu cuenta tienes acceso al catálogo completo de experiencias para disfrutar y regalar.</p>
+         <p>${link.mustSetPassword ? "Crea tu contraseña para entrar:" : "Entra con tu correo y tu contraseña. Si no la recuerdas, usa \"¿Olvidaste tu contraseña?\" en la pantalla de ingreso."}</p>`,
+        { label: link.mustSetPassword ? "Crear mi contraseña" : "Entrar a mi cuenta", url: link.url }
+      ),
+    });
+  } catch (e) {
+    return {
+      error: `Ese correo ya tiene una cuenta, pero no pudimos enviarle el aviso: ${e instanceof Error ? e.message : ""}`,
+      success: null,
+    };
+  }
+  return {
+    error: null,
+    success: `${email} ya tenía una cuenta en la plataforma, así que no se creó otra y no se usó ningún cupo. Le enviamos un correo con las instrucciones para entrar a su cuenta.`,
+  };
 }
