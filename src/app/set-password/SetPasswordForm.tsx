@@ -33,7 +33,17 @@ export function SetPasswordForm({ email }: { email: string | null }) {
 
     if (updateError) {
       setLoading(false);
-      setError("No se pudo guardar la contraseña. Intenta de nuevo.");
+      const msg = updateError.message.toLowerCase();
+      if (msg.includes("session") || updateError.status === 401 || updateError.status === 403) {
+        setError(
+          "Tu enlace de acceso ya no es válido (se usó, venció o se cerró la sesión en este navegador). " +
+            "Pide uno nuevo en \"¿Olvidaste tu contraseña?\" y ábrelo en una ventana de incógnito si usas varias cuentas."
+        );
+      } else if (msg.includes("weak") || msg.includes("password")) {
+        setError("Elige una contraseña más segura: combina letras y números.");
+      } else {
+        setError(`No se pudo guardar la contraseña: ${updateError.message}`);
+      }
       return;
     }
 
