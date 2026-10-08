@@ -12,11 +12,13 @@ const PRODUCT_LINKS: Record<string, string | undefined> = {
   "puntos-1000": process.env.NEXT_PUBLIC_PAYPHONE_PUNTOS_1000_URL,
 };
 
+// Mismos enlaces que los planes de Escape Ecuador y el Mundo (mismos precios).
+// Una variable de entorno, si se define, tiene prioridad.
 const PLAN_LINKS: Record<string, string | undefined> = {
-  inicial: process.env.NEXT_PUBLIC_PAYPHONE_PLAN_INICIAL_URL,
-  comercial: process.env.NEXT_PUBLIC_PAYPHONE_PLAN_COMERCIAL_URL,
-  crecimiento: process.env.NEXT_PUBLIC_PAYPHONE_PLAN_CRECIMIENTO_URL,
-  corporativo: process.env.NEXT_PUBLIC_PAYPHONE_PLAN_CORPORATIVO_URL,
+  inicial: process.env.NEXT_PUBLIC_PAYPHONE_PLAN_INICIAL_URL || "https://ppls.me/D9mKe5NeOYszZkH2Y6Vh7Q",
+  comercial: process.env.NEXT_PUBLIC_PAYPHONE_PLAN_COMERCIAL_URL || "https://ppls.me/x4Dd2NmJs2CmXE5F91Ym6g",
+  crecimiento: process.env.NEXT_PUBLIC_PAYPHONE_PLAN_CRECIMIENTO_URL || "https://ppls.me/mZ36pZ4noCMKSa4BGZ5owg",
+  corporativo: process.env.NEXT_PUBLIC_PAYPHONE_PLAN_CORPORATIVO_URL || "https://ppls.me/OpHYktcKMNzL5hrG2OSA",
 };
 
 export function productPaymentUrl(slug: string): string | null {
