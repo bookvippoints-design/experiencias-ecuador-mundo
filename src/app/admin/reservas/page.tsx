@@ -6,13 +6,17 @@ import { TopBar } from "@/components/TopBar";
 import { RpcButton } from "@/components/RpcButton";
 import { BOOKING_STATUS_LABEL, shortDate } from "@/lib/format";
 
+function fmtDay(d: string) {
+  return new Date(d + "T12:00:00").toLocaleDateString("es-EC", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+}
+
 export default async function AdminReservas({ searchParams }: { searchParams: Promise<{ f?: string }> }) {
   const profile = await requireRole("admin");
   const { f = "abiertas" } = await searchParams;
   const supabase = await createClient();
   let query = supabase
     .from("booking_requests")
-    .select("id, kind, destination, preferred_dates, travelers, notes, status, admin_message, created_at, user_id, entitlements(code, valid_until, points, product_name)")
+    .select("id, kind, destination, preferred_dates, travelers, notes, status, admin_message, created_at, user_id, check_in, alt_check_in, contact_phone, entitlements(code, valid_until, points, product_name)")
     .order("created_at", { ascending: false });
   query = f === "abiertas" ? query.in("status", ["requested", "in_progress"]) : query.in("status", ["confirmed", "cancelled"]);
   const { data: bookings } = await query;
@@ -29,7 +33,7 @@ export default async function AdminReservas({ searchParams }: { searchParams: Pr
         </nav>
         <p className="field-hint">
           Confirmar una escapada nacional la marca como utilizada. Confirmar un canje de puntos los marca como acreditados (hazlo después de acreditarlos en BookVipPoints). Para invitaciones internacionales registra la emisión
-          y la activación en &quot;Beneficios&quot;. Cancelar devuelve el beneficio a disponible.
+          y la activación en &quot;Beneficios&quot;. Cancelar (antes de confirmar) devuelve el beneficio a disponible: úsalo si no hay disponibilidad o si las fechas caen en temporada alta, vacaciones o feriados, indicando el motivo. Una escapada confirmada ya no se anula ni se reintegra.
         </p>
         <div className="table-card">
           <table className="simple-table">
@@ -65,6 +69,12 @@ export default async function AdminReservas({ searchParams }: { searchParams: Pr
                     </td>
                     <td>
                       {b.kind === "points" ? <>Acreditar en BookVipPoints: <strong>{b.destination}</strong></> : <strong>{b.destination}</strong>}
+                      {b.check_in && (
+                        <div style={{ fontWeight: 700 }}>
+                          Entrada: {fmtDay(b.check_in)}{b.alt_check_in ? <span style={{ fontWeight: 400 }}> · alternativa: {fmtDay(b.alt_check_in)}</span> : null}
+                        </div>
+                      )}
+                      {b.contact_phone && <div className="exp-card__meta">Teléfono: <a href={`https://wa.me/${b.contact_phone.replace(/\D/g, "").replace(/^0/, "593")}`} target="_blank" rel="noreferrer">{b.contact_phone}</a></div>}
                       {b.preferred_dates && <div className="exp-card__meta">Fechas: {b.preferred_dates}</div>}
                       {b.travelers && <div className="exp-card__meta">Viajeros: {b.travelers}</div>}
                       {b.notes && <div className="exp-card__meta">Notas: {b.notes}</div>}

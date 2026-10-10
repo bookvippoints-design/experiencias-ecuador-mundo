@@ -64,6 +64,7 @@ export default async function Catalogo() {
             regla puede anular todos los certificados. En algunos resorts del Caribe el todo incluido es obligatorio y se paga al hotel.
           </p>
           <div className="btn-row">
+            <Link className="btn-orange btn-small" href="/cuenta/destinos">Ver destinos, estadías e impuestos</Link>
             <a className="btn-blue btn-small" href={INVITATION_INFO_URL} target="_blank" rel="noreferrer">Cómo funciona la invitación</a>
             <a className="btn-ghost btn-small" href={INVITATION_DESTINATIONS_MAP_URL} target="_blank" rel="noreferrer">Mapa de destinos e impuestos</a>
           </div>

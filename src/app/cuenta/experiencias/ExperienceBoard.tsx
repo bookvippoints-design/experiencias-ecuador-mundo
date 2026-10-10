@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Countdown } from "@/components/Countdown";
 import { StatusPill } from "@/components/StatusPill";
 import { Modal } from "@/components/Modal";
 import { giftEntitlementsAction } from "./actions";
+import Link from "next/link";
 import { effectiveStatus, entitlementTitle, KIND_LABEL, type EntitlementRow } from "@/lib/format";
+import { destinationLabel, estimatedTaxes, usd, TAX_NOTE, type IntlDestination } from "@/lib/intl-destinations";
+import { NATIONAL_RULE, NATIONAL_MIN_DAYS, NATIONAL_RESPONSE, BONUS_REGISTER_URL } from "@/lib/brand";
 
 const NATIONAL = ["Quito", "Guayaquil", "Manta", "Cuenca", "Loja"];
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -30,12 +33,24 @@ function giftable(e: BoardItem) {
   return true;
 }
 
-export function ExperienceBoard({ items, readOnly = false, userEmail = "" }: { items: BoardItem[]; readOnly?: boolean; userEmail?: string }) {
+export function ExperienceBoard({ items, readOnly = false, userEmail = "", destinations = [], requestInvitation }: {
+  items: BoardItem[]; readOnly?: boolean; userEmail?: string; destinations?: IntlDestination[]; requestInvitation?: string;
+}) {
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [giftOpen, setGiftOpen] = useState(false);
   const [booking, setBooking] = useState<BoardItem | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+
+  // Llegó desde "Pedir esta invitación": abrir el canje con el destino elegido.
+  const openedFromLink = useRef(false);
+  useEffect(() => {
+    if (readOnly || !requestInvitation || openedFromLink.current) return;
+    openedFromLink.current = true;
+    const first = items.find((e) => e.kind === "international" && effectiveStatus(e) === "available");
+    if (first) setBooking(first);
+    else setFlash("No tienes invitaciones internacionales disponibles para canjear.");
+  }, [readOnly, requestInvitation, items]);
 
   const toggle = (id: string) => setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
 
@@ -122,7 +137,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "" }: { i
           onDone={(m) => { setGiftOpen(false); setSelecting(false); setSelected([]); setFlash(m); }}
         />
       )}
-      {booking && <BookingDialog item={booking} userEmail={userEmail} onClose={() => setBooking(null)} onDone={(m) => { setBooking(null); setFlash(m); }} />}
+      {booking && <BookingDialog item={booking} userEmail={userEmail} destinations={destinations} initialDestination={requestInvitation} onClose={() => setBooking(null)} onDone={(m) => { setBooking(null); setFlash(m); }} />}
     </>
   );
 }
@@ -198,17 +213,35 @@ function GiftDialog({ items, onClose, onDone }: { items: BoardItem[]; onClose: (
   );
 }
 
-function BookingDialog({ item, userEmail, onClose, onDone }: { item: BoardItem; userEmail: string; onClose: () => void; onDone: (m: string) => void }) {
+function isoDate(d: Date) {
+  const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, "0"), day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function BookingDialog({ item, userEmail, destinations, initialDestination, onClose, onDone }: {
+  item: BoardItem; userEmail: string; destinations: IntlDestination[]; initialDestination?: string;
+  onClose: () => void; onDone: (m: string) => void;
+}) {
   const isPoints = item.kind === "points";
-  const [destination, setDestination] = useState(isPoints ? userEmail : "");
-  const [dates, setDates] = useState("");
+  const intl = item.kind === "international";
+  const [destination, setDestination] = useState(isPoints ? userEmail : intl ? initialDestination ?? "" : "");
+  const [destQuery, setDestQuery] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [altCheckIn, setAltCheckIn] = useState("");
   const [travelers, setTravelers] = useState("");
+  const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
   const [rules, setRules] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const intl = item.kind === "international";
+
+  const minDate = isoDate(new Date(Date.now() + NATIONAL_MIN_DAYS * 86400000));
+  const maxDate = item.valid_until ? isoDate(new Date(item.valid_until)) : undefined;
+  const chosen = intl ? destinations.find((d) => destinationLabel(d).toLowerCase() === destination.toLowerCase()) : undefined;
+  const filtered = intl
+    ? destinations.filter((d) => !destQuery.trim() || destinationLabel(d).toLowerCase().includes(destQuery.trim().toLowerCase()))
+    : [];
 
   async function send() {
     setLoading(true);
@@ -216,10 +249,13 @@ function BookingDialog({ item, userEmail, onClose, onDone }: { item: BoardItem; 
     const { error: e } = await createClient().rpc("request_booking", {
       p_entitlement_id: item.id,
       p_destination: destination,
-      p_preferred_dates: dates || null,
+      p_preferred_dates: null,
       p_travelers: travelers || null,
       p_notes: notes || null,
       p_accept_rules: rules,
+      p_check_in: item.kind === "national" ? checkIn || null : null,
+      p_alt_check_in: item.kind === "national" ? altCheckIn || null : null,
+      p_phone: phone || null,
     });
     setLoading(false);
     if (e) return setError(e.message);
@@ -227,7 +263,7 @@ function BookingDialog({ item, userEmail, onClose, onDone }: { item: BoardItem; 
     onDone(
       isPoints
         ? "Recibimos tu solicitud de canje. Acreditaremos tus puntos en BookVipPoints y te avisaremos."
-        : "Recibimos tu solicitud. Te escribiremos para coordinar los detalles; puedes seguirla en \"Mis reservas\"."
+        : `Recibimos tu solicitud. ${NATIONAL_RESPONSE} Puedes seguirla en "Canjes y reservas".`
     );
   }
 
@@ -239,10 +275,12 @@ function BookingDialog({ item, userEmail, onClose, onDone }: { item: BoardItem; 
         <div className="field">
           <label htmlFor="bk-email">Correo de tu cuenta BookVipPoints</label>
           <input id="bk-email" type="email" value={destination} onChange={(e) => setDestination(e.target.value)} />
-          <span className="field-hint">Si aún no tienes cuenta en BookVipPoints, la crearemos con este correo.</span>
+          <span className="field-hint">
+            ¿Aún no tienes cuenta? <a href={BONUS_REGISTER_URL} target="_blank" rel="noreferrer" style={{ color: "var(--naranja-oscuro)", fontWeight: 700 }}>Regístrate gratis aquí</a> y recibe además 100 puntos de bienvenida.
+          </span>
         </div>
         <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
-        <p className="info-box">Los puntos no son efectivo ni saldo para pagar una reserva completa, y no caducan. Una vez acreditados ya no se pueden regalar.</p>
+        <p className="info-box">Cada punto equivale a hasta US$1 de ahorro como pago parcial. No son efectivo ni pagan una reserva completa, y no caducan. Una vez acreditados ya no se pueden regalar.</p>
         {error && <p className="field-error">{error}</p>}
         <div className="modal-actions">
           <button className="btn-ghost" onClick={onClose}>Cancelar</button>
@@ -252,43 +290,93 @@ function BookingDialog({ item, userEmail, onClose, onDone }: { item: BoardItem; 
     );
   }
 
-  return (
-    <Modal open onClose={onClose} wide labelledBy="bk-title">
-      <h2 id="bk-title">{intl ? "Canjear: invitación hotelera internacional" : "Canjear: reservar escapada nacional"}</h2>
-      <p className="modal__subtitle">{entitlementTitle(item)} · vence el {longDate(item.valid_until)}</p>
-      <div className="field">
-        <label htmlFor="bk-dest">Destino</label>
-        {intl ? (
-          <input id="bk-dest" value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="Ciudad o país de la lista de más de 130 destinos" />
-        ) : (
+  if (!intl) {
+    const ready = destination && checkIn && travelers.trim() && phone.replace(/\D/g, "").length >= 7 && rules;
+    return (
+      <Modal open onClose={onClose} wide labelledBy="bk-title">
+        <h2 id="bk-title">Canjear: reservar escapada nacional</h2>
+        <p className="modal__subtitle">{entitlementTitle(item)} · vence el {longDate(item.valid_until)}</p>
+        <p className="rule-box">{NATIONAL_RULE}</p>
+        <div className="field">
+          <label htmlFor="bk-dest">Ciudad</label>
           <select id="bk-dest" value={destination} onChange={(e) => setDestination(e.target.value)}>
-            <option value="">Elige un destino</option>
+            <option value="">Elige una ciudad</option>
             {NATIONAL.map((d) => <option key={d}>{d}</option>)}
           </select>
-        )}
+        </div>
+        <div className="field-row">
+          <div className="field">
+            <label htmlFor="bk-in">Fecha de entrada</label>
+            <input id="bk-in" type="date" min={minDate} max={maxDate} value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
+          </div>
+          <div className="field">
+            <label htmlFor="bk-alt">Fecha alternativa (opcional)</label>
+            <input id="bk-alt" type="date" min={minDate} max={maxDate} value={altCheckIn} onChange={(e) => setAltCheckIn(e.target.value)} />
+          </div>
+        </div>
+        <span className="field-hint">Mínimo {NATIONAL_MIN_DAYS} días de anticipación: desde el {longDate(minDate + "T12:00:00")}.</span>
+        <div className="field"><label htmlFor="bk-trav">Nombre de tu acompañante</label><input id="bk-trav" value={travelers} onChange={(e) => setTravelers(e.target.value)} /></div>
+        <div className="field"><label htmlFor="bk-phone">Teléfono de contacto (WhatsApp)</label><input id="bk-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="09..." /></div>
+        <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
+        <p className="info-box">{NATIONAL_RESPONSE} Mientras tu solicitud está pendiente puedes cambiar las fechas; si no hay disponibilidad, te ofrecemos otras.</p>
+        <label className="consent">
+          <input type="checkbox" checked={rules} onChange={(e) => setRules(e.target.checked)} />
+          <span>
+            Entiendo que las escapadas nacionales <strong>no se pueden usar en temporada alta, vacaciones ni feriados</strong>, y que
+            <strong> una vez confirmado el hospedaje no se puede anular ni se reintegra el paquete</strong>.
+          </span>
+        </label>
+        {error && <p className="field-error">{error}</p>}
+        <div className="modal-actions">
+          <button className="btn-ghost" onClick={onClose}>Cancelar</button>
+          <button className="btn-orange" onClick={send} disabled={loading || !ready}>{loading ? "Enviando..." : "Enviar solicitud"}</button>
+        </div>
+      </Modal>
+    );
+  }
+
+  return (
+    <Modal open onClose={onClose} wide labelledBy="bk-title">
+      <h2 id="bk-title">Canjear: invitación hotelera internacional</h2>
+      <p className="modal__subtitle">{entitlementTitle(item)} · vence el {longDate(item.valid_until)}</p>
+      <div className="field">
+        <label htmlFor="bk-q">Destino</label>
+        <input id="bk-q" value={destQuery} onChange={(e) => setDestQuery(e.target.value)} placeholder="Busca una ciudad o país" />
+        <select aria-label="Elige el destino" size={6} value={chosen ? chosen.id : ""} onChange={(e) => {
+          const d = destinations.find((x) => x.id === e.target.value);
+          if (d) setDestination(destinationLabel(d));
+        }} className="dest-select">
+          {filtered.map((d) => (
+            <option key={d.id} value={d.id}>{destinationLabel(d)} · {d.days}D/{d.nights}N · {usd(Number(d.tax_per_night))} por noche</option>
+          ))}
+        </select>
+        <span className="field-hint"><Link href="/cuenta/destinos" style={{ color: "var(--naranja-oscuro)", fontWeight: 700 }}>Ver todos los destinos con filtros</Link></span>
       </div>
-      <div className="field"><label htmlFor="bk-dates">Fechas preferidas</label><input id="bk-dates" value={dates} onChange={(e) => setDates(e.target.value)} placeholder="Ej. segunda quincena de marzo" /></div>
-      <div className="field"><label htmlFor="bk-trav">Viajeros</label><input id="bk-trav" value={travelers} onChange={(e) => setTravelers(e.target.value)} placeholder={intl ? "Ej. 2 adultos" : "Nombres de las 2 personas"} /></div>
-      <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
-      {intl && (
-        <>
-          <p className="info-box">
-            Fee de emisión US$0. Pagarás los impuestos gubernamentales y las tasas del hotel o resort. Emitida la invitación
-            tendrás 30 días para registrarla y 7 días para pagar esos valores; desde la activación, 18 meses para viajar.
-          </p>
-          <label className="consent">
-            <input type="checkbox" checked={rules} onChange={(e) => setRules(e.target.checked)} />
-            <span>
-              Acepto que solo puedo usar una invitación por año, sin repetir destino, y que dos invitaciones no pueden usarse en el
-              mismo destino. Entiendo que incumplir estas reglas puede anular todos los certificados.
-            </span>
-          </label>
-        </>
+      {chosen && (
+        <div className="dest-summary">
+          <strong>{destinationLabel(chosen)}</strong>
+          <span>{chosen.days} días / {chosen.nights} noches</span>
+          <span>Impuesto por noche: {usd(Number(chosen.tax_per_night))}</span>
+          <span className="dest-summary__total">Total estimado a pagar: {usd(estimatedTaxes(chosen))}</span>
+        </div>
       )}
+      <div className="field"><label htmlFor="bk-trav">Viajeros</label><input id="bk-trav" value={travelers} onChange={(e) => setTravelers(e.target.value)} placeholder="Ej. 2 adultos: Ana Pérez y Luis Mora" /></div>
+      <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
+      <p className="info-box">
+        <strong>Fee de emisión US$0.</strong> {TAX_NOTE} Emitida la invitación tendrás 30 días para registrarla y 7 días para pagar esos
+        valores; desde la activación, 18 meses para viajar.
+      </p>
+      <label className="consent">
+        <input type="checkbox" checked={rules} onChange={(e) => setRules(e.target.checked)} />
+        <span>
+          Acepto que solo puedo usar una invitación por año, sin repetir destino, y que dos invitaciones no pueden usarse en el
+          mismo destino. Entiendo que incumplir estas reglas puede anular todos los certificados.
+        </span>
+      </label>
       {error && <p className="field-error">{error}</p>}
       <div className="modal-actions">
         <button className="btn-ghost" onClick={onClose}>Cancelar</button>
-        <button className="btn-orange" onClick={send} disabled={loading || !destination.trim() || (intl && !rules)}>
+        <button className="btn-orange" onClick={send} disabled={loading || !chosen || !rules}>
           {loading ? "Enviando..." : "Enviar solicitud"}
         </button>
       </div>

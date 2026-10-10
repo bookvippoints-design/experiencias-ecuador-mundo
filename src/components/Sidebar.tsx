@@ -19,6 +19,7 @@ const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
     { href: "/admin/regalos", label: "Regalos", gift: true },
     { href: "/admin/beneficios", label: "Beneficios" },
     { href: "/admin/reservas", label: "Solicitudes de reserva" },
+    { href: "/admin/destinos", label: "Destinos internacionales" },
     { href: "/admin/catalogo", label: "Catálogo" },
     { href: "/admin/usuarios", label: "Usuarios" },
     { href: "/admin/correos", label: "Correos enviados" },

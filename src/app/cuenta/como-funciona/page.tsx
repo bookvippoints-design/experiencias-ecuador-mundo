@@ -105,8 +105,9 @@ export default async function ComoFunciona() {
             <li>La mayoría de habitaciones admite máximo 2 adultos. No incluye alimentación ni transporte.</li>
           </ul>
           <div className="btn-row">
+            <Link className="btn-orange btn-small" href="/cuenta/destinos">Ver destinos, estadías e impuestos</Link>
             <a className="btn-blue btn-small" href={INVITATION_INFO_URL} target="_blank" rel="noreferrer">Ver la guía completa de la invitación</a>
-            <a className="btn-ghost btn-small" href={INVITATION_DESTINATIONS_MAP_URL} target="_blank" rel="noreferrer">Mapa de destinos e impuestos</a>
+            <a className="btn-ghost btn-small" href={INVITATION_DESTINATIONS_MAP_URL} target="_blank" rel="noreferrer">Mapa de destinos</a>
           </div>
           <InternationalGallery />
         </section>

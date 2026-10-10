@@ -47,6 +47,7 @@ export default async function ProductoDetalle({
               <ul className="conditions-list">{conditionLines(p).map((l) => <li key={l}>{l}</li>)}</ul>
               {p.international_count > 0 && (
                 <div className="btn-row" style={{ marginTop: "1rem" }}>
+                  <Link className="btn-orange btn-small" href="/cuenta/destinos">Ver destinos, estadías e impuestos</Link>
                   <a className="btn-blue btn-small" href={INVITATION_INFO_URL} target="_blank" rel="noreferrer">Cómo funciona la invitación internacional</a>
                   <a className="btn-ghost btn-small" href={INVITATION_DESTINATIONS_MAP_URL} target="_blank" rel="noreferrer">Mapa de destinos e impuestos por noche</a>
                 </div>
