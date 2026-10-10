@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getCurrentProfile } from "@/lib/auth/identity";
 import { ensureAccountAndLink } from "@/lib/auth/access-links";
+import { activationStepsHtml, accessFooterHtml } from "@/lib/email-blocks";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
 import { APP_NAME } from "@/lib/brand";
 
@@ -58,8 +59,9 @@ export async function registerCompanyAction(_prev: FormState, formData: FormData
       html: emailLayout(
         `<h2 style="margin:0 0 8px;color:#c4520a">Bienvenidos, ${escapeHtml(name)}</h2>
          <p>Ya tienen su panel empresarial en ${APP_NAME}. Desde ahí pueden comprar cupos, crear las cuentas de sus clientes o colaboradores y enviarles su invitación.</p>
-         <p>Crea tu contraseña para entrar:</p>`,
-        { label: "Crear mi contraseña", url: link.url }
+         ${activationStepsHtml("Crear mi contraseña").replace("¡Listo! Descubre tus beneficios y disfrútalos o regálalos.", "¡Listo! Entra a tu panel empresarial.")}`,
+        { label: "Crear mi contraseña", url: link.url },
+        accessFooterHtml(email, true)
       ),
     });
   } catch (e) {

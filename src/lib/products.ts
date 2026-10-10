@@ -37,7 +37,7 @@ export function inclusions(p: Product): string[] {
       `${p.international_count} ${p.international_count === 1 ? "invitación hotelera internacional" : "invitaciones hoteleras internacionales"}: más de 130 destinos, de 4 días y 3 noches hasta 8 días y 7 noches según destino`
     );
   }
-  if (p.points > 0) list.push(`${p.points.toLocaleString("es-EC")} puntos para ahorro en hoteles`);
+  if (p.points > 0) list.push(`${p.points.toLocaleString("es-EC")} puntos = hasta US$${p.points.toLocaleString("es-EC")} de ahorro en hoteles`);
   if (p.validity_months) list.push(`Vigencia de ${p.validity_months} meses desde el pago aprobado`);
   return list;
 }

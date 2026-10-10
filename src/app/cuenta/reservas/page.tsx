@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AccountTabs } from "@/components/AccountTabs";
 import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
@@ -16,6 +17,7 @@ export default async function MisReservas() {
     <>
       <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis canjes y reservas" />
       <main className="portal-content">
+        <AccountTabs current="/cuenta/reservas" />
         <p className="content-lead">
           Solicita tus reservas desde <Link href="/cuenta/experiencias" style={{ color: "var(--naranja-oscuro)" }}>Mis experiencias</Link>. Aquí ves en qué estado está cada una.
         </p>

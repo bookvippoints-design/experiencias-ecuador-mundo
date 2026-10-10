@@ -18,7 +18,7 @@ export default async function Comparar() {
     { label: "Personas por escapada", value: (p) => (p.national_count ? String(p.national_people ?? 2) : "—") },
     { label: "Desayuno nacional", value: (p) => (p.breakfast_included ? "Incluido" : "—") },
     { label: "Invitaciones hoteleras internacionales", value: (p) => String(p.international_count) },
-    { label: "Puntos para ahorro en hoteles", value: (p) => p.points.toLocaleString("es-EC") },
+    { label: "Fee de emisión de la invitación", value: (p) => (p.international_count ? "US$0" : "—") },
     { label: "Vigencia desde el pago aprobado", value: (p) => (p.validity_months ? `${p.validity_months} meses` : "—") },
   ];
 
@@ -82,7 +82,7 @@ export default async function Comparar() {
         </div>
         <p className="field-hint" style={{ marginTop: ".75rem" }}>
           Invitación internacional: más de 130 destinos, de 4 días y 3 noches hasta 8 días y 7 noches según destino; fee de
-          emisión US$0; impuestos y tasas del hotel o resort a cargo del viajero. Los puntos dan un ahorro parcial y no caducan.
+          emisión US$0; impuestos y tasas del hotel o resort a cargo del viajero. Las escapadas nacionales no se pueden usar en temporada alta, vacaciones ni feriados.
         </p>
       </main>
     </>

@@ -77,7 +77,7 @@ export function SetPasswordForm({ email }: { email: string | null }) {
     <form onSubmit={handleSubmit} className="login-form">
       {email && <p className="modal__subtitle">Configurando el acceso de <strong>{email}</strong></p>}
 
-      <label htmlFor="password">Nueva contraseña</label>
+      <label htmlFor="password">Nueva contraseña (mínimo 8 caracteres)</label>
       <div className="password-field">
         <input
           id="password"
@@ -87,12 +87,12 @@ export function SetPasswordForm({ email }: { email: string | null }) {
           required
           minLength={8}
         />
-        <button type="button" onClick={() => setShowPassword((v) => !v)}>
-          {showPassword ? "Ocultar" : "Mostrar"}
+        <button type="button" onClick={() => setShowPassword((v) => !v)} aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}>
+          {showPassword ? "Ocultar" : "Ver"}
         </button>
       </div>
 
-      <label htmlFor="confirm">Confirmar contraseña</label>
+      <label htmlFor="confirm">Repite tu contraseña</label>
       <input
         id="confirm"
         type={showPassword ? "text" : "password"}
@@ -109,7 +109,7 @@ export function SetPasswordForm({ email }: { email: string | null }) {
       )}
 
       <button type="submit" className="btn-primary" disabled={loading}>
-        {loading ? "Guardando..." : "Guardar y entrar al portal"}
+        {loading ? "Guardando..." : "Guardar y entrar a mi portal"}
       </button>
     </form>
   );

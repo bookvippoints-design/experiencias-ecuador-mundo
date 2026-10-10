@@ -81,6 +81,7 @@ body {
 
 .password-field input {
   flex: 1;
+  min-width: 0;
 }
 
 .password-field button {
@@ -90,6 +91,9 @@ body {
   padding: 0 0.75rem;
   font-size: 0.8rem;
   cursor: pointer;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  min-height: 44px;
 }
 
 .btn-primary {
@@ -2425,3 +2429,90 @@ body { background: #f3f8fc; }
 .compare-mobile__actions { padding: .6rem 6px; }
 .compare-mobile__actions > div { display: flex; flex-direction: column; gap: .35rem; }
 .compare-mobile__actions .btn-small { padding: .45rem .3rem; font-size: .78rem; text-align: center; }
+
+/* Pantalla de crear contraseña: pasos */
+.step-progress { display: flex; gap: 6px; margin: .5rem 0 1rem; }
+.step-progress span { flex: 1; height: 6px; border-radius: 3px; background: #e3eef6; }
+.step-progress span.is-done { background: var(--naranja); }
+.step-eyebrow { margin: 0; color: var(--naranja-oscuro); font-weight: 800; font-size: .75rem; letter-spacing: .08em; }
+.step-title { margin: .25rem 0 .4rem; color: var(--azul); font-size: 1.35rem; line-height: 1.25; }
+.step-text { margin: 0 0 .8rem; color: #4b5563; font-size: .95rem; }
+.step-email { margin: 0 0 1rem; background: var(--celeste); border-radius: 10px; padding: .6rem .8rem; font-size: .9rem; }
+.step-email strong { display: block; overflow-wrap: anywhere; }
+.step-help { margin: 1rem 0 0; text-align: center; font-size: .9rem; }
+.step-help a { color: var(--naranja-oscuro); font-weight: 700; }
+
+/* Pestañas de "Mis experiencias" */
+.account-tabs { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.account-tabs a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 1rem; border-radius: 999px; background: #fff; border: 2px solid #cfe8f7; color: var(--azul); font-weight: 700; text-decoration: none; font-size: .92rem; }
+.account-tabs a:hover { border-color: var(--azul); }
+.account-tabs a.is-active { background: var(--azul); border-color: var(--azul); color: #fff; }
+@media (max-width: 700px) {
+  .account-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .account-tabs a { flex: 0 0 auto; }
+}
+.fee-badge { align-self: flex-start; background: var(--naranja-oscuro); color: #fff; border-radius: 999px; padding: .25rem .7rem; font-size: .78rem; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; }
+.product-card__how { text-align: center; color: var(--naranja-oscuro); font-weight: 700; font-size: .88rem; margin-top: .25rem; }
+
+/* Inicio del cliente: bono de bienvenida */
+.bonus-card { background: var(--naranja-claro); border: 2px solid #f7b98a; border-radius: 20px; padding: 1.6rem; display: flex; flex-wrap: wrap; gap: 1.6rem; align-items: center; }
+.bonus-card__seal { flex: 0 0 auto; width: 150px; height: 150px; border-radius: 50%; background: var(--naranja); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 800; text-align: center; }
+.bonus-card__number { font-size: 3.2rem; font-weight: 900; line-height: 1; }
+.bonus-card__body { flex: 1 1 340px; display: flex; flex-direction: column; gap: .75rem; }
+.bonus-card__eyebrow { font-size: .75rem; font-weight: 800; color: var(--naranja-oscuro); letter-spacing: .08em; text-transform: uppercase; }
+.bonus-card__title { margin: 0; font-size: 1.55rem; line-height: 1.2; color: var(--gris-texto); }
+.bonus-card__steps { display: flex; flex-wrap: wrap; gap: .5rem; }
+.bonus-card__steps span { background: var(--celeste); color: #17679a; border-radius: 999px; padding: .3rem .8rem; font-size: .82rem; font-weight: 800; }
+.bonus-card__link { color: var(--naranja-oscuro); font-weight: 700; align-self: center; }
+.bonus-card__fine { margin: 0; font-size: .78rem; color: #5b6570; line-height: 1.5; }
+@media (max-width: 700px) {
+  .bonus-card { flex-direction: column; text-align: center; padding: 1.25rem; }
+  .bonus-card__seal { width: 120px; height: 120px; }
+  .bonus-card__number { font-size: 2.6rem; }
+  .bonus-card__title { font-size: 1.3rem; }
+  .bonus-card__steps { justify-content: center; }
+  .bonus-card .btn-row { justify-content: center; }
+  .bonus-card .btn-orange { width: 100%; }
+}
+
+/* Ayuda por WhatsApp flotante (portal del cliente) */
+.help-float { position: fixed; right: 20px; bottom: 20px; z-index: 40; display: inline-flex; align-items: center; gap: .5rem; min-height: 52px; padding: 0 1.2rem; border-radius: 999px; background: #1a7f4b; color: #fff; font-weight: 800; text-decoration: none; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+.help-float:hover { background: #156a3e; color: #fff; }
+@media (max-width: 700px) {
+  .help-float { width: 56px; height: 56px; padding: 0; justify-content: center; right: 14px; bottom: 14px; }
+  .help-float__text { display: none; }
+  .portal-content { padding-bottom: 5rem; }
+}
+
+/* Cómo funciona */
+.how-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
+.how-tabs a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.1rem; border-radius: 999px; background: #fff; border: 2px solid #cfe8f7; color: #17679a; font-weight: 800; text-decoration: none; }
+.how-tabs a:hover { border-color: var(--azul); }
+.how-block { background: #fff; border: 1px solid #dcebf5; border-radius: 20px; padding: 1.75rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 1rem; scroll-margin-top: 80px; }
+.how-block h2 { margin: 0; font-size: 1.6rem; color: var(--gris-texto); }
+.how-block .content-lead { margin: 0; }
+.how-block__eyebrow { color: var(--azul); font-weight: 800; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
+.how-block__eyebrow--orange { color: var(--naranja-oscuro); }
+.how-block__head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: flex-start; }
+.how-block__head > div:first-child { flex: 1 1 380px; display: flex; flex-direction: column; gap: .35rem; }
+.how-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .8rem; }
+.how-step { background: #f6fafd; border-radius: 14px; padding: 1rem; display: flex; flex-direction: column; gap: .4rem; font-size: .92rem; color: #4b5563; }
+.how-step strong { color: var(--gris-texto); font-size: 1rem; }
+.how-step__num { width: 38px; height: 38px; border-radius: 50%; color: #fff; font-weight: 900; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; }
+.how-step__num--blue { background: var(--azul); }
+.how-step__num--orange { background: var(--naranja); }
+.fee-seal { flex: 0 0 auto; background: var(--naranja-oscuro); color: #fff; border-radius: 18px; padding: 1rem 1.5rem; text-align: center; display: flex; flex-direction: column; font-size: .8rem; font-weight: 700; }
+.fee-seal strong { font-size: 2rem; line-height: 1.1; font-weight: 900; }
+.rule-box { margin: 0; background: #fdecea; border: 2px solid #e8a39c; color: #8a1c13; border-radius: 12px; padding: .8rem 1rem; font-weight: 800; }
+.video-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; background: var(--celeste); border-radius: 14px; padding: 1rem 1.2rem; }
+.video-cta__icon { width: 72px; height: 48px; border-radius: 10px; background: var(--azul); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+.video-cta__text { flex: 1 1 240px; display: flex; flex-direction: column; font-size: .9rem; color: #4b5563; }
+.video-cta__text strong { color: var(--gris-texto); font-size: 1.05rem; }
+@media (max-width: 700px) {
+  .how-block { padding: 1.1rem; border-radius: 16px; }
+  .how-block h2 { font-size: 1.3rem; }
+  .how-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .how-tabs a { flex: 0 0 auto; }
+  .fee-seal { width: 100%; }
+}
+@media (max-width: 700px) { .login-card { padding: 1.75rem 1.4rem; box-sizing: border-box; } }

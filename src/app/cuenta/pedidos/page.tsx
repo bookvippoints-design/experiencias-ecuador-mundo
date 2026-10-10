@@ -1,4 +1,5 @@
 import { requireRole } from "@/lib/auth/identity";
+import { AccountTabs } from "@/components/AccountTabs";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
 import { productPaymentUrl } from "@/lib/payphone";
@@ -19,6 +20,7 @@ export default async function MisPedidos({ searchParams }: { searchParams: Promi
     <>
       <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis pedidos" />
       <main className="portal-content">
+        <AccountTabs current="/cuenta/pedidos" />
         {nuevo && (
           <div className="success-box">
             <strong>Pedido {nuevo} creado.</strong> Paga con PayPhone y luego pulsa &quot;Ya pagué&quot;. Cuando confirmemos tu

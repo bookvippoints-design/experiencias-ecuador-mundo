@@ -22,11 +22,20 @@ export default function TerminosPage() {
       <p>
         Cada paquete indica en su ficha qué incluye, su precio y su vigencia (12, 18 o 24 meses contados desde la
         aprobación del pago). La vigencia es el plazo para solicitar y usar las escapadas nacionales y para solicitar
-        las invitaciones hoteleras internacionales. Las escapadas nacionales son para 2 personas, con desayuno, en
-        Quito, Guayaquil, Manta, Cuenca o Loja, en los hoteles del catálogo vigente y sujetas a disponibilidad.
+        las invitaciones hoteleras internacionales. Los paquetes no incluyen puntos.
       </p>
 
-      <h2>3. Invitación hotelera internacional</h2>
+      <h2>3. Escapadas nacionales</h2>
+      <ul>
+        <li><strong>Las escapadas nacionales NO se pueden usar en temporada alta, vacaciones ni feriados.</strong></li>
+        <li>Son para 2 personas, con desayuno, en Quito, Guayaquil, Manta, Cuenca o Loja, en los hoteles del catálogo vigente.</li>
+        <li>Se solicitan con un mínimo de 30 días de anticipación. Respondemos en 24 a 48 horas hábiles.</li>
+        <li>Mientras la solicitud está pendiente se pueden cambiar las fechas. Si no hay disponibilidad, se ofrecen otras fechas.</li>
+        <li><strong>Una vez confirmado el hospedaje, no se puede anular ni se reintegra el paquete.</strong> Cancelar o no presentarse significa perder la escapada.</li>
+        <li>No incluyen transporte, otras comidas ni consumos adicionales.</li>
+      </ul>
+
+      <h2>4. Invitación hotelera internacional</h2>
       <ul>
         <li>Acceso a más de 130 destinos, desde 4 días y 3 noches hasta 8 días y 7 noches según destino.</li>
         <li>En estos paquetes el fee de emisión es US$0.</li>
@@ -49,13 +58,20 @@ export default function TerminosPage() {
         </li>
       </ul>
 
-      <h2>4. Puntos</h2>
-      <p>
-        Los puntos permiten un ahorro parcial en hospedajes. No son efectivo ni saldo para pagar íntegramente una
-        reserva. Los puntos no caducan. Su acreditación en BookVipPoints se realiza manualmente tras confirmar el pago.
-      </p>
+      <h2>5. Puntos y bono de bienvenida</h2>
+      <ul>
+        <li>
+          Cada punto equivale a hasta US$1 de ahorro como pago parcial en reservas de hotel nacionales o internacionales,
+          sujeto a disponibilidad. Los puntos no son efectivo ni saldo para pagar íntegramente una reserva. Los puntos no caducan.
+        </li>
+        <li>Las tarjetas de puntos se acreditan manualmente en la cuenta BookVipPoints del cliente tras confirmar el pago, y se regalan completas.</li>
+        <li>
+          Bono de bienvenida: BookVipPoints otorga 100 puntos a las cuentas nuevas que se registran en su sitio. Es uno por
+          persona, no se puede regalar y no aplica a cuentas BookVipPoints ya existentes.
+        </li>
+      </ul>
 
-      <h2>5. Regalos</h2>
+      <h2>6. Regalos</h2>
       <ul>
         <li>Cualquier experiencia se puede comprar para regalar o regalar después de comprarla, mientras esté disponible y vigente.</li>
         <li>El correo del destinatario se escribe dos veces y debe coincidir.</li>
@@ -67,13 +83,13 @@ export default function TerminosPage() {
         <li>Los regalos comprados se entregan cuando se confirma el pago en PayPhone.</li>
       </ul>
 
-      <h2>6. Pagos</h2>
+      <h2>7. Pagos</h2>
       <p>
-        Los pagos se realizan por PayPhone y se reportan desde la plataforma. Las experiencias se acreditan cuando el
-        equipo confirma el pago.
+        Los pagos se realizan por PayPhone y se reportan desde la plataforma con el número de transacción. Las experiencias
+        se acreditan solo cuando el equipo verifica el pago en PayPhone. Los reportes de pago falsos pueden bloquear la cuenta.
       </p>
 
-      <h2>7. Datos personales</h2>
+      <h2>8. Datos personales</h2>
       <p>
         Usamos tus datos solo para gestionar tu cuenta, tus compras, regalos y reservas. La empresa que te dio acceso
         ve tu nombre, correo y si activaste tu cuenta, pero no tus compras ni tus reservas.

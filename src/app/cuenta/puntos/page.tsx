@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { AccountTabs } from "@/components/AccountTabs";
 import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
+import { POINTS_MANUAL_URL } from "@/lib/brand";
 import { shortDate, type EntitlementRow } from "@/lib/format";
 
 export default async function MisPuntos() {
@@ -16,6 +18,7 @@ export default async function MisPuntos() {
     <>
       <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis puntos" />
       <main className="portal-content">
+        <AccountTabs current="/cuenta/puntos" />
         <section className="points-hero">
           <div>
             <div style={{ fontSize: ".85rem", opacity: 0.9 }}>Puntos para ahorro en hoteles</div>
@@ -31,12 +34,16 @@ export default async function MisPuntos() {
         <section className="panel">
           <h2>Cómo funcionan tus puntos</h2>
           <ul className="check-list">
-            <li>Te dan un <strong>ahorro parcial</strong> al reservar hospedaje.</li>
+            <li>Cada punto equivale a <strong>hasta US$1 de ahorro</strong> como pago parcial en reservas de hotel nacionales o internacionales, sujeto a disponibilidad.</li>
             <li>No son efectivo ni saldo para pagar una reserva completa.</li>
             <li><strong>No caducan</strong>, a diferencia de la vigencia de las experiencias.</li>
             <li>Para usarlos, pulsa &quot;Canjear mis puntos&quot; y los acreditamos en tu cuenta BookVipPoints.</li>
             <li>Puedes regalarlos completos mientras no estén acreditados.</li>
           </ul>
+          <div className="btn-row" style={{ marginTop: "1rem" }}>
+            <a className="btn-blue btn-small" href={POINTS_MANUAL_URL} target="_blank" rel="noreferrer">Ver el manual en video</a>
+            <Link className="btn-ghost btn-small" href="/cuenta/como-funciona#puntos">Cómo funciona</Link>
+          </div>
         </section>
 
         <div className="table-card">

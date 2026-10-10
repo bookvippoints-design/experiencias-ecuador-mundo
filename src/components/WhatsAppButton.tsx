@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "593981350463";
+import { WHATSAPP_NUMBER } from "@/lib/brand";
 
 export function WhatsAppButton({ message, phone, label }: { message: string; phone?: string; label?: string }) {
   const number = (phone || WHATSAPP_NUMBER).replace(/\D/g, "");

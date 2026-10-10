@@ -18,6 +18,7 @@ export function ProductCard({ product }: { product: Product }) {
           {product.purchasable ? money(product.price) : "Próximamente"}
           {product.purchasable && product.category === "escape" && <small> precio total</small>}
         </div>
+        {product.international_count > 0 && <span className="fee-badge">Fee de emisión US$0</span>}
         <ul className="check-list">
           {inclusions(product).map((line) => (
             <li key={line}>{line}</li>
@@ -38,6 +39,9 @@ export function ProductCard({ product }: { product: Product }) {
             </>
           )}
         </div>
+        <Link href={`/cuenta/como-funciona#${product.category === "points" ? "puntos" : product.international_count > 0 ? "internacional" : "nacional"}`} className="product-card__how">
+          ¿Cómo funciona?
+        </Link>
       </div>
     </article>
   );

@@ -70,7 +70,7 @@ export function escapeHtml(value: string | null | undefined): string {
 }
 
 /** Plantilla común de correo con la identidad naranja y azul. */
-export function emailLayout(body: string, button?: { label: string; url: string }): string {
+export function emailLayout(body: string, button?: { label: string; url: string }, after = ""): string {
   const cta = button
     ? `<p style="margin:28px 0;text-align:center"><a href="${button.url}" style="background:${BRAND.orange};color:#ffffff;text-decoration:none;font-weight:bold;padding:14px 26px;border-radius:8px;display:inline-block">${escapeHtml(button.label)}</a></p>
        <p style="font-size:12px;color:#6b7280">Si el botón no funciona, copia este enlace en tu navegador:<br><a href="${button.url}" style="color:${BRAND.orangeDark};word-break:break-all">${button.url}</a></p>`
@@ -82,7 +82,7 @@ export function emailLayout(body: string, button?: { label: string; url: string 
       <div style="font-size:20px;font-weight:bold">${APP_NAME}</div>
       <div style="font-size:13px;font-style:italic;opacity:.95">${APP_SLOGAN}</div>
     </td></tr>
-    <tr><td style="padding:28px;font-size:15px;line-height:1.6">${body}${cta}</td></tr>
+    <tr><td style="padding:28px;font-size:15px;line-height:1.6">${body}${cta}${after}</td></tr>
     <tr><td style="padding:16px 28px;background:#f7f9fb;font-size:12px;color:#6b7280">
       ${APP_NAME} · <a href="${appUrl()}" style="color:${BRAND.orangeDark}">${appUrl().replace(/^https?:\/\//, "")}</a>
     </td></tr>

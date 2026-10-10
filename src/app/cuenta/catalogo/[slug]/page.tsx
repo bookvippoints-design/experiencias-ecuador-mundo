@@ -6,7 +6,7 @@ import { TopBar } from "@/components/TopBar";
 import { NationalGallery, InternationalGallery } from "@/components/DestinationGallery";
 import { PRODUCT_FIELDS, inclusions, exclusions, conditionLines, type Product } from "@/lib/products";
 import { money } from "@/lib/format";
-import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL } from "@/lib/brand";
+import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL, NATIONAL_RULE } from "@/lib/brand";
 import { BuyPanel } from "./BuyPanel";
 
 export default async function ProductoDetalle({
@@ -37,6 +37,8 @@ export default async function ProductoDetalle({
             <section className="panel">
               <h2>{p.tagline}</h2>
               <p>{p.description}</p>
+              {p.national_count > 0 && <p className="rule-box">{NATIONAL_RULE}</p>}
+              {p.international_count > 0 && <p><span className="fee-badge">Fee de emisión US$0</span></p>}
               <h3>Incluye</h3>
               <ul className="check-list">{inclusions(p).map((l) => <li key={l}>{l}</li>)}</ul>
               <h3>No incluye</h3>

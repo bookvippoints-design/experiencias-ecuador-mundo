@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { NationalGallery, InternationalGallery } from "@/components/DestinationGallery";
 import { PRODUCT_FIELDS, type Product } from "@/lib/products";
 import { unsplashUrl, NATIONAL_DESTINATIONS } from "@/lib/destinations";
-import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL } from "@/lib/brand";
+import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL, NATIONAL_RULE, POINTS_VALUE_NOTE } from "@/lib/brand";
 
 export default async function Catalogo() {
   const profile = await requireRole("user");
@@ -36,10 +36,7 @@ export default async function Catalogo() {
         <div className="product-grid">{escapes.map((p) => <ProductCard key={p.id} product={p} />)}</div>
 
         <div className="section-title"><h2>Tarjetas de puntos hoteleros</h2></div>
-        <p className="info-box">
-          Los puntos te dan un <strong>ahorro parcial</strong> al reservar hospedaje. No son efectivo ni saldo para pagar una
-          reserva completa, y <strong>no caducan</strong>.
-        </p>
+        <p className="info-box">{POINTS_VALUE_NOTE}</p>
         <div className="product-grid">{cards.map((p) => <ProductCard key={p.id} product={p} />)}</div>
 
         <div className="section-title"><h2>Destinos nacionales</h2></div>
@@ -49,13 +46,14 @@ export default async function Catalogo() {
             Ver hoteles participantes (PDF)
           </a>
         </p>
+        <p className="rule-box" style={{ marginBottom: "1rem" }}>{NATIONAL_RULE}</p>
         <NationalGallery />
 
         <div className="section-title" id="invitacion"><h2>Invitación hotelera internacional</h2></div>
         <div className="panel">
           <ul className="check-list">
             <li>Más de 130 destinos en el mundo, desde 4 días y 3 noches hasta 8 días y 7 noches según destino.</li>
-            <li>En estos paquetes el fee de emisión es US$0.</li>
+            <li><strong>En estos paquetes el fee de emisión es US$0.</strong></li>
             <li>Ocupación: 2 adultos y hasta 2 niños de hasta 11 años, según el hotel; muchos hoteles admiten solo 2 adultos.</li>
             <li>El viajero paga los impuestos gubernamentales y las tasas del hotel o resort, que varían por destino y temporada.</li>
             <li>Una vez emitida: 30 días para registrarla, 7 días para pagar impuestos y tasas, y 18 meses para viajar desde la activación.</li>

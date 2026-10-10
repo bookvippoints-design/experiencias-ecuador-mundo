@@ -4,6 +4,7 @@ import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
 import { generateGiftCardPdf, describeGiftItem, type GiftCardItem } from "@/lib/pdf/render";
 import { appUrl, INVITATION_INFO_URL } from "@/lib/brand";
 import type { AccessLink } from "@/lib/auth/access-links";
+import { activationStepsHtml, welcomeBonusHtml, accessFooterHtml } from "@/lib/email-blocks";
 
 /** Lee un regalo con la llave de servidor (para correos y la tarjeta). */
 export async function loadGift(giftId: string) {
@@ -65,9 +66,10 @@ export async function sendGiftEmails(giftId: string, access: AccessLink): Promis
     const dedication = gift.dedication
       ? `<blockquote style="margin:16px 0;padding:12px 16px;background:#eaf6fd;border-left:4px solid #f07a1f;font-style:italic">${escapeHtml(gift.dedication)}</blockquote>`
       : "";
+    const buttonLabel = access.mustSetPassword ? "Activar mi cuenta" : "Iniciar sesión";
     const accessText = access.mustSetPassword
-      ? "Tu regalo ya está en tu cuenta. Crea tu contraseña con el botón para entrar y ver tus experiencias."
-      : "Tu regalo ya está en tu cuenta. Inicia sesión con tu correo para verlo.";
+      ? `<p>Tu regalo ya está en tu cuenta.</p>${activationStepsHtml(buttonLabel)}`
+      : "<p>Tu regalo ya está en tu cuenta. Inicia sesión con tu correo para verlo.</p>";
     const international = hasInternational
       ? `<p style="font-size:13px;color:#6b7280">La invitación hotelera internacional no tiene costo de emisión. El viajero paga los impuestos gubernamentales y las tasas del hotel o resort, que varían por destino y temporada. <a href="${INVITATION_INFO_URL}" style="color:#c4520a">Conoce cómo funciona</a>.</p>`
       : "";
@@ -78,9 +80,10 @@ export async function sendGiftEmails(giftId: string, access: AccessLink): Promis
       html: emailLayout(
         `<h2 style="margin:0 0 8px;color:#c4520a">¡${escapeHtml(gift.recipient_name)}, tienes un regalo!</h2>
          <p><strong>${escapeHtml(senderName)}</strong> te regaló:</p><ul>${list}</ul>${dedication}
-         <p>${accessText}</p>${international}
+         ${accessText}${international}
          <p style="font-size:13px">Te adjuntamos tu tarjeta de regalo en PDF.</p>`,
-        { label: access.mustSetPassword ? "Entrar a mi cuenta" : "Iniciar sesión", url: access.url }
+        { label: buttonLabel, url: access.url },
+        (access.mustSetPassword ? welcomeBonusHtml() : "") + accessFooterHtml(gift.recipient_email, access.mustSetPassword)
       ),
       attachments: [{ filename: `regalo-${gift.code}.pdf`, content: pdf }],
     });
