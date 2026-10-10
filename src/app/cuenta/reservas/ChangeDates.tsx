@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Modal } from "@/components/Modal";
 import { NATIONAL_MIN_DAYS } from "@/lib/brand";
+import { notifyAdmin } from "@/app/alert-actions";
 
 function isoDate(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -28,6 +29,7 @@ export function ChangeDates({ bookingId, checkIn, altCheckIn }: { bookingId: str
     });
     setLoading(false);
     if (e) return setError(e.message);
+    await notifyAdmin("booking_dates", bookingId);
     setOpen(false);
     router.refresh();
   }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { notifyAdmin } from "@/app/alert-actions";
 
 /** Minutos que deben pasar desde que se abre PayPhone hasta poder reportar el pago. */
 const WAIT_MS = 3 * 60 * 1000;
@@ -46,6 +47,7 @@ export function ReportPayment({ orderId, payUrl, reported, payClickedAt }: {
     setLoading(false);
     if (e) setError(e.message);
     else {
+      await notifyAdmin("payment", orderId);
       setOpen(false);
       router.refresh();
     }

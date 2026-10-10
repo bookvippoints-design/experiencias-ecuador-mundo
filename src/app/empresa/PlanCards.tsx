@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { notifyAdmin } from "@/app/alert-actions";
 
 export interface Plan {
   key: string;
@@ -27,11 +28,12 @@ export function PlanCards({ plans, disabled }: { plans: Plan[]; disabled?: boole
 
   async function report(planKey: string) {
     setError(null);
-    const { error: e } = await createClient().rpc("request_quota_purchase", {
+    const { data: purchaseId, error: e } = await createClient().rpc("request_quota_purchase", {
       p_plan_key: planKey,
       p_payment_reference: reference || null,
     });
     if (e) return setError(e.message);
+    if (purchaseId) await notifyAdmin("quota", purchaseId as string);
     setReporting(null);
     setReference("");
     setMsg("Recibimos tu reporte de pago. Los cupos se sumarán cuando confirmemos el pago en PayPhone.");

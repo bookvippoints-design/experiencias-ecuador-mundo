@@ -7,6 +7,7 @@ import { Countdown } from "@/components/Countdown";
 import { StatusPill } from "@/components/StatusPill";
 import { Modal } from "@/components/Modal";
 import { giftEntitlementsAction } from "./actions";
+import { notifyAdmin } from "@/app/alert-actions";
 import Link from "next/link";
 import { effectiveStatus, entitlementTitle, KIND_LABEL, type EntitlementRow } from "@/lib/format";
 import { destinationLabel, estimatedTaxes, usd, TAX_NOTE, type IntlDestination } from "@/lib/intl-destinations";
@@ -246,7 +247,7 @@ function BookingDialog({ item, userEmail, destinations, initialDestination, onCl
   async function send() {
     setLoading(true);
     setError(null);
-    const { error: e } = await createClient().rpc("request_booking", {
+    const { data: bookingId, error: e } = await createClient().rpc("request_booking", {
       p_entitlement_id: item.id,
       p_destination: destination,
       p_preferred_dates: null,
@@ -259,6 +260,7 @@ function BookingDialog({ item, userEmail, destinations, initialDestination, onCl
     });
     setLoading(false);
     if (e) return setError(e.message);
+    if (bookingId) await notifyAdmin("booking", bookingId as string);
     router.refresh();
     onDone(
       isPoints
