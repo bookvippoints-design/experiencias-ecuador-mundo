@@ -1,3 +1,5 @@
+import { NATIONAL_RULE, NATIONAL_MIN_DAYS, NATIONAL_RESPONSE, NATIONAL_NO_CANCEL } from "@/lib/brand";
+
 export interface Product {
   id: string;
   slug: string;
@@ -51,6 +53,19 @@ export function exclusions(p: Product): string[] {
   return list;
 }
 
+/**
+ * Condiciones del producto. Las reglas de la escapada nacional se agregan siempre
+ * desde el código, para que sean idénticas en todos los paquetes.
+ */
 export function conditionLines(p: Product): string[] {
-  return (p.conditions ?? "").split("\n").map((l) => l.trim()).filter(Boolean);
+  const lines = (p.conditions ?? "").split("\n").map((l) => l.trim()).filter(Boolean);
+  if (p.national_count > 0) {
+    const rules = [
+      NATIONAL_RULE,
+      `Se solicitan con un mínimo de ${NATIONAL_MIN_DAYS} días de anticipación. ${NATIONAL_RESPONSE}`,
+      NATIONAL_NO_CANCEL,
+    ].filter((r) => !lines.some((l) => l.toLowerCase() === r.toLowerCase()));
+    lines.splice(Math.min(1, lines.length), 0, ...rules);
+  }
+  return lines;
 }
