@@ -12,7 +12,7 @@ export default async function MisPedidos({ searchParams }: { searchParams: Promi
   const supabase = await createClient();
   const { data: orders } = await supabase
     .from("orders")
-    .select("id, code, product_snapshot, price, mode, recipient_name, recipient_email, status, payment_reference, created_at, review_notes")
+    .select("id, code, product_snapshot, price, mode, recipient_name, recipient_email, status, payment_reference, created_at, review_notes, pay_clicked_at")
     .eq("buyer_id", profile.userId)
     .order("created_at", { ascending: false });
 
@@ -23,8 +23,9 @@ export default async function MisPedidos({ searchParams }: { searchParams: Promi
         <AccountTabs current="/cuenta/pedidos" />
         {nuevo && (
           <div className="success-box">
-            <strong>Pedido {nuevo} creado.</strong> Paga con PayPhone y luego pulsa &quot;Ya pagué&quot;. Cuando confirmemos tu
-            pago, tus experiencias se acreditarán (o el regalo se enviará a su destinatario).
+            <strong>Pedido {nuevo} creado.</strong> Paga con PayPhone y, unos minutos después, pulsa &quot;Ya pagué&quot; con el número de
+            transacción de tu comprobante. Cuando verifiquemos tu pago en PayPhone, tus experiencias se acreditarán (o el regalo se
+            enviará a su destinatario).
           </div>
         )}
         {(orders ?? []).length === 0 && <div className="empty-card">Todavía no tienes pedidos.</div>}
@@ -57,7 +58,7 @@ export default async function MisPedidos({ searchParams }: { searchParams: Promi
                   {o.status === "rejected" && o.review_notes && <p className="field-error">{o.review_notes}</p>}
                   {open && (
                     <div className="exp-card__actions">
-                      <ReportPayment orderId={o.id} payUrl={productPaymentUrl(product.slug)} reported={o.status === "payment_reported"} />
+                      <ReportPayment orderId={o.id} payUrl={productPaymentUrl(product.slug)} reported={o.status === "payment_reported"} payClickedAt={o.pay_clicked_at} />
                     </div>
                   )}
                 </div>
