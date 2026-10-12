@@ -39,7 +39,7 @@ const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
   ],
 };
 
-export function Sidebar({ role }: { role: AppRole }) {
+export function Sidebar({ role, badges = {} }: { role: AppRole; badges?: Record<string, number> }) {
   const items = NAV_BY_ROLE[role];
 
   return (
@@ -61,6 +61,9 @@ export function Sidebar({ role }: { role: AppRole }) {
           ) : (
             <Link key={item.href} href={item.href} className={`sidebar__link${item.gift ? " is-gift" : ""}`}>
               {item.label}
+              {(badges[item.href] ?? 0) > 0 && (
+                <span className="sidebar__badge" aria-label={`${badges[item.href]} pendientes`}>{badges[item.href]}</span>
+              )}
             </Link>
           )
         )}

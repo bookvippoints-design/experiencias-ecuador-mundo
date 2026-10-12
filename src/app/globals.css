@@ -2536,3 +2536,38 @@ body { background: #f3f8fc; }
 .dest-summary { display: flex; flex-direction: column; gap: .15rem; background: var(--celeste); border-radius: 12px; padding: .75rem 1rem; margin-bottom: .75rem; }
 .dest-summary__total { color: var(--naranja-oscuro); font-weight: 800; font-size: 1.05rem; }
 .dest-admin-table input:not([type="checkbox"]) { width: 100%; min-width: 0; padding: .35rem .45rem; border: 1px solid #cfe8f7; border-radius: 8px; font: inherit; font-size: .88rem; }
+
+/* Resumen de administración */
+.sidebar__badge { margin-left: auto; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; background: #d93025; color: #fff; font-size: .75rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
+.sidebar__link { display: flex; align-items: center; gap: .5rem; }
+.todo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: .9rem; }
+.todo-card { display: flex; align-items: center; gap: 1rem; background: #fff; border: 1px solid #dcebf5; border-radius: 16px; padding: 1rem 1.1rem; text-decoration: none; color: var(--gris-texto); transition: border-color .15s, box-shadow .15s; }
+.todo-card:hover { border-color: var(--azul); box-shadow: 0 4px 14px rgba(31,127,184,.12); }
+.todo-card__n { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; background: #e7f6ec; color: #1a7f4b; font-size: 1.4rem; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+.todo-card__body { flex: 1; display: flex; flex-direction: column; gap: .2rem; font-size: .88rem; color: #5b6570; }
+.todo-card__body strong { color: var(--gris-texto); font-size: 1rem; }
+.todo-card__go { color: var(--azul); font-size: 1.3rem; font-weight: 800; }
+.todo-card--alert { border: 2px solid #f4a3a3; background: #fff7f6; }
+.todo-card--alert .todo-card__n { background: #d93025; color: #fff; }
+.sales-list { display: flex; flex-direction: column; background: #fff; border: 1px solid #dcebf5; border-radius: 16px; overflow: hidden; }
+.sale-row { display: grid; grid-template-columns: 90px minmax(0, 1.2fr) minmax(0, 1.4fr) auto; gap: 1rem; align-items: center; padding: .8rem 1.1rem; border-bottom: 1px solid #eef3f7; text-decoration: none; color: var(--gris-texto); }
+.sale-row:last-child { border-bottom: 0; }
+.sale-row:hover { background: #f6fafd; }
+.sale-row__date { font-size: .85rem; color: #5b6570; }
+.sale-row__who { display: flex; flex-direction: column; min-width: 0; }
+.sale-row__who span { font-size: .8rem; color: #5b6570; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sale-row__what { display: flex; flex-direction: column; font-size: .92rem; }
+.sale-row__gift { font-size: .8rem; color: var(--naranja-oscuro); font-weight: 700; }
+.sale-row__amount { font-weight: 900; color: #1a7f4b; font-size: 1.05rem; }
+.numbers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: .9rem; }
+.number-card { background: #fff; border: 1px solid #dcebf5; border-radius: 16px; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .15rem; text-decoration: none; color: var(--gris-texto); }
+.number-card:hover { border-color: var(--azul); box-shadow: 0 4px 14px rgba(31,127,184,.12); }
+.number-card__value { font-size: 1.6rem; font-weight: 900; color: var(--azul); }
+.number-card__label { font-weight: 800; font-size: .95rem; }
+.number-card__hint { font-size: .8rem; color: var(--naranja-oscuro); font-weight: 600; }
+@media (max-width: 700px) {
+  .sale-row { grid-template-columns: 1fr auto; gap: .25rem .75rem; }
+  .sale-row__date { grid-column: 1 / -1; }
+  .sale-row__what { grid-column: 1; }
+  .sale-row__amount { grid-row: 2; grid-column: 2; }
+}

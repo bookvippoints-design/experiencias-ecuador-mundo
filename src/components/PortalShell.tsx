@@ -3,11 +3,11 @@ import { Sidebar } from "./Sidebar";
 import { ResponsiveTables } from "./ResponsiveTables";
 import { whatsappUrl } from "@/lib/brand";
 
-export function PortalShell({ role, children }: { role: AppRole; children: React.ReactNode }) {
+export function PortalShell({ role, children, badges }: { role: AppRole; children: React.ReactNode; badges?: Record<string, number> }) {
   return (
     <div className="app-shell">
       <input type="checkbox" id="mobile-nav-toggle" className="mobile-nav-checkbox" />
-      <Sidebar role={role} />
+      <Sidebar role={role} badges={badges} />
       <label htmlFor="mobile-nav-toggle" className="sidebar-backdrop" aria-hidden="true"></label>
       <div className="content-area">{children}</div>
       <ResponsiveTables />
