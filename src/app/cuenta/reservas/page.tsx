@@ -20,7 +20,7 @@ export default async function MisReservas() {
 
   return (
     <>
-      <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis canjes y reservas" />
+      <TopBar profile={profile} eyebrow="LO QUE TENGO" title="Mis canjes y reservas" />
       <main className="portal-content">
         <AccountTabs current="/cuenta/reservas" />
         <p className="content-lead">

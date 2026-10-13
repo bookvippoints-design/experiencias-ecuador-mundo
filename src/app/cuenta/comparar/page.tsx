@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Crumbs } from "@/components/Crumbs";
 import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
@@ -24,8 +25,9 @@ export default async function Comparar() {
 
   return (
     <>
-      <TopBar profile={profile} eyebrow="CATÁLOGO" title="Compara los paquetes" />
+      <TopBar profile={profile} eyebrow="PAQUETES" title="Compara los paquetes" />
       <main className="portal-content">
+        <Crumbs trail={[{ href: "/cuenta/catalogo", label: "Paquetes" }, { label: "Comparar" }]} />
         <div className="compare-mobile mobile-only">
           <div className="compare-mobile__head" style={{ gridTemplateColumns: `repeat(${ps.length}, 1fr)` }}>
             {ps.map((p) => (

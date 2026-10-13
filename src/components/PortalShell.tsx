@@ -1,16 +1,18 @@
 import type { AppRole } from "@/lib/auth/identity";
-import { Sidebar } from "./Sidebar";
+import { Sidebar, NAV_BY_ROLE } from "./Sidebar";
+import { BottomNav } from "./NavLinks";
 import { ResponsiveTables } from "./ResponsiveTables";
 import { whatsappUrl } from "@/lib/brand";
 
 export function PortalShell({ role, children, badges }: { role: AppRole; children: React.ReactNode; badges?: Record<string, number> }) {
   return (
-    <div className="app-shell">
+    <div className={`app-shell${role === "user" ? " app-shell--user" : ""}`}>
       <input type="checkbox" id="mobile-nav-toggle" className="mobile-nav-checkbox" />
       <Sidebar role={role} badges={badges} />
       <label htmlFor="mobile-nav-toggle" className="sidebar-backdrop" aria-hidden="true"></label>
       <div className="content-area">{children}</div>
       <ResponsiveTables />
+      {role === "user" && <BottomNav items={NAV_BY_ROLE.user.slice(0, 5)} badges={badges ?? {}} />}
       {role === "user" && (
         <a
           className="help-float"

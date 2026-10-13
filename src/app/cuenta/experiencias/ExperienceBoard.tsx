@@ -46,7 +46,7 @@ function GroupCard({ icon, title, available, inProcess, nextExpiry, actionLabel,
         <span className="group-card__icon" aria-hidden="true">{icon}</span>
         <div>
           <h3 className="group-card__title">{title}</h3>
-          <div className="group-card__count"><strong>{available}</strong> {available === 1 ? "disponible" : "disponibles"}</div>
+          <div className="group-card__count"><strong>{available.toLocaleString("es-EC")}</strong> {available === 1 ? "disponible" : "disponibles"}</div>
         </div>
       </div>
       {nextExpiry && available > 0 && <div className="group-card__meta">{available > 1 ? "La primera vence" : "Vence"} el {longDate(nextExpiry)}</div>}

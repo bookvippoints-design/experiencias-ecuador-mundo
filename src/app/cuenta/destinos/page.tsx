@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Crumbs } from "@/components/Crumbs";
 import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
@@ -19,6 +20,7 @@ export default async function Destinos() {
     <>
       <TopBar profile={profile} eyebrow="INVITACIÓN INTERNACIONAL" title="Destinos, estadías e impuestos" />
       <main className="portal-content">
+        <Crumbs trail={[{ href: "/cuenta/catalogo", label: "Paquetes" }, { label: "Destinos internacionales" }]} />
         <p className="content-lead" style={{ marginTop: 0 }}>
           {list.length} destinos en el mundo. Fee de emisión <strong>US$0</strong> en tu paquete: solo pagas los impuestos y tasas del hotel.
         </p>

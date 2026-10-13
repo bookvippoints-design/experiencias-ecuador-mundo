@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
 import { appUrl, BRAND, NATIONAL_RULE, NATIONAL_MIN_DAYS } from "@/lib/brand";
+import { flushPendingMessageEmails } from "@/lib/message-emails";
 
 export const dynamic = "force-dynamic";
 
@@ -85,6 +86,12 @@ export async function GET(req: Request) {
         ),
       });
       sent++;
+      // También queda en su bandeja "Mensajes" (el correo ya salió arriba).
+      await admin.from("messages").insert({
+        user_id: ownerId, kind: "auto", email_status: "none", link: "/cuenta/experiencias",
+        title: urgent ? "Último aviso: tienes experiencias por vencer" : "Recuerda usar tus experiencias antes de que venzan",
+        body: items.map(({ row }) => `${row.kind === "national" ? "Escapada nacional" : "Invitación internacional"} (${row.code}): vence el ${longDate(row.valid_until)}.`).join("\n"),
+      });
       const stamp = new Date().toISOString();
       const first = items.filter((i) => i.stage === "first").map((i) => i.row.id);
       const last = items.filter((i) => i.stage === "last").map((i) => i.row.id);
@@ -95,5 +102,7 @@ export async function GET(req: Request) {
     }
   }
 
-  return NextResponse.json({ checked: data?.length ?? 0, emails: sent, failures });
+  // Repesca de correos de mensajes que hayan quedado pendientes.
+  const messageEmails = await flushPendingMessageEmails(100).catch(() => 0);
+  return NextResponse.json({ checked: data?.length ?? 0, emails: sent, messageEmails, failures });
 }

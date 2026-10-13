@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getCurrentProfile } from "@/lib/auth/identity";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
 import { appUrl, BRAND } from "@/lib/brand";
+import { flushPendingMessageEmails } from "@/lib/message-emails";
 
 /** Correo donde llegan los avisos de administración. */
 function adminInbox(): string | null {
@@ -40,6 +41,7 @@ async function alert(subject: string, title: string, rows: string, path: string)
  * que no se pueda usar para enviar correos repetidos.
  */
 export async function notifyAdmin(kind: "booking" | "booking_dates" | "payment" | "quota", id: string): Promise<void> {
+  await flushPendingMessageEmails().catch(() => 0);
   try {
     const profile = await getCurrentProfile();
     if (!profile) return;

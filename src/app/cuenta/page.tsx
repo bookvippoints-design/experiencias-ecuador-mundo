@@ -42,6 +42,22 @@ export default async function CuentaHome() {
           </p>
         )}
 
+        <div className="quick-grid">
+          <Link href="/cuenta/catalogo" className="quick-card quick-card--orange">
+            <span className="quick-card__icon" aria-hidden="true">🛍️</span>
+            <span className="quick-card__text"><strong>Ver paquetes</strong><span>Para ti o para regalar</span></span>
+            <span className="quick-card__go" aria-hidden="true">→</span>
+          </Link>
+          <Link href="/cuenta/experiencias" className="quick-card">
+            <span className="quick-card__icon" aria-hidden="true">🧳</span>
+            <span className="quick-card__text">
+              <strong>Usar o regalar lo que ya tengo</strong>
+              <span>{nationals} {nationals === 1 ? "escapada" : "escapadas"} · {internationals} {internationals === 1 ? "invitación" : "invitaciones"} · {pointsAvailable.toLocaleString("es-EC")} puntos</span>
+            </span>
+            <span className="quick-card__go" aria-hidden="true">→</span>
+          </Link>
+        </div>
+
         {/* 1. Gratis para ti */}
         <div className="section-title"><h2>🎁 Gratis para ti</h2></div>
         <section className="bonus-card">

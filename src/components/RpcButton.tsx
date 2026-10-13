@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { flushMessages } from "@/app/message-actions";
 
 /**
  * Botón que llama una función de la base de datos y refresca la página.
@@ -44,7 +45,10 @@ export function RpcButton({
     const { error: rpcError } = await createClient().rpc(fn, payload);
     setLoading(false);
     if (rpcError) setError(rpcError.message);
-    else router.refresh();
+    else {
+      await flushMessages();
+      router.refresh();
+    }
   }
 
   return (

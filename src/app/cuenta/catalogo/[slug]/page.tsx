@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Crumbs } from "@/components/Crumbs";
 import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
@@ -28,7 +29,7 @@ export default async function ProductoDetalle({
     <>
       <TopBar profile={profile} eyebrow={p.category === "escape" ? "PAQUETE" : "TARJETA DE PUNTOS"} title={p.name} />
       <main className="portal-content">
-        <p><Link href="/cuenta/catalogo" style={{ color: "var(--naranja-oscuro)" }}>← Volver al catálogo</Link></p>
+        <Crumbs trail={[{ href: "/cuenta/catalogo", label: "Paquetes" }, { label: p.name }]} />
         <div className="detail-layout">
           <div>
             <div className="detail-photo" style={{ backgroundImage: p.image_url ? `url('${p.image_url}')` : undefined }}>

@@ -18,7 +18,7 @@ export default async function Catalogo() {
 
   return (
     <>
-      <TopBar profile={profile} eyebrow="CATÁLOGO" title="Experiencias para disfrutar y regalar" />
+      <TopBar profile={profile} eyebrow="PARA TI O PARA REGALAR" title="Paquetes" />
       <main className="portal-content">
         <section className="hero" style={{ backgroundImage: `url('${unsplashUrl(NATIONAL_DESTINATIONS[0].imageId, 1600, 600)}')`, minHeight: 200 }}>
           <div className="hero__content">

@@ -18,7 +18,7 @@ export default async function MisPedidos({ searchParams }: { searchParams: Promi
 
   return (
     <>
-      <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis pedidos" />
+      <TopBar profile={profile} eyebrow="LO QUE TENGO" title="Mis pedidos" />
       <main className="portal-content">
         <AccountTabs current="/cuenta/pedidos" />
         {nuevo && (

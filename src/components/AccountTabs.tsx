@@ -5,12 +5,13 @@ const TABS = [
   { href: "/cuenta/reservas", label: "Canjes y reservas" },
   { href: "/cuenta/puntos", label: "Mis puntos" },
   { href: "/cuenta/pedidos", label: "Mis pedidos" },
+  { href: "/cuenta/regalos", label: "Regalos" },
 ];
 
 /** Pestañas que agrupan todo lo que el cliente tiene: experiencias, canjes, puntos y pedidos. */
 export function AccountTabs({ current }: { current: string }) {
   return (
-    <nav className="account-tabs" aria-label="Mis cosas">
+    <nav className="account-tabs" aria-label="Lo que tengo">
       {TABS.map((t) => (
         <Link key={t.href} href={t.href} className={t.href === current ? "is-active" : undefined} aria-current={t.href === current ? "page" : undefined}>
           {t.label}

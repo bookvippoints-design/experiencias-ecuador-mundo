@@ -16,7 +16,7 @@ export default async function MisPuntos() {
 
   return (
     <>
-      <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis puntos" />
+      <TopBar profile={profile} eyebrow="LO QUE TENGO" title="Mis puntos" />
       <main className="portal-content">
         <AccountTabs current="/cuenta/puntos" />
         <section className="points-hero">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AccountTabs } from "@/components/AccountTabs";
 import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
@@ -85,8 +86,9 @@ export default async function MisRegalos() {
 
   return (
     <>
-      <TopBar profile={profile} eyebrow="MI CUENTA" title="Regalos" />
+      <TopBar profile={profile} eyebrow="LO QUE TENGO" title="Regalos" />
       <main className="portal-content">
+        <AccountTabs current="/cuenta/regalos" />
         <section className="hero" style={{ backgroundImage: `url('${unsplashUrl(HOTEL_PHOTOS[0], 1600, 500)}')`, minHeight: 180 }}>
           <div className="hero__content">
             <span className="hero__eyebrow">Para regalar</span>

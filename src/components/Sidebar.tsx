@@ -1,16 +1,10 @@
-import Link from "next/link";
 import type { AppRole } from "@/lib/auth/identity";
 import { APP_NAME, APP_SLOGAN } from "@/lib/brand";
 import { SignOutButton } from "./SignOutButton";
+import { SidebarLinks, type NavItem } from "./NavLinks";
 
-interface NavItem {
-  href: string;
-  label: string;
-  external?: boolean;
-  gift?: boolean;
-}
 
-const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
+export const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
   admin: [
     { href: "/admin", label: "Resumen" },
     { href: "/admin/empresas", label: "Empresas y cupos" },
@@ -22,6 +16,7 @@ const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
     { href: "/admin/destinos", label: "Destinos internacionales" },
     { href: "/admin/catalogo", label: "Catálogo" },
     { href: "/admin/usuarios", label: "Usuarios" },
+    { href: "/admin/mensajes", label: "Mensajes a clientes" },
     { href: "/admin/correos", label: "Correos enviados" },
   ],
   company: [
@@ -31,11 +26,11 @@ const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
     { href: "/empresa/configuracion", label: "Mi empresa" },
   ],
   user: [
-    { href: "/cuenta", label: "Inicio" },
-    { href: "/cuenta/catalogo", label: "Catálogo" },
-    { href: "/cuenta/experiencias", label: "Mis experiencias" },
-    { href: "/cuenta/regalos", label: "Regalos", gift: true },
-    { href: "/cuenta/como-funciona", label: "Cómo funciona" },
+    { href: "/cuenta", label: "Inicio", icon: "home" },
+    { href: "/cuenta/catalogo", label: "Paquetes", icon: "bag", also: ["/cuenta/comparar", "/cuenta/destinos"] },
+    { href: "/cuenta/experiencias", label: "Lo que tengo", icon: "suitcase", also: ["/cuenta/reservas", "/cuenta/puntos", "/cuenta/pedidos", "/cuenta/regalos"] },
+    { href: "/cuenta/mensajes", label: "Mensajes", icon: "mail" },
+    { href: "/cuenta/como-funciona", label: "Ayuda", icon: "help" },
   ],
 };
 
@@ -53,20 +48,7 @@ export function Sidebar({ role, badges = {} }: { role: AppRole; badges?: Record<
       </div>
 
       <nav className="sidebar__nav">
-        {items.map((item) =>
-          item.external ? (
-            <a key={item.href} href={item.href} target="_blank" rel="noreferrer" className="sidebar__link">
-              {item.label}
-            </a>
-          ) : (
-            <Link key={item.href} href={item.href} className={`sidebar__link${item.gift ? " is-gift" : ""}`}>
-              {item.label}
-              {(badges[item.href] ?? 0) > 0 && (
-                <span className="sidebar__badge" aria-label={`${badges[item.href]} pendientes`}>{badges[item.href]}</span>
-              )}
-            </Link>
-          )
-        )}
+        <SidebarLinks items={items} badges={badges} />
       </nav>
 
       <div className="sidebar__footer">

@@ -22,9 +22,10 @@ export default async function MisExperiencias({ searchParams }: { searchParams: 
 
   return (
     <>
-      <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis experiencias" />
+      <TopBar profile={profile} eyebrow="MI CUENTA" title="Lo que tengo" />
       <main className="portal-content">
         <AccountTabs current="/cuenta/experiencias" />
+        <p className="content-lead" style={{ marginTop: 0 }}>Tus escapadas, invitaciones y puntos. Úsalos o regálalos desde aquí.</p>
         {items.length === 0 ? (
           <div className="empty-card">
             <p>Aquí verás tus escapadas, invitaciones y puntos, con el tiempo que te queda para usarlos.</p>
@@ -32,19 +33,17 @@ export default async function MisExperiencias({ searchParams }: { searchParams: 
           </div>
         ) : (
           <>
-            <section className="panel">
-              <h2>Cómo canjear tus experiencias</h2>
-              <ol style={{ margin: 0, paddingLeft: "1.2rem", lineHeight: 1.7 }}>
-                <li><strong>Escapada nacional:</strong> pulsa &quot;Canjear: reservar escapada&quot;, elige ciudad y fechas con al menos 30 días de anticipación. Te confirmamos hotel y fechas en 24 a 48 horas hábiles. <strong>No se puede usar en temporada alta, vacaciones ni feriados.</strong></li>
-                <li><strong>Invitación internacional:</strong> pulsa &quot;Canjear: pedir invitación&quot; y elige destino de la <Link href="/cuenta/destinos" style={{ color: "var(--naranja-oscuro)", fontWeight: 700 }}>lista de destinos con impuestos</Link>. Te emitimos la invitación; la registras en 30 días y pagas impuestos y tasas en 7 días.</li>
-                <li><strong>Puntos:</strong> pulsa &quot;Canjear mis puntos&quot; y los acreditamos en tu cuenta BookVipPoints.</li>
-              </ol>
-              <p className="field-hint" style={{ marginBottom: 0 }}>
-                Cada experiencia muestra cuánto tiempo te queda. También puedes regalarla mientras esté disponible; un regalo es definitivo.
-                {" "}<Link href="/cuenta/como-funciona" style={{ color: "var(--naranja-oscuro)", fontWeight: 700 }}>Ver la guía completa</Link>
-              </p>
-            </section>
             <ExperienceBoard items={active} userEmail={profile.email} userName={profile.fullName} destinations={destinations} requestInvitation={invitacion} />
+            <details className="how-details">
+              <summary>¿Cómo canjear o regalar?</summary>
+              <ol>
+                <li><strong>Escapada nacional:</strong> toca &quot;Reservar una&quot;, elige ciudad y fecha con al menos 30 días de anticipación. Te confirmamos hotel y fecha en 24 a 48 horas hábiles. No se puede usar en temporada alta, vacaciones ni feriados.</li>
+                <li><strong>Invitación internacional:</strong> toca &quot;Pedir una&quot; y elige el destino de la <Link href="/cuenta/destinos">lista de destinos</Link>. Te emitimos la invitación; la registras en 30 días y pagas impuestos y tasas en 7 días.</li>
+                <li><strong>Puntos:</strong> toca &quot;Canjear&quot; y los acreditamos en tu cuenta BookVipPoints.</li>
+                <li><strong>Regalar:</strong> toca &quot;Regalar&quot; y elige cuántas. El regalo es definitivo.</li>
+              </ol>
+              <Link href="/cuenta/como-funciona">Ver la guía completa</Link>
+            </details>
             {past.length > 0 && (
               <>
                 <div className="section-title"><h2>Utilizadas y vencidas</h2></div>
