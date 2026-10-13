@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { destinationLabel, estimatedTaxes, usd, TAX_NOTE, type IntlDestination } from "@/lib/intl-destinations";
+import { destinationLabel, usd, TAX_NOTE, type IntlDestination } from "@/lib/intl-destinations";
 
 const TAX_RANGES = [
   { key: "all", label: "Cualquier impuesto", test: () => true },
@@ -34,7 +34,7 @@ export function DestinationFinder({ destinations, canRequest }: { destinations: 
         && (nights === "all" || d.nights === Number(nights))
         && range.test(Number(d.tax_per_night))
         && (!nq || norm(`${d.city} ${d.country}`).includes(nq)))
-      .sort((a, b) => sort === "tax" ? estimatedTaxes(a) - estimatedTaxes(b)
+      .sort((a, b) => sort === "tax" ? Number(a.tax_per_night) - Number(b.tax_per_night)
         : sort === "nights" ? b.nights - a.nights || a.city.localeCompare(b.city)
         : a.country.localeCompare(b.country) || a.city.localeCompare(b.city));
   }, [destinations, q, region, nights, tax, sort]);
@@ -70,7 +70,7 @@ export function DestinationFinder({ destinations, canRequest }: { destinations: 
           <label htmlFor="df-s">Ordenar</label>
           <select id="df-s" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}>
             <option value="name">Por país</option>
-            <option value="tax">Menor total de impuestos</option>
+            <option value="tax">Menor impuesto por noche</option>
             <option value="nights">Más noches</option>
           </select>
         </div>
@@ -86,8 +86,7 @@ export function DestinationFinder({ destinations, canRequest }: { destinations: 
             </div>
             <div className="dest-card__stay">{d.days} días / {d.nights} noches</div>
             <dl className="dest-card__money">
-              <div><dt>Impuesto por noche</dt><dd>{usd(Number(d.tax_per_night))}</dd></div>
-              <div className="is-total"><dt>Total estimado</dt><dd>{usd(estimatedTaxes(d))}</dd></div>
+              <div className="is-total"><dt>Impuestos y tasas por noche</dt><dd>{usd(Number(d.tax_per_night))}</dd></div>
             </dl>
             {canRequest && (
               <Link className="btn-orange btn-small" href={`/cuenta/experiencias?invitacion=${encodeURIComponent(destinationLabel(d))}`}>

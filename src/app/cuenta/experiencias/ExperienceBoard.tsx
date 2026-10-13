@@ -10,7 +10,7 @@ import { giftEntitlementsAction } from "./actions";
 import { notifyAdmin } from "@/app/alert-actions";
 import Link from "next/link";
 import { effectiveStatus, entitlementTitle, KIND_LABEL, type EntitlementRow } from "@/lib/format";
-import { destinationLabel, estimatedTaxes, usd, TAX_NOTE, type IntlDestination } from "@/lib/intl-destinations";
+import { destinationLabel, usd, TAX_NOTE, type IntlDestination } from "@/lib/intl-destinations";
 import { NATIONAL_RULE, NATIONAL_MIN_DAYS, NATIONAL_RESPONSE, BONUS_REGISTER_URL } from "@/lib/brand";
 
 const NATIONAL = ["Quito", "Guayaquil", "Manta", "Cuenca", "Loja"];
@@ -358,8 +358,7 @@ function BookingDialog({ item, userEmail, destinations, initialDestination, onCl
         <div className="dest-summary">
           <strong>{destinationLabel(chosen)}</strong>
           <span>{chosen.days} días / {chosen.nights} noches</span>
-          <span>Impuesto por noche: {usd(Number(chosen.tax_per_night))}</span>
-          <span className="dest-summary__total">Total estimado a pagar: {usd(estimatedTaxes(chosen))}</span>
+          <span className="dest-summary__total">Impuestos y tasas por noche: {usd(Number(chosen.tax_per_night))}</span>
         </div>
       )}
       <div className="field"><label htmlFor="bk-trav">Viajeros</label><input id="bk-trav" value={travelers} onChange={(e) => setTravelers(e.target.value)} placeholder="Ej. 2 adultos: Ana Pérez y Luis Mora" /></div>
