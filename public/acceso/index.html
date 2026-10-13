@@ -132,7 +132,7 @@ footer{padding:28px 0 44px;background:#fff;border-top:1px solid #edf4f8}.footer-
         <p>Accede a una propuesta de viajes diseñada para emocionar. Descubre escapadas nacionales, experiencias internacionales y opciones perfectas para disfrutar o regalar.</p>
         <div class="hero-actions">
           <a class="ee-btn" href="#comprar">Obtener mi acceso · US$25</a>
-          <a class="ee-btn ee-btn-outline" href="#video-principal">Ver de qué se trata</a>
+          <a class="ee-btn ee-btn-outline" href="#video-principal">Ver el video</a>
         </div>
         <div class="hero-note">Pago único con tarjeta. Tu acceso no vence.</div>
       </div>
@@ -171,16 +171,17 @@ footer{padding:28px 0 44px;background:#fff;border-top:1px solid #edf4f8}.footer-
   <section class="ee-section" id="video-principal">
     <div class="ee-wrap video-wrap">
       <div>
-        <span class="eyebrow">Míralo en pocos segundos</span>
-        <h2 class="ee-title">Mira en pocos segundos <em>todo lo que te espera.</em></h2>
-        <p class="ee-lede">Escapadas para dos en Ecuador e invitaciones hoteleras en más de 130 destinos del mundo, para disfrutar o para regalar.</p>
+        <span class="eyebrow">Tu siguiente destino</span>
+        <h2 class="ee-title">El mundo te está esperando. <em>¿A dónde quieres ir primero?</em></h2>
+        <p class="ee-lede">Playas de aguas turquesa, montañas nevadas, safaris, viñedos y ciudades llenas de historia. Con la invitación hotelera internacional de tu catálogo eliges entre más de 130 destinos para vivir algo así, o para regalárselo a alguien especial.</p>
         <div class="video-points" style="margin-top:20px">
-          <div class="mini-tip"><strong>🔊 Activa el sonido</strong><p>Toca el video para reproducirlo. Según tu celular, puede empezar en silencio.</p></div>
+          <div class="mini-tip"><strong>🔊 Dale play con sonido</strong><p>Son dos minutos de destinos que te van a dar ganas de viajar. Según tu celular, puede empezar en silencio.</p></div>
           <div class="mini-tip"><strong>Para que sea claro</strong><p>Tu acceso de US$25 abre el catálogo privado e incluye 100 puntos de bienvenida. Los paquetes se compran por separado dentro del portal.</p></div>
         </div>
       </div>
       <div class="video-frame ee-panel">
-        <button type="button" class="vid-facade" data-video="x9xt0ta" data-title="Experiencias Ecuador y el Mundo" style="background-image:url('https://www.dailymotion.com/thumbnail/video/x9xt0ta')" aria-label="Reproducir video: Experiencias Ecuador y el Mundo"><span class="vid-facade__play" aria-hidden="true"></span></button>
+        <video id="main-video" preload="none" playsinline poster="/acceso/img/siguiente-destino.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0f334d"><source src="/acceso/siguiente-destino.mp4" type="video/mp4"></video>
+        <button type="button" class="vid-facade vid-facade--local" data-local="main-video" style="background-image:url('/acceso/img/siguiente-destino.webp')" aria-label="Reproducir video: tu siguiente destino"><span class="vid-facade__play" aria-hidden="true"></span></button>
       </div>
     </div>
   </section>
