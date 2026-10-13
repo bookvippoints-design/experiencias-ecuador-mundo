@@ -71,7 +71,7 @@ export default async function AdminReservas({ searchParams }: { searchParams: Pr
                       {b.kind === "points" ? <>Acreditar en BookVipPoints: <strong>{b.destination}</strong></> : <strong>{b.destination}</strong>}
                       {b.check_in && (
                         <div style={{ fontWeight: 700 }}>
-                          Entrada: {fmtDay(b.check_in)}{b.alt_check_in ? <span style={{ fontWeight: 400 }}> · alternativa: {fmtDay(b.alt_check_in)}</span> : null}
+                          Entrada: {fmtDay(b.check_in)}
                         </div>
                       )}
                       {b.contact_phone && <div className="exp-card__meta">Teléfono: <a href={`https://wa.me/${b.contact_phone.replace(/\D/g, "").replace(/^0/, "593")}`} target="_blank" rel="noreferrer">{b.contact_phone}</a></div>}

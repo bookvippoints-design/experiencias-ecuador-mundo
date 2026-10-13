@@ -2571,3 +2571,21 @@ body { background: #f3f8fc; }
   .sale-row__what { grid-column: 1; }
   .sale-row__amount { grid-row: 2; grid-column: 2; }
 }
+
+/* Lo que tengo: totales por tipo */
+.group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .9rem; margin-bottom: 1rem; }
+.group-card { background: #fff; border: 1px solid #dcebf5; border-radius: 16px; padding: 1.1rem; display: flex; flex-direction: column; gap: .5rem; }
+.group-card__head { display: flex; align-items: center; gap: .8rem; }
+.group-card__icon { width: 48px; height: 48px; border-radius: 14px; background: var(--celeste); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+.group-card__title { margin: 0; font-size: 1rem; color: var(--gris-texto); }
+.group-card__count { font-size: .95rem; color: #4b5563; }
+.group-card__count strong { font-size: 1.6rem; color: var(--azul); margin-right: .15rem; }
+.group-card__meta { font-size: .85rem; color: #5b6570; }
+.group-card__meta a { color: var(--naranja-oscuro); font-weight: 700; }
+.group-card__actions { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: auto; }
+.group-card__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .4rem; }
+.group-card__list li { display: flex; justify-content: space-between; align-items: center; gap: .5rem; font-size: .9rem; border-top: 1px solid #eef3f7; padding-top: .4rem; flex-wrap: wrap; }
+.group-card__mini { display: flex; gap: .35rem; }
+.detail-toggle { background: none; border: 0; color: var(--azul); font-weight: 800; font-size: .92rem; cursor: pointer; padding: .4rem 0; margin-bottom: .75rem; font-family: inherit; }
+.field-row--person { display: grid; grid-template-columns: minmax(0, 1fr) 90px; gap: .6rem; }
+.field--age input { width: 100%; }

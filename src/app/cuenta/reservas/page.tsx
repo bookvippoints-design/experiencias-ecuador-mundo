@@ -15,7 +15,7 @@ export default async function MisReservas() {
   const supabase = await createClient();
   const { data: bookings } = await supabase
     .from("booking_requests")
-    .select("id, kind, destination, preferred_dates, travelers, status, admin_message, created_at, check_in, alt_check_in, entitlements(code)")
+    .select("id, kind, destination, preferred_dates, travelers, status, admin_message, created_at, check_in, entitlements(code)")
     .order("created_at", { ascending: false });
 
   return (
@@ -39,14 +39,15 @@ export default async function MisReservas() {
                     <td>{b.kind === "national" ? "Escapada nacional" : b.kind === "international" ? "Invitación internacional" : "Canje de puntos"}<div className="exp-card__meta">{(b.entitlements as unknown as { code: string } | null)?.code}</div></td>
                     <td>
                       <strong>{b.destination}</strong>
-                      {b.check_in && <div className="exp-card__meta">Entrada: {longDate(b.check_in)}{b.alt_check_in ? ` · alternativa: ${longDate(b.alt_check_in)}` : ""}</div>}
+                      {b.check_in && <div className="exp-card__meta">Entrada: {longDate(b.check_in)}</div>}
+                      {b.travelers && <div className="exp-card__meta">Viajeros: {b.travelers}</div>}
                       {b.preferred_dates && <div className="exp-card__meta">{b.preferred_dates}</div>}
                     </td>
                     <td>{BOOKING_STATUS_LABEL[b.status]}</td>
                     <td>{b.admin_message ?? "—"}</td>
                     <td>
                       {b.kind === "national" && ["requested", "in_progress"].includes(b.status) && (
-                        <ChangeDates bookingId={b.id} checkIn={b.check_in} altCheckIn={b.alt_check_in} />
+                        <ChangeDates bookingId={b.id} checkIn={b.check_in} />
                       )}
                       {b.kind === "national" && b.status === "confirmed" && <span className="field-hint">Confirmada: no se puede anular ni reintegrar.</span>}
                     </td>

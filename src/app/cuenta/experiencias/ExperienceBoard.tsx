@@ -11,7 +11,7 @@ import { notifyAdmin } from "@/app/alert-actions";
 import Link from "next/link";
 import { effectiveStatus, entitlementTitle, KIND_LABEL, type EntitlementRow } from "@/lib/format";
 import { destinationLabel, usd, TAX_NOTE, type IntlDestination } from "@/lib/intl-destinations";
-import { NATIONAL_RULE, NATIONAL_MIN_DAYS, NATIONAL_RESPONSE, BONUS_REGISTER_URL } from "@/lib/brand";
+import { NATIONAL_MIN_DAYS, NATIONAL_RESPONSE, BONUS_REGISTER_URL } from "@/lib/brand";
 
 const NATIONAL = ["Quito", "Guayaquil", "Manta", "Cuenca", "Loja"];
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -34,9 +34,59 @@ function giftable(e: BoardItem) {
   return true;
 }
 
-export function ExperienceBoard({ items, readOnly = false, userEmail = "", destinations = [], requestInvitation }: {
-  items: BoardItem[]; readOnly?: boolean; userEmail?: string; destinations?: IntlDestination[]; requestInvitation?: string;
+const byExpiry = (a: BoardItem, b: BoardItem) => new Date(a.valid_until ?? "9999-12-31").getTime() - new Date(b.valid_until ?? "9999-12-31").getTime();
+
+function GroupCard({ icon, title, available, inProcess, nextExpiry, actionLabel, onAction, onGift, canGift, children }: {
+  icon: string; title: string; available: number; inProcess: number; nextExpiry: string | null;
+  actionLabel: string; onAction?: () => void; onGift?: () => void; canGift: boolean; children?: React.ReactNode;
 }) {
+  return (
+    <article className="group-card">
+      <div className="group-card__head">
+        <span className="group-card__icon" aria-hidden="true">{icon}</span>
+        <div>
+          <h3 className="group-card__title">{title}</h3>
+          <div className="group-card__count"><strong>{available}</strong> {available === 1 ? "disponible" : "disponibles"}</div>
+        </div>
+      </div>
+      {nextExpiry && available > 0 && <div className="group-card__meta">{available > 1 ? "La primera vence" : "Vence"} el {longDate(nextExpiry)}</div>}
+      {inProcess > 0 && <div className="group-card__meta">{inProcess} en trámite · <a href="/cuenta/reservas">ver canjes</a></div>}
+      {children}
+      {available > 0 && (onAction || onGift) && (
+        <div className="group-card__actions">
+          {onAction && <button className="btn-blue btn-small" onClick={onAction}>{actionLabel}</button>}
+          {onGift && canGift && <button className="btn-orange btn-small" onClick={onGift}>Regalar</button>}
+        </div>
+      )}
+    </article>
+  );
+}
+
+function GiftQuantityDialog({ label, max, onClose, onChoose }: { label: string; max: number; onClose: () => void; onChoose: (n: number) => void }) {
+  const [n, setN] = useState(1);
+  return (
+    <Modal open onClose={onClose} labelledBy="gq-title">
+      <h2 id="gq-title">🎁 ¿Cuántas quieres regalar?</h2>
+      <p className="modal__subtitle">Tienes {max} {label} para regalar. Se regalan primero las que vencen antes.</p>
+      <div className="field">
+        <label htmlFor="gq-n">Cantidad</label>
+        <select id="gq-n" value={n} onChange={(e) => setN(Number(e.target.value))}>
+          {Array.from({ length: max }, (_, i) => i + 1).map((i) => <option key={i} value={i}>{i}</option>)}
+        </select>
+      </div>
+      <div className="modal-actions">
+        <button className="btn-ghost" onClick={onClose}>Cancelar</button>
+        <button className="btn-orange" onClick={() => onChoose(n)}>Continuar</button>
+      </div>
+    </Modal>
+  );
+}
+
+export function ExperienceBoard({ items, readOnly = false, userEmail = "", userName = "", destinations = [], requestInvitation }: {
+  items: BoardItem[]; readOnly?: boolean; userEmail?: string; userName?: string; destinations?: IntlDestination[]; requestInvitation?: string;
+}) {
+  const [showDetail, setShowDetail] = useState(readOnly);
+  const [giftQty, setGiftQty] = useState<{ label: string; pool: BoardItem[] } | null>(null);
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [giftOpen, setGiftOpen] = useState(false);
@@ -55,10 +105,58 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", desti
 
   const toggle = (id: string) => setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
 
+  const avail = (kind: string) => items.filter((e) => e.kind === kind && effectiveStatus(e) === "available").sort(byExpiry);
+  const inProc = (kind: string) => items.filter((e) => e.kind === kind && effectiveStatus(e) === "requested").length;
+  const nationals = avail("national");
+  const intls = avail("international");
+  const points = avail("points").filter((e) => !e.points_credited_at);
+  const giftNow = (pool: BoardItem[], label: string) => {
+    const g = pool.filter(giftable);
+    if (g.length === 1) { setSelected([g[0].id]); setGiftOpen(true); }
+    else if (g.length > 1) setGiftQty({ label, pool: g });
+  };
+
   return (
     <>
       {flash && <p className="success-box">{flash}</p>}
-      {!readOnly && <div className="btn-row" style={{ marginBottom: "1rem" }}>
+
+      {!readOnly && (
+        <div className="group-grid">
+          <GroupCard icon="🏨" title="Escapadas nacionales" available={nationals.length} inProcess={inProc("national")}
+            nextExpiry={nationals[0]?.valid_until ?? null} actionLabel="Reservar una"
+            onAction={nationals[0] ? () => setBooking(nationals[0]) : undefined}
+            onGift={() => giftNow(nationals, "escapadas nacionales")} canGift={nationals.some(giftable)} />
+          <GroupCard icon="✈️" title="Invitaciones internacionales" available={intls.length} inProcess={inProc("international")}
+            nextExpiry={intls[0]?.valid_until ?? null} actionLabel="Pedir una"
+            onAction={intls[0] ? () => setBooking(intls[0]) : undefined}
+            onGift={() => giftNow(intls, "invitaciones internacionales")} canGift={intls.some(giftable)} />
+          <GroupCard icon="⭐" title="Puntos por canjear" available={points.reduce((sum, e) => sum + (e.points ?? 0), 0)} inProcess={inProc("points")}
+            nextExpiry={null} actionLabel="" canGift={false}>
+            {points.length > 0 && (
+              <ul className="group-card__list">
+                {points.map((e) => (
+                  <li key={e.id}>
+                    <span><strong>{(e.points ?? 0).toLocaleString("es-EC")}</strong> · {e.productName}</span>
+                    <span className="group-card__mini">
+                      <button className="btn-blue btn-small" onClick={() => setBooking(e)}>Canjear</button>
+                      {giftable(e) && <button className="btn-orange btn-small" onClick={() => { setSelected([e.id]); setGiftOpen(true); }}>Regalar</button>}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className="group-card__meta">Los puntos no caducan.</div>
+          </GroupCard>
+        </div>
+      )}
+
+      {!readOnly && (
+        <button className="detail-toggle" onClick={() => setShowDetail((v) => !v)} aria-expanded={showDetail}>
+          {showDetail ? "Ocultar detalle ▲" : "Ver detalle de cada una ▼"}
+        </button>
+      )}
+
+      {showDetail && !readOnly && <div className="btn-row" style={{ marginBottom: "1rem" }}>
         {!selecting ? (
           <button className="btn-orange" onClick={() => setSelecting(true)} disabled={!items.some(giftable)}>🎁 Regalar experiencias</button>
         ) : (
@@ -70,7 +168,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", desti
         )}
       </div>}
 
-      <div className="exp-grid">
+      {showDetail && <div className="exp-grid">
         {items.map((e) => {
           const status = effectiveStatus(e);
           const canGift = giftable(e);
@@ -129,8 +227,12 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", desti
             </article>
           );
         })}
-      </div>
+      </div>}
 
+      {giftQty && (
+        <GiftQuantityDialog label={giftQty.label} max={giftQty.pool.length} onClose={() => setGiftQty(null)}
+          onChoose={(n) => { setSelected(giftQty.pool.slice(0, n).map((e) => e.id)); setGiftQty(null); setGiftOpen(true); }} />
+      )}
       {giftOpen && (
         <GiftDialog
           items={items.filter((i) => selected.includes(i.id))}
@@ -138,7 +240,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", desti
           onDone={(m) => { setGiftOpen(false); setSelecting(false); setSelected([]); setFlash(m); }}
         />
       )}
-      {booking && <BookingDialog item={booking} userEmail={userEmail} destinations={destinations} initialDestination={requestInvitation} onClose={() => setBooking(null)} onDone={(m) => { setBooking(null); setFlash(m); }} />}
+      {booking && <BookingDialog item={booking} userEmail={userEmail} userName={userName} destinations={destinations} initialDestination={requestInvitation} onClose={() => setBooking(null)} onDone={(m) => { setBooking(null); setFlash(m); }} />}
     </>
   );
 }
@@ -219,8 +321,30 @@ function isoDate(d: Date) {
   return `${y}-${m}-${day}`;
 }
 
-function BookingDialog({ item, userEmail, destinations, initialDestination, onClose, onDone }: {
-  item: BoardItem; userEmail: string; destinations: IntlDestination[]; initialDestination?: string;
+function TravelerFields({ holder, setHolder, holderAge, setHolderAge, companion, setCompanion, companionAge, setCompanionAge, companionOptional }: {
+  holder: string; setHolder: (v: string) => void; holderAge: string; setHolderAge: (v: string) => void;
+  companion: string; setCompanion: (v: string) => void; companionAge: string; setCompanionAge: (v: string) => void;
+  companionOptional?: boolean;
+}) {
+  return (
+    <>
+      <div className="field-row field-row--person">
+        <div className="field"><label htmlFor="bk-holder">Nombre del titular</label><input id="bk-holder" value={holder} onChange={(e) => setHolder(e.target.value)} /></div>
+        <div className="field field--age"><label htmlFor="bk-holder-age">Edad</label><input id="bk-holder-age" type="number" inputMode="numeric" min={0} max={120} value={holderAge} onChange={(e) => setHolderAge(e.target.value)} /></div>
+      </div>
+      <div className="field-row field-row--person">
+        <div className="field"><label htmlFor="bk-comp">Nombre del acompañante{companionOptional ? " (opcional)" : ""}</label><input id="bk-comp" value={companion} onChange={(e) => setCompanion(e.target.value)} /></div>
+        <div className="field field--age"><label htmlFor="bk-comp-age">Edad</label><input id="bk-comp-age" type="number" inputMode="numeric" min={0} max={120} value={companionAge} onChange={(e) => setCompanionAge(e.target.value)} /></div>
+      </div>
+      <span className="field-hint">La edad nos ayuda a saber si viaja un adulto o un niño.</span>
+    </>
+  );
+}
+
+const validAge = (v: string) => v.trim() !== "" && Number(v) >= 0 && Number(v) <= 120;
+
+function BookingDialog({ item, userEmail, userName, destinations, initialDestination, onClose, onDone }: {
+  item: BoardItem; userEmail: string; userName: string; destinations: IntlDestination[]; initialDestination?: string;
   onClose: () => void; onDone: (m: string) => void;
 }) {
   const isPoints = item.kind === "points";
@@ -228,8 +352,10 @@ function BookingDialog({ item, userEmail, destinations, initialDestination, onCl
   const [destination, setDestination] = useState(isPoints ? userEmail : intl ? initialDestination ?? "" : "");
   const [destQuery, setDestQuery] = useState("");
   const [checkIn, setCheckIn] = useState("");
-  const [altCheckIn, setAltCheckIn] = useState("");
-  const [travelers, setTravelers] = useState("");
+  const [holder, setHolder] = useState(userName);
+  const [holderAge, setHolderAge] = useState("");
+  const [companion, setCompanion] = useState("");
+  const [companionAge, setCompanionAge] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
   const [rules, setRules] = useState(false);
@@ -247,15 +373,16 @@ function BookingDialog({ item, userEmail, destinations, initialDestination, onCl
   async function send() {
     setLoading(true);
     setError(null);
-    const { data: bookingId, error: e } = await createClient().rpc("request_booking", {
+    const { data: bookingId, error: e } = await createClient().rpc("request_booking_v2", {
       p_entitlement_id: item.id,
       p_destination: destination,
-      p_preferred_dates: null,
-      p_travelers: travelers || null,
+      p_holder_name: isPoints ? null : holder || null,
+      p_holder_age: isPoints || holderAge === "" ? null : Number(holderAge),
+      p_companion_name: isPoints ? null : companion || null,
+      p_companion_age: isPoints || companionAge === "" ? null : Number(companionAge),
       p_notes: notes || null,
       p_accept_rules: rules,
       p_check_in: item.kind === "national" ? checkIn || null : null,
-      p_alt_check_in: item.kind === "national" ? altCheckIn || null : null,
       p_phone: phone || null,
     });
     setLoading(false);
@@ -293,12 +420,12 @@ function BookingDialog({ item, userEmail, destinations, initialDestination, onCl
   }
 
   if (!intl) {
-    const ready = destination && checkIn && travelers.trim() && phone.replace(/\D/g, "").length >= 7 && rules;
+    const ready = destination && checkIn && holder.trim() && validAge(holderAge) && companion.trim() && validAge(companionAge)
+      && phone.replace(/\D/g, "").length >= 7 && rules;
     return (
       <Modal open onClose={onClose} wide labelledBy="bk-title">
         <h2 id="bk-title">Canjear: reservar escapada nacional</h2>
         <p className="modal__subtitle">{entitlementTitle(item)} · vence el {longDate(item.valid_until)}</p>
-        <p className="rule-box">{NATIONAL_RULE}</p>
         <div className="field">
           <label htmlFor="bk-dest">Ciudad</label>
           <select id="bk-dest" value={destination} onChange={(e) => setDestination(e.target.value)}>
@@ -306,26 +433,21 @@ function BookingDialog({ item, userEmail, destinations, initialDestination, onCl
             {NATIONAL.map((d) => <option key={d}>{d}</option>)}
           </select>
         </div>
-        <div className="field-row">
-          <div className="field">
-            <label htmlFor="bk-in">Fecha de entrada</label>
-            <input id="bk-in" type="date" min={minDate} max={maxDate} value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
-          </div>
-          <div className="field">
-            <label htmlFor="bk-alt">Fecha alternativa (opcional)</label>
-            <input id="bk-alt" type="date" min={minDate} max={maxDate} value={altCheckIn} onChange={(e) => setAltCheckIn(e.target.value)} />
-          </div>
+        <div className="field">
+          <label htmlFor="bk-in">Fecha de entrada</label>
+          <input id="bk-in" type="date" min={minDate} max={maxDate} value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
         </div>
         <span className="field-hint">Mínimo {NATIONAL_MIN_DAYS} días de anticipación: desde el {longDate(minDate + "T12:00:00")}.</span>
-        <div className="field"><label htmlFor="bk-trav">Nombre de tu acompañante</label><input id="bk-trav" value={travelers} onChange={(e) => setTravelers(e.target.value)} /></div>
+        <TravelerFields holder={holder} setHolder={setHolder} holderAge={holderAge} setHolderAge={setHolderAge}
+          companion={companion} setCompanion={setCompanion} companionAge={companionAge} setCompanionAge={setCompanionAge} />
         <div className="field"><label htmlFor="bk-phone">Teléfono de contacto (WhatsApp)</label><input id="bk-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="09..." /></div>
         <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
-        <p className="info-box">{NATIONAL_RESPONSE} Mientras tu solicitud está pendiente puedes cambiar las fechas; si no hay disponibilidad, te ofrecemos otras.</p>
+        <p className="info-box">{NATIONAL_RESPONSE} Si no hay disponibilidad en la fecha que elegiste, te contactamos para buscar otra.</p>
         <label className="consent">
           <input type="checkbox" checked={rules} onChange={(e) => setRules(e.target.checked)} />
           <span>
-            Entiendo que las escapadas nacionales <strong>no se pueden usar en temporada alta, vacaciones ni feriados</strong>, y que
-            <strong> una vez confirmado el hospedaje no se puede anular ni se reintegra el paquete</strong>.
+            Entiendo que las escapadas nacionales no se pueden usar en temporada alta, vacaciones ni feriados, y que una vez
+            confirmado el hospedaje no se puede anular ni se reintegra el paquete.
           </span>
         </label>
         {error && <p className="field-error">{error}</p>}
@@ -361,7 +483,8 @@ function BookingDialog({ item, userEmail, destinations, initialDestination, onCl
           <span className="dest-summary__total">Impuestos y tasas por noche: {usd(Number(chosen.tax_per_night))}</span>
         </div>
       )}
-      <div className="field"><label htmlFor="bk-trav">Viajeros</label><input id="bk-trav" value={travelers} onChange={(e) => setTravelers(e.target.value)} placeholder="Ej. 2 adultos: Ana Pérez y Luis Mora" /></div>
+      <TravelerFields holder={holder} setHolder={setHolder} holderAge={holderAge} setHolderAge={setHolderAge}
+        companion={companion} setCompanion={setCompanion} companionAge={companionAge} setCompanionAge={setCompanionAge} companionOptional />
       <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
       <p className="info-box">
         <strong>Fee de emisión US$0.</strong> {TAX_NOTE} Emitida la invitación tendrás 30 días para registrarla y 7 días para pagar esos
@@ -377,7 +500,7 @@ function BookingDialog({ item, userEmail, destinations, initialDestination, onCl
       {error && <p className="field-error">{error}</p>}
       <div className="modal-actions">
         <button className="btn-ghost" onClick={onClose}>Cancelar</button>
-        <button className="btn-orange" onClick={send} disabled={loading || !chosen || !rules}>
+        <button className="btn-orange" onClick={send} disabled={loading || !chosen || !rules || !holder.trim() || !validAge(holderAge) || (companion.trim() !== "" && !validAge(companionAge))}>
           {loading ? "Enviando..." : "Enviar solicitud"}
         </button>
       </div>

@@ -50,7 +50,6 @@ export default async function ComoFunciona() {
           <span className="how-block__eyebrow">Ecuador</span>
           <h2>Escapadas nacionales</h2>
           <p className="content-lead">Hospedaje para 2 personas con desayuno en Quito, Guayaquil, Manta, Cuenca o Loja.</p>
-          <p className="rule-box">{NATIONAL_RULE}</p>
           <NationalGallery />
           <Steps
             items={[
@@ -63,6 +62,7 @@ export default async function ComoFunciona() {
             <li>Escape Esencial: 2 días y 1 noche. Escape Plus y Premium: 3 días y 2 noches por escapada.</li>
             <li>Mientras tu solicitud está pendiente puedes cambiar las fechas. Si no hay disponibilidad, no la pierdes: te ofrecemos otras fechas.</li>
             <li><strong>{NATIONAL_NO_CANCEL}</strong></li>
+            <li>{NATIONAL_RULE}</li>
             <li>Se solicitan y usan dentro de la vigencia del paquete: 12, 18 o 24 meses desde el pago aprobado.</li>
           </ul>
           <div className="btn-row">

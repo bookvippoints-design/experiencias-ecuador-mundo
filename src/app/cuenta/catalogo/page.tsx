@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { NationalGallery, InternationalGallery } from "@/components/DestinationGallery";
 import { PRODUCT_FIELDS, type Product } from "@/lib/products";
 import { unsplashUrl, NATIONAL_DESTINATIONS } from "@/lib/destinations";
-import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL, NATIONAL_RULE, POINTS_VALUE_NOTE } from "@/lib/brand";
+import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL, POINTS_VALUE_NOTE } from "@/lib/brand";
 
 export default async function Catalogo() {
   const profile = await requireRole("user");
@@ -46,7 +46,6 @@ export default async function Catalogo() {
             Ver hoteles participantes (PDF)
           </a>
         </p>
-        <p className="rule-box" style={{ marginBottom: "1rem" }}>{NATIONAL_RULE}</p>
         <NationalGallery />
 
         <div className="section-title" id="invitacion"><h2>Invitación hotelera internacional</h2></div>

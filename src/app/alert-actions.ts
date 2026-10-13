@@ -60,7 +60,7 @@ export async function notifyAdmin(kind: "booking" | "booking_dates" | "payment" 
         title,
         row("Cliente", who) + row("Beneficio", `${ent?.product_name ?? ""} · ${ent?.code ?? ""}`) +
           (b.kind === "points" ? row("Puntos a acreditar", String(ent?.points ?? "")) + row("Cuenta BookVipPoints", b.destination) : row("Destino", b.destination)) +
-          row("Entrada", day(b.check_in)) + row("Fecha alternativa", day(b.alt_check_in)) +
+          row("Entrada", day(b.check_in)) +
           row("Viajeros / acompañante", b.travelers) + row("Teléfono", b.contact_phone) + row("Comentarios", b.notes) +
           (b.kind === "national" ? row("Recuerda", "Responder en 24 a 48 horas hábiles. No válido en temporada alta, vacaciones ni feriados.") : ""),
         "/admin/reservas"

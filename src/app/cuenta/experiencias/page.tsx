@@ -44,7 +44,7 @@ export default async function MisExperiencias({ searchParams }: { searchParams: 
                 {" "}<Link href="/cuenta/como-funciona" style={{ color: "var(--naranja-oscuro)", fontWeight: 700 }}>Ver la guía completa</Link>
               </p>
             </section>
-            <ExperienceBoard items={active} userEmail={profile.email} destinations={destinations} requestInvitation={invitacion} />
+            <ExperienceBoard items={active} userEmail={profile.email} userName={profile.fullName} destinations={destinations} requestInvitation={invitacion} />
             {past.length > 0 && (
               <>
                 <div className="section-title"><h2>Utilizadas y vencidas</h2></div>

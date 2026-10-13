@@ -5,7 +5,7 @@ import { TopBar } from "@/components/TopBar";
 import { ProductCard } from "@/components/ProductCard";
 import { PRODUCT_FIELDS, type Product } from "@/lib/products";
 import { effectiveStatus, type EntitlementRow } from "@/lib/format";
-import { BONUS_REGISTER_URL, WELCOME_BONUS_POINTS, NATIONAL_RULE, POINTS_VALUE_NOTE } from "@/lib/brand";
+import { BONUS_REGISTER_URL, WELCOME_BONUS_POINTS, POINTS_VALUE_NOTE } from "@/lib/brand";
 
 export default async function CuentaHome() {
   const profile = await requireRole("user");
@@ -75,7 +75,7 @@ export default async function CuentaHome() {
         <p className="content-lead">Escapadas en Ecuador e invitaciones hoteleras en más de 130 destinos del mundo. Para ti o para regalar.</p>
         <div className="product-grid">{escapes.map((p) => <ProductCard key={p.id} product={p} />)}</div>
         <p className="field-hint" style={{ marginTop: ".75rem" }}>
-          <strong>{NATIONAL_RULE}</strong> Invitación internacional: fee de emisión US$0; los impuestos y tasas del hotel o resort
+          Invitación internacional: fee de emisión US$0; los impuestos y tasas del hotel o resort
           los paga el viajero y varían por destino y temporada.
         </p>
 
