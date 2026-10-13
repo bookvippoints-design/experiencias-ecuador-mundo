@@ -371,7 +371,8 @@ footer{padding:28px 0 44px;background:#fff;border-top:1px solid #edf4f8}.footer-
   document.querySelectorAll('.vid-facade:not(.vid-facade--local)').forEach(function(el){
     el.addEventListener('click',function(){
       var f=document.createElement('iframe');
-      f.src='https://www.dailymotion.com/embed/video/'+el.dataset.video+'?autoplay=1';
+      f.src='https://geo.dailymotion.com/player.html?video='+el.dataset.video+'&autoplay=1&mute=0';
+      f.referrerPolicy='strict-origin-when-cross-origin';
       f.title=el.dataset.title||'Video';
       f.setAttribute('allow','autoplay; fullscreen; picture-in-picture; encrypted-media');
       f.allowFullscreen=true;
