@@ -7,7 +7,7 @@ const PORTAL_BY_ROLE: Record<string, string> = {
   user: "/cuenta",
 };
 
-const PUBLIC_PATHS = ["/login", "/recuperar", "/auth", "/set-password", "/terminos", "/api/cron", "/pago/respuesta", "/pago/resultado"];
+const PUBLIC_PATHS = ["/login", "/recuperar", "/auth", "/set-password", "/terminos", "/api/cron", "/pago/respuesta", "/pago/resultado", "/acceso", "/api/acceso"];
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });

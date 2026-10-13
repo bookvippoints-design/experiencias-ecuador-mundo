@@ -6,6 +6,7 @@ import { sendOrderApprovedEmails } from "@/lib/order-fulfillment";
 import { flushPendingMessageEmails } from "@/lib/message-emails";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
 import { appUrl, BRAND } from "@/lib/brand";
+import { ACCESS_TX_PREFIX, settleAccessPayment } from "@/lib/access-sale";
 
 export type SettleOutcome = "approved" | "canceled" | "pending_credit" | "error";
 
@@ -32,6 +33,7 @@ async function alertAdmin(subject: string, title: string, lines: [string, string
  * PayPhone revierte el cobro si no se confirma dentro de 5 minutos.
  */
 export async function settlePayphonePayment(payphoneId: number, clientTxId: string): Promise<SettleOutcome> {
+  if (clientTxId.startsWith(ACCESS_TX_PREFIX)) return settleAccessPayment(payphoneId, clientTxId);
   const admin = createAdminClient();
   const { data: pay } = await admin.from("payphone_payments").select("*").eq("client_tx_id", clientTxId).maybeSingle();
   if (!pay) return "error";

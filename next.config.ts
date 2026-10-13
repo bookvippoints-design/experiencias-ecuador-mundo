@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
     "/cuenta/experiencias": ["./node_modules/pdfkit/js/**/*"],
   },
   images: { remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }] },
+  // Página pública de venta del acceso (HTML estático en public/acceso).
+  async rewrites() {
+    return [{ source: "/acceso", destination: "/acceso/index.html" }];
+  },
 };
 
 export default nextConfig;

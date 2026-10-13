@@ -12,7 +12,7 @@ const PLAN_LABEL: Record<string, string> = { inicial: "Plan Inicial", comercial:
 export default async function AdminHome() {
   const profile = await requireRole("admin");
   const supabase = await createClient();
-  const [{ data, error }, { data: sales }, { data: quotas }, { data: allQuotas }] = await Promise.all([
+  const [{ data, error }, { data: sales }, { data: quotas }, { data: allQuotas }, { data: accessSales }] = await Promise.all([
     supabase.rpc("admin_dashboard"),
     supabase
       .from("orders")
@@ -27,7 +27,10 @@ export default async function AdminHome() {
       .order("reviewed_at", { ascending: false })
       .limit(5),
     supabase.from("quota_purchases").select("total_price").eq("status", "approved"),
+    supabase.from("access_purchases").select("id, full_name, email, amount_cents, confirmed_at, credited_at").eq("status", "approved").order("confirmed_at", { ascending: false }),
   ]);
+  const accessList = accessSales ?? [];
+  const accessTotal = accessList.reduce((sum, a) => sum + a.amount_cents / 100, 0);
   const quotaSales = (allQuotas ?? []).reduce((sum, q) => sum + Number(q.total_price), 0);
   const d = (data ?? {}) as Dash;
   const people = await loadPeople((sales ?? []).map((s) => s.buyer_id));
@@ -45,6 +48,7 @@ export default async function AdminHome() {
   const numbers: { value: string | number; label: string; hint: string; href: string }[] = [
     { value: money(d.sales_total ?? 0), label: "Ventas aprobadas a clientes", hint: `${d.approved_orders ?? 0} ${(d.approved_orders ?? 0) === 1 ? "pedido" : "pedidos"} · ver quién compró`, href: "/admin/pedidos?f=aprobados" },
     { value: money(quotaSales), label: "Ventas de cupos a empresas", hint: `${(allQuotas ?? []).length} ${(allQuotas ?? []).length === 1 ? "compra aprobada" : "compras aprobadas"} · ver detalle`, href: "/admin/compras" },
+    { value: money(accessTotal), label: "Accesos vendidos al público", hint: `${accessList.length} ${accessList.length === 1 ? "acceso" : "accesos"} · ver clientes`, href: "/admin/usuarios" },
     { value: d.companies ?? 0, label: "Empresas", hint: `${d.quota_purchased ?? 0} cupos comprados · ${d.quota_used ?? 0} usados`, href: "/admin/empresas" },
     { value: d.users ?? 0, label: "Clientes con cuenta", hint: "Ver la lista de usuarios", href: "/admin/usuarios" },
     { value: d.gifts ?? 0, label: "Regalos enviados", hint: "Ver quién regaló a quién", href: "/admin/regalos" },
@@ -90,7 +94,7 @@ export default async function AdminHome() {
           <h2>Últimas ventas</h2>
           <Link href="/admin/pedidos?f=aprobados">Ver todas →</Link>
         </div>
-        {(sales ?? []).length === 0 && quotaRevenue === 0 ? (
+        {(sales ?? []).length === 0 && quotaRevenue === 0 && accessList.length === 0 ? (
           <div className="empty-card">Todavía no hay ventas aprobadas.</div>
         ) : (
           <div className="sales-list">
@@ -112,6 +116,20 @@ export default async function AdminHome() {
                 </Link>
               );
             })}
+            {accessList.slice(0, 5).map((a) => (
+              <Link key={a.id} href="/admin/usuarios" className="sale-row">
+                <span className="sale-row__date">{shortDate(a.confirmed_at)}</span>
+                <span className="sale-row__who">
+                  <strong>{a.full_name}</strong>
+                  <span>{a.email}</span>
+                </span>
+                <span className="sale-row__what">
+                  Acceso al catálogo <span className="exp-card__meta">Página pública · tarjeta</span>
+                  {!a.credited_at && <span className="field-error">Pagado sin cuenta creada: revisa el correo de alerta</span>}
+                </span>
+                <span className="sale-row__amount">{money(a.amount_cents / 100)}</span>
+              </Link>
+            ))}
             {(quotas ?? []).map((q) => (
               <Link key={q.id} href="/admin/compras" className="sale-row">
                 <span className="sale-row__date">{shortDate(q.reviewed_at)}</span>

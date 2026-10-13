@@ -48,3 +48,9 @@ export const POINTS_VALUE_NOTE =
 
 /** Ingreso a la plataforma de puntos BookVipPoints. */
 export const POINTS_LOGIN_URL = "https://bvpoints.netlify.app/login";
+
+/** Precio del acceso que se vende al público en /acceso (US$). Configurable con ACCESS_PRICE_USD. */
+export function accessPriceUsd(): number {
+  const n = Number(process.env.ACCESS_PRICE_USD || "25");
+  return Number.isFinite(n) && n > 0 ? n : 25;
+}
