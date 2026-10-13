@@ -45,3 +45,6 @@ export const NATIONAL_NO_CANCEL = "Una vez confirmado el hospedaje, no se puede 
 /** Equivalencia de los puntos, siempre con su letra pequeña. */
 export const POINTS_VALUE_NOTE =
   "Cada punto equivale a hasta US$1 de ahorro como pago parcial en reservas de hotel nacionales o internacionales, sujeto a disponibilidad. No es efectivo ni paga el total de la reserva. Los puntos no caducan.";
+
+/** Ingreso a la plataforma de puntos BookVipPoints. */
+export const POINTS_LOGIN_URL = "https://bvpoints.netlify.app/login";

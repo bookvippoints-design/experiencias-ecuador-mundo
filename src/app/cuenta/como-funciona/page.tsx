@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PointsLoginButton } from "@/components/PointsLoginButton";
 import { requireRole } from "@/lib/auth/identity";
 import { TopBar } from "@/components/TopBar";
 import { NationalGallery, InternationalGallery } from "@/components/DestinationGallery";
@@ -141,6 +142,7 @@ export default async function ComoFunciona() {
             <li>Las tarjetas de puntos se regalan completas. El bono de bienvenida no se puede regalar.</li>
           </ul>
           <div className="btn-row">
+            <PointsLoginButton />
             <a className="btn-blue btn-small" href={BONUS_REGISTER_URL} target="_blank" rel="noreferrer">Obtener mis {WELCOME_BONUS_POINTS} puntos gratis</a>
           </div>
         </section>

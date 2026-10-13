@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PointsLoginButton } from "@/components/PointsLoginButton";
 import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
@@ -35,7 +36,7 @@ export default async function Catalogo() {
         </div>
         <div className="product-grid">{escapes.map((p) => <ProductCard key={p.id} product={p} />)}</div>
 
-        <div className="section-title"><h2>Tarjetas de puntos hoteleros</h2></div>
+        <div className="section-title"><h2>Tarjetas de puntos hoteleros</h2><PointsLoginButton /></div>
         <p className="info-box">{POINTS_VALUE_NOTE}</p>
         <div className="product-grid">{cards.map((p) => <ProductCard key={p.id} product={p} />)}</div>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PointsLoginButton } from "@/components/PointsLoginButton";
 import { AccountTabs } from "@/components/AccountTabs";
 import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
@@ -28,6 +29,7 @@ export default async function MisPuntos() {
           <div className="btn-row">
             <Link href="/cuenta/experiencias" className="btn-orange">Canjear mis puntos</Link>
             <Link href="/cuenta/catalogo" className="btn-ghost">Comprar tarjetas de puntos</Link>
+            <PointsLoginButton small={false} />
           </div>
         </section>
 

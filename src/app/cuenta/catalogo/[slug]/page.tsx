@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PointsLoginButton } from "@/components/PointsLoginButton";
 import { Crumbs } from "@/components/Crumbs";
 import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth/identity";
@@ -43,6 +44,7 @@ export default async function ProductoDetalle({
               <ul className="check-list">{inclusions(p).map((l) => <li key={l}>{l}</li>)}</ul>
               <h3>No incluye</h3>
               <ul className="check-list cross-list">{exclusions(p).map((l) => <li key={l}>{l}</li>)}</ul>
+              {p.category === "points" && <p><PointsLoginButton /></p>}
               <h3>Condiciones</h3>
               <ul className="conditions-list">{conditionLines(p).map((l) => <li key={l}>{l}</li>)}</ul>
               {p.international_count > 0 && (

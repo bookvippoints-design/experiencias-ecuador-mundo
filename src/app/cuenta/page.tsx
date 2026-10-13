@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PointsLoginButton } from "@/components/PointsLoginButton";
 import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
@@ -75,6 +76,7 @@ export default async function CuentaHome() {
             </div>
             <div className="btn-row">
               <a className="btn-orange" href={BONUS_REGISTER_URL} target="_blank" rel="noreferrer">Obtener mis {WELCOME_BONUS_POINTS} puntos</a>
+              <PointsLoginButton label="Ya tengo cuenta: ir a BookVipPoints" />
               <Link href="/cuenta/como-funciona#puntos" className="bonus-card__link">¿Cómo funcionan los puntos?</Link>
             </div>
             <p className="bonus-card__fine">
@@ -96,7 +98,7 @@ export default async function CuentaHome() {
         </p>
 
         {/* 3. Puntos */}
-        <div className="section-title"><h2>⭐ Tarjetas de puntos</h2></div>
+        <div className="section-title"><h2>⭐ Tarjetas de puntos</h2><PointsLoginButton /></div>
         <p className="content-lead">Ahorra en hoteles de Ecuador y el mundo: cada punto equivale a hasta US$1 de ahorro.</p>
         <div className="product-grid">{cards.map((p) => <ProductCard key={p.id} product={p} />)}</div>
         <p className="field-hint" style={{ marginTop: ".75rem" }}>{POINTS_VALUE_NOTE}</p>

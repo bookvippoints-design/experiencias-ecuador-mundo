@@ -1,5 +1,6 @@
 "use client";
 
+import { PointsLoginButton } from "@/components/PointsLoginButton";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -146,6 +147,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
               </ul>
             )}
             <div className="group-card__meta">Los puntos no caducan.</div>
+            <div><PointsLoginButton /></div>
           </GroupCard>
         </div>
       )}
@@ -409,6 +411,7 @@ function BookingDialog({ item, userEmail, userName, destinations, initialDestina
           </span>
         </div>
         <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
+        <p><PointsLoginButton label="Ver mi cuenta BookVipPoints" /></p>
         <p className="info-box">Cada punto equivale a hasta US$1 de ahorro como pago parcial. No son efectivo ni pagan una reserva completa, y no caducan. Una vez acreditados ya no se pueden regalar.</p>
         {error && <p className="field-error">{error}</p>}
         <div className="modal-actions">
