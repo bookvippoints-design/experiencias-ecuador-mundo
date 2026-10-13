@@ -51,7 +51,7 @@ export function BuyPanel({
     });
     setLoading(false);
     if (e) return setError(e.message);
-    router.push(`/cuenta/pedidos?nuevo=${(data as { code: string }).code}`);
+    router.push(`/cuenta/pagar/${(data as { id: string }).id}`);
   }
 
   if (!purchasable) {

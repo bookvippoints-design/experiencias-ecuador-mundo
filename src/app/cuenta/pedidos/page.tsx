@@ -3,6 +3,7 @@ import { AccountTabs } from "@/components/AccountTabs";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
 import { productPaymentUrl } from "@/lib/payphone";
+import { payphoneBoxEnabled } from "@/lib/payphone-box";
 import { money, shortDate, ORDER_STATUS_LABEL } from "@/lib/format";
 import { ReportPayment } from "./ReportPayment";
 
@@ -10,6 +11,7 @@ export default async function MisPedidos({ searchParams }: { searchParams: Promi
   const profile = await requireRole("user");
   const { nuevo } = await searchParams;
   const supabase = await createClient();
+  const box = payphoneBoxEnabled();
   const { data: orders } = await supabase
     .from("orders")
     .select("id, code, product_snapshot, price, mode, recipient_name, recipient_email, status, payment_reference, created_at, review_notes, pay_clicked_at")
@@ -23,9 +25,9 @@ export default async function MisPedidos({ searchParams }: { searchParams: Promi
         <AccountTabs current="/cuenta/pedidos" />
         {nuevo && (
           <div className="success-box">
-            <strong>Pedido {nuevo} creado.</strong> Paga con PayPhone y, unos minutos después, pulsa &quot;Ya pagué&quot; con el número de
+            <strong>Pedido {nuevo} creado.</strong>{box ? <> Págalo con tarjeta: tus experiencias se acreditan apenas se apruebe el pago (o el regalo llega a su destinatario).</> : <> Paga con PayPhone y, unos minutos después, pulsa &quot;Ya pagué&quot; con el número de
             transacción de tu comprobante. Cuando verifiquemos tu pago en PayPhone, tus experiencias se acreditarán (o el regalo se
-            enviará a su destinatario).
+            enviará a su destinatario).</>}
           </div>
         )}
         {(orders ?? []).length === 0 && <div className="empty-card">Todavía no tienes pedidos.</div>}
@@ -58,7 +60,7 @@ export default async function MisPedidos({ searchParams }: { searchParams: Promi
                   {o.status === "rejected" && o.review_notes && <p className="field-error">{o.review_notes}</p>}
                   {open && (
                     <div className="exp-card__actions">
-                      <ReportPayment orderId={o.id} payUrl={productPaymentUrl(product.slug)} reported={o.status === "payment_reported"} payClickedAt={o.pay_clicked_at} />
+                      <ReportPayment orderId={o.id} boxUrl={box ? `/cuenta/pagar/${o.id}` : null} payUrl={productPaymentUrl(product.slug)} reported={o.status === "payment_reported"} payClickedAt={o.pay_clicked_at} />
                     </div>
                   )}
                 </div>

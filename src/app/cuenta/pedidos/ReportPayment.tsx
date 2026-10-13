@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { notifyAdmin } from "@/app/alert-actions";
 
@@ -13,8 +14,8 @@ function mmss(ms: number) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
-export function ReportPayment({ orderId, payUrl, reported, payClickedAt }: {
-  orderId: string; payUrl: string | null; reported: boolean; payClickedAt: string | null;
+export function ReportPayment({ orderId, boxUrl = null, payUrl, reported, payClickedAt }: {
+  orderId: string; boxUrl?: string | null; payUrl: string | null; reported: boolean; payClickedAt: string | null;
 }) {
   const [clickedAt, setClickedAt] = useState<number | null>(payClickedAt ? new Date(payClickedAt).getTime() : null);
   const [now, setNow] = useState(() => Date.now());
@@ -58,6 +59,20 @@ export function ReportPayment({ orderId, payUrl, reported, payClickedAt }: {
     const { error: e } = await createClient().rpc("cancel_order", { p_order_id: orderId });
     if (e) setError(e.message);
     else router.refresh();
+  }
+
+  if (boxUrl) {
+    // Cajita de Pagos activa: se paga con tarjeta y se acredita solo; ya no hay "Ya pagué".
+    return (
+      <div>
+        <div className="btn-row">
+          <Link className="btn-orange btn-small" href={boxUrl}>{reported ? "Pagar con tarjeta" : "Pagar ahora con tarjeta"}</Link>
+          {!reported && <button className="btn-ghost btn-small" onClick={cancel}>Cancelar pedido</button>}
+        </div>
+        {reported && <p className="field-hint" style={{ marginTop: ".5rem" }}>Si ya pagaste por otro medio, no hace falta pagar de nuevo: lo estamos verificando.</p>}
+        {error && <p className="field-error">{error}</p>}
+      </div>
+    );
   }
 
   return (

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { notifyAdmin } from "@/app/alert-actions";
 
@@ -12,6 +13,8 @@ export interface Plan {
   total_price: number;
   badge: string | null;
   payUrl: string | null;
+  /** Cajita de Pagos PayPhone activa: se paga dentro de la plataforma y los cupos se suman solos. */
+  box?: boolean;
 }
 
 function money(n: number) {
@@ -69,6 +72,10 @@ export function PlanCards({ plans, disabled }: { plans: Plan[]; disabled?: boole
                   <button className="btn-orange btn-small" onClick={() => report(p.key)}>Enviar reporte</button>
                   <button className="btn-ghost btn-small" onClick={() => setReporting(null)}>Cancelar</button>
                 </div>
+              </div>
+            ) : p.box ? (
+              <div className="btn-row">
+                <Link className="btn-orange btn-small" href={`/empresa/pagar/${p.key}`}>Comprar con tarjeta</Link>
               </div>
             ) : (
               <div className="btn-row">

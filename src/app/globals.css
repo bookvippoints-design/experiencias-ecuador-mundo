@@ -2664,3 +2664,20 @@ body { background: #f3f8fc; }
   .detail-row__date { grid-column: 1 / -1; }
   .detail-row__actions { grid-column: 1 / -1; justify-content: flex-start; }
 }
+
+/* ---------- Pago con tarjeta (Cajita PayPhone) ---------- */
+.checkout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 1.25rem; align-items: start; }
+.checkout__summary, .checkout__pay { background: #fff; border: 1px solid #dcebf5; border-radius: 16px; padding: 1.25rem; min-width: 0; }
+.checkout__summary h2 { margin: .25rem 0 .5rem; color: var(--azul); }
+.checkout__pay h3 { margin: 0 0 .75rem; color: var(--azul); }
+.checkout__photo { height: 150px; border-radius: 12px; background: var(--celeste) center/cover no-repeat; margin-bottom: .9rem; }
+.checkout__total { display: flex; justify-content: space-between; align-items: baseline; background: var(--naranja-claro); border-radius: 12px; padding: .8rem 1rem; margin: .9rem 0; }
+.checkout__total strong { font-size: 1.5rem; color: var(--naranja-oscuro); }
+.pp-box { min-height: 120px; overflow-x: auto; }
+.pay-result { text-align: center; }
+.pay-result .step-text, .pay-result .step-help { text-align: center; }
+.pay-result__icon { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; margin: 1rem auto .5rem; font-size: 2rem; font-weight: 800; color: #fff; }
+.pay-result__icon--ok { background: #1a7f4e; }
+.pay-result__icon--wait { background: var(--azul-cielo); }
+.pay-result__icon--bad { background: var(--naranja); }
+@media (max-width: 800px) { .checkout { grid-template-columns: 1fr; } .checkout__summary, .checkout__pay { padding: 1rem; } }

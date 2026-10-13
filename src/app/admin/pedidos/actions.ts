@@ -5,9 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getCurrentProfile } from "@/lib/auth/identity";
 import { ensureAccountAndLink } from "@/lib/auth/access-links";
-import { sendGiftEmails } from "@/lib/notifications";
-import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
-import { appUrl } from "@/lib/brand";
+import { sendOrderApprovedEmails } from "@/lib/order-fulfillment";
 
 export interface ActionResult {
   error: string | null;
@@ -48,28 +46,7 @@ export async function approveOrderAction(orderId: string, notes: string | null):
   if (error) return { error: error.message, message: null };
   const result = data as { gift_id: string | null };
 
-  let warning: string | null = null;
-  if (order.mode === "gift" && result.gift_id && access) {
-    warning = await sendGiftEmails(result.gift_id, access);
-  } else {
-    try {
-      const { data: buyer } = await admin.from("profiles").select("full_name, email").eq("user_id", order.buyer_id).single();
-      const product = order.product_snapshot as { name: string };
-      if (buyer) {
-        await sendMail({
-          to: buyer.email,
-          subject: `Tu ${product.name} ya está activo`,
-          html: emailLayout(
-            `<h2 style="margin:0 0 8px;color:#c4520a">¡Listo, ${escapeHtml(buyer.full_name)}!</h2>
-             <p>Confirmamos tu pago del pedido <strong>${order.code}</strong>. Tus experiencias de <strong>${escapeHtml(product.name)}</strong> ya están en tu cuenta, con su vigencia y el acceso para solicitar tu reserva.</p>`,
-            { label: "Ver mis experiencias", url: `${appUrl()}/cuenta/experiencias` }
-          ),
-        });
-      }
-    } catch (e) {
-      warning = e instanceof Error ? e.message : "No se pudo enviar el correo";
-    }
-  }
+  const warning = await sendOrderApprovedEmails(order, result.gift_id, access);
 
   revalidatePath("/admin/pedidos");
   return {

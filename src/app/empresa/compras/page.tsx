@@ -4,6 +4,7 @@ import { TopBar } from "@/components/TopBar";
 import { PlanCards } from "../PlanCards";
 import { loadPlans } from "@/lib/plans";
 import { money, shortDate } from "@/lib/format";
+import { payphoneBoxEnabled } from "@/lib/payphone-box";
 
 const STATUS: Record<string, string> = { pending: "En revisión", approved: "Aprobada", rejected: "Rechazada" };
 
@@ -22,7 +23,9 @@ export default async function EmpresaCompras() {
       <TopBar profile={profile} eyebrow="PANEL EMPRESARIAL" title="Comprar cupos" />
       <main className="portal-content">
         <p className="content-lead">
-          Paga el plan con PayPhone y luego pulsa &quot;Ya pagué&quot;. Sumamos los cupos cuando confirmamos el pago.
+          {payphoneBoxEnabled()
+            ? "Elige tu plan y págalo con tarjeta. Los cupos se suman a tu empresa apenas se apruebe el pago."
+            : <>Paga el plan con PayPhone y luego pulsa &quot;Ya pagué&quot;. Sumamos los cupos cuando confirmamos el pago.</>}
         </p>
         <PlanCards plans={plans} disabled={company?.status !== "active"} />
 

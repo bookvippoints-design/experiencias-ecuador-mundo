@@ -80,13 +80,15 @@ export default function TerminosPage() {
           ni recuperarlo. Regalar no cambia la fecha de vencimiento.
         </li>
         <li>Los puntos se regalan completos. Una invitación internacional ya registrada no puede regalarse.</li>
-        <li>Los regalos comprados se entregan cuando se confirma el pago en PayPhone.</li>
+        <li>Los regalos comprados se entregan apenas se confirma el pago.</li>
       </ul>
 
       <h2>7. Pagos</h2>
       <p>
-        Los pagos se realizan por PayPhone y se reportan desde la plataforma con el número de transacción. Las experiencias
-        se acreditan solo cuando el equipo verifica el pago en PayPhone. Los reportes de pago falsos pueden bloquear la cuenta.
+        Los pagos se realizan con tarjeta de crédito o débito dentro de la plataforma, procesados por PayPhone. Las experiencias,
+        los regalos y los cupos se acreditan automáticamente cuando PayPhone aprueba el pago; la plataforma no guarda los datos
+        de la tarjeta. Si un pago no se completa, no se realiza ningún cobro. Los pagos por otros medios, como depósito o
+        transferencia, se acreditan cuando el equipo los verifica. Los reportes de pago falsos pueden bloquear la cuenta.
       </p>
 
       <h2>8. Datos personales</h2>

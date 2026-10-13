@@ -26,13 +26,19 @@ export default async function AdminPedidos({ searchParams }: { searchParams: Pro
     .order("created_at", { ascending: false });
 
   const byId = await loadPeople((orders ?? []).map((o) => o.buyer_id));
+  const ids = (orders ?? []).map((o) => o.id);
+  const { data: cardPays } = ids.length
+    ? await supabase.from("payphone_payments").select("order_id, payphone_id, authorization_code, card_brand, last_digits").eq("status", "approved").in("order_id", ids)
+    : { data: [] };
+  const cardByOrder = new Map((cardPays ?? []).map((c) => [c.order_id as string, c]));
 
   return (
     <>
       <TopBar profile={profile} eyebrow="ADMINISTRACIÓN" title="Pedidos y pagos" />
       <main className="portal-content">
         <p className="content-lead">
-          Verifica cada pago en PayPhone antes de aprobarlo. Los regalos se entregan al destinatario solo con este paso.
+          Los pagos con tarjeta (Cajita PayPhone) se aprueban solos. Aprueba a mano solo casos especiales, como un depósito o
+          transferencia que ya verificaste; los regalos se entregan al destinatario con ese paso.
         </p>
         <nav className="tabs">
           {FILTERS.map((x) => (
@@ -81,8 +87,27 @@ export default async function AdminPedidos({ searchParams }: { searchParams: Pro
                       )}
                     </td>
                     <td>
-                      {o.payment_reference ?? "—"}
-                      <div className="exp-card__meta">{o.payment_reported_at ? `Reportado ${shortDate(o.payment_reported_at)}` : "Sin reporte"}</div>
+                      {(() => {
+                        const card = cardByOrder.get(o.id);
+                        if (card) {
+                          return (
+                            <>
+                              <span className="pill pill--available">Tarjeta PayPhone</span>
+                              <div className="exp-card__meta">
+                                Transacción {card.payphone_id}{card.authorization_code ? ` · aut. ${card.authorization_code}` : ""}
+                                {card.last_digits ? ` · ${card.card_brand ?? ""} **** ${card.last_digits}` : ""}
+                              </div>
+                              {o.status !== "approved" && <div className="field-error">PayPhone aprobó el pago pero no se acreditó: apruébalo a mano.</div>}
+                            </>
+                          );
+                        }
+                        return (
+                          <>
+                            {o.payment_reference ?? "—"}
+                            <div className="exp-card__meta">{o.payment_reported_at ? `Reportado ${shortDate(o.payment_reported_at)}` : "Sin pago"}</div>
+                          </>
+                        );
+                      })()}
                     </td>
                     <td>{ORDER_STATUS_LABEL[o.status]}{o.review_notes ? <div className="exp-card__meta">{o.review_notes}</div> : null}</td>
                     <td>
