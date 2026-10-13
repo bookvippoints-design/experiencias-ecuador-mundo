@@ -35,6 +35,12 @@ function giftable(e: BoardItem) {
   return true;
 }
 
+function describeKind(e: BoardItem): string {
+  if (e.kind === "national") return `Hospedaje para 2 personas con desayuno en Quito, Guayaquil, Manta, Cuenca o Loja. Pídela con al menos ${NATIONAL_MIN_DAYS} días de anticipación.`;
+  if (e.kind === "international") return "Más de 130 destinos, de 4 días y 3 noches hasta 8 días y 7 noches según destino. Fee de emisión US$0; impuestos y tasas a cargo del viajero.";
+  return "Cada punto equivale a hasta US$1 de ahorro como pago parcial en hoteles. Se acreditan en tu cuenta BookVipPoints.";
+}
+
 const byExpiry = (a: BoardItem, b: BoardItem) => new Date(a.valid_until ?? "9999-12-31").getTime() - new Date(b.valid_until ?? "9999-12-31").getTime();
 
 function GroupCard({ icon, title, available, inProcess, nextExpiry, actionLabel, onAction, onGift, canGift, children }: {
@@ -158,78 +164,54 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
         </button>
       )}
 
-      {showDetail && !readOnly && <div className="btn-row" style={{ marginBottom: "1rem" }}>
-        {!selecting ? (
-          <button className="btn-orange" onClick={() => setSelecting(true)} disabled={!items.some(giftable)}>🎁 Regalar experiencias</button>
-        ) : (
-          <>
-            <span className="info-box" style={{ margin: 0 }}>Toca las experiencias que quieres regalar ({selected.length} elegidas).</span>
-            <button className="btn-orange" disabled={selected.length === 0} onClick={() => setGiftOpen(true)}>Continuar</button>
-            <button className="btn-ghost" onClick={() => { setSelecting(false); setSelected([]); }}>Cancelar</button>
-          </>
-        )}
-      </div>}
-
-      {showDetail && <div className="exp-grid">
-        {items.map((e) => {
-          const status = effectiveStatus(e);
-          const canGift = giftable(e);
-          const isSel = selected.includes(e.id);
-          const deadline = e.kind === "international" && e.travel_deadline ? e.travel_deadline : e.valid_until;
-          return (
-            <article
-              key={e.id}
-              className={`exp-card${selecting && canGift ? " exp-card--selectable" : ""}${isSel ? " exp-card--selected" : ""}`}
-              onClick={selecting && canGift ? () => toggle(e.id) : undefined}
-              aria-pressed={selecting && canGift ? isSel : undefined}
-            >
-              <div className="exp-card__photo" style={{ backgroundImage: `url('${e.photo}')` }}>
-                <span className="exp-card__kind">{KIND_LABEL[e.kind]}</span>
-              </div>
-              <div className="exp-card__body">
-                <h3 className="exp-card__title">{entitlementTitle(e)}</h3>
-                <div className="exp-card__meta">{e.productName} · {e.code}</div>
-                {e.giftFrom && <div className="exp-card__gift">🎁 Regalo de {e.giftFrom}</div>}
-                <div><StatusPill status={status} /></div>
-                {e.destination && <div className="exp-card__meta">Destino solicitado: <strong>{e.destination}</strong></div>}
-
-                {e.kind === "points" ? (
-                  <div className="exp-card__countdown">
-                    {e.points_credited_at
-                      ? "Ya están acreditados en tu cuenta BookVipPoints. Úsalos al reservar tu hotel."
-                      : status === "requested"
-                        ? "Recibimos tu solicitud de canje. Te avisaremos cuando estén acreditados en BookVipPoints."
-                        : "Los puntos no caducan. Canjéalos para acreditarlos en tu cuenta BookVipPoints."}
-                  </div>
-                ) : status === "available" || status === "requested" ? (
-                  <div className="exp-card__countdown">
-                    {e.kind === "international" && e.travel_deadline ? "Tiempo para viajar" : "Tiempo para usarla"}:{" "}
-                    <Countdown deadline={deadline!} />
-                    <div className="exp-card__meta">Vence el {longDate(deadline)}</div>
-                  </div>
-                ) : null}
-
-                {e.kind === "international" && e.invitation_delivered_at && !e.invitation_registered_at && (
-                  <p className="field-hint">Tu invitación fue emitida: regístrala en 30 días y paga impuestos y tasas dentro de 7 días tras el registro.</p>
-                )}
-
-                {!selecting && (
-                  <div className="exp-card__actions">
-                    {status === "available" && !(e.kind === "points" && e.points_credited_at) && (
-                      <button className="btn-blue btn-small" onClick={() => setBooking(e)}>
-                        {e.kind === "national" ? "Canjear: reservar escapada" : e.kind === "international" ? "Canjear: pedir invitación" : "Canjear mis puntos"}
-                      </button>
-                    )}
-                    {canGift && (
-                      <button className="btn-orange btn-small" onClick={() => { setSelected([e.id]); setGiftOpen(true); }}>Regalar</button>
-                    )}
-                  </div>
-                )}
-              </div>
-            </article>
-          );
-        })}
-      </div>}
+      {showDetail && (
+        <div className="detail-groups">
+          {Object.entries(
+            items.reduce<Record<string, BoardItem[]>>((acc, e) => {
+              const key = e.kind === "points" ? "Puntos" : entitlementTitle(e);
+              (acc[key] ??= []).push(e);
+              return acc;
+            }, {})
+          ).map(([title, group]) => (
+            <section key={title} className="detail-group">
+              <h3 className="detail-group__title">{title}</h3>
+              <p className="detail-group__desc">{describeKind(group[0])}</p>
+              <ul className="detail-rows">
+                {group.sort(byExpiry).map((e) => {
+                  const status = effectiveStatus(e);
+                  const deadline = e.kind === "international" && e.travel_deadline ? e.travel_deadline : e.valid_until;
+                  return (
+                    <li key={e.id} className="detail-row">
+                      <span className="detail-row__main">
+                        <strong>{e.kind === "points" ? `${(e.points ?? 0).toLocaleString("es-EC")} puntos` : e.productName}</strong>
+                        <span className="detail-row__meta">{e.code}{e.giftFrom ? ` · 🎁 regalo de ${e.giftFrom}` : ""}{e.destination ? ` · ${e.destination}` : ""}</span>
+                      </span>
+                      <StatusPill status={status} />
+                      <span className="detail-row__date">
+                        {e.kind === "points"
+                          ? e.points_credited_at ? "Acreditados" : "No caducan"
+                          : deadline ? `${e.kind === "international" && e.travel_deadline ? "Viajar hasta" : "Vence"} el ${longDate(deadline)}` : ""}
+                      </span>
+                      {!readOnly && (
+                        <span className="detail-row__actions">
+                          {status === "available" && !(e.kind === "points" && e.points_credited_at) && (
+                            <button className="btn-blue btn-small" onClick={() => setBooking(e)}>
+                              {e.kind === "national" ? "Reservar" : e.kind === "international" ? "Pedir" : "Canjear"}
+                            </button>
+                          )}
+                          {giftable(e) && (
+                            <button className="btn-orange btn-small" onClick={() => { setSelected([e.id]); setGiftOpen(true); }}>Regalar</button>
+                          )}
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ))}
+        </div>
+      )}
 
       {giftQty && (
         <GiftQuantityDialog label={giftQty.label} max={giftQty.pool.length} onClose={() => setGiftQty(null)}

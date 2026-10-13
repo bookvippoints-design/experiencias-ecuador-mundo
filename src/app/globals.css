@@ -2647,3 +2647,20 @@ body { background: #f3f8fc; }
 .btn-points { display: inline-flex; align-items: center; gap: .35rem; background: #fff; color: var(--naranja-oscuro); border: 2px solid var(--naranja); border-radius: 10px; font-weight: 800; text-decoration: none; padding: .55rem 1rem; }
 .btn-points.btn-small { padding: .35rem .8rem; font-size: .85rem; }
 .btn-points:hover { background: var(--naranja-claro); color: var(--naranja-oscuro); }
+
+/* Detalle de cada experiencia: una descripción por tipo y filas compactas */
+.detail-groups { display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1rem; }
+.detail-group { background: #fff; border: 1px solid #dcebf5; border-radius: 16px; padding: 1rem 1.1rem; }
+.detail-group__title { margin: 0; font-size: 1.05rem; color: var(--azul); }
+.detail-group__desc { margin: .2rem 0 .6rem; font-size: .88rem; color: #5b6570; }
+.detail-rows { list-style: none; margin: 0; padding: 0; }
+.detail-row { display: grid; grid-template-columns: minmax(0, 1.4fr) auto minmax(0, 1fr) auto; gap: .75rem; align-items: center; padding: .6rem 0; border-top: 1px solid #eef3f7; }
+.detail-row__main { display: flex; flex-direction: column; min-width: 0; }
+.detail-row__meta { font-size: .8rem; color: #5b6570; overflow: hidden; text-overflow: ellipsis; }
+.detail-row__date { font-size: .85rem; color: #374151; }
+.detail-row__actions { display: flex; gap: .4rem; justify-content: flex-end; }
+@media (max-width: 700px) {
+  .detail-row { grid-template-columns: 1fr auto; gap: .35rem .6rem; }
+  .detail-row__date { grid-column: 1 / -1; }
+  .detail-row__actions { grid-column: 1 / -1; justify-content: flex-start; }
+}
