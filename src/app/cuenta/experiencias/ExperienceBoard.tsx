@@ -41,6 +41,8 @@ function describeKind(e: BoardItem): string {
   return "Cada punto equivale a hasta US$1 de ahorro como pago parcial en hoteles. Se acreditan en tu cuenta BookVipPoints.";
 }
 
+const KIND_ORDER: Record<string, number> = { national: 0, international: 1, points: 2 };
+
 const byExpiry = (a: BoardItem, b: BoardItem) => new Date(a.valid_until ?? "9999-12-31").getTime() - new Date(b.valid_until ?? "9999-12-31").getTime();
 
 function GroupCard({ icon, title, available, inProcess, nextExpiry, actionLabel, onAction, onGift, canGift, children }: {
@@ -172,7 +174,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
               (acc[key] ??= []).push(e);
               return acc;
             }, {})
-          ).map(([title, group]) => (
+          ).sort(([, a], [, b]) => KIND_ORDER[a[0].kind] - KIND_ORDER[b[0].kind]).map(([title, group]) => (
             <section key={title} className="detail-group">
               <h3 className="detail-group__title">{title}</h3>
               <p className="detail-group__desc">{describeKind(group[0])}</p>
