@@ -1,18 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#F07A1F">
-<meta name="description" content="Accede por US$25 al catálogo privado de Experiencias Ecuador y el Mundo y descubre escapadas en Ecuador e invitaciones hoteleras en el mundo para disfrutar o regalar.">
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#F07A1F" name="theme-color"/>
 <title>Experiencias Ecuador y el Mundo | Para disfrutar y regalar</title>
-<link rel="icon" type="image/svg+xml" href="/acceso/img/icono.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/acceso/img/icono-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/acceso/img/icono-180.png">
+<link rel="icon" type="image/webp" href="/acceso/img/logo-bvpoints.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="/acceso/img/logo-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/acceso/img/logo-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Experiencias Ecuador y el Mundo">
 <meta property="og:title" content="Experiencias Ecuador y el Mundo · Para disfrutar y regalar">
-<meta property="og:description" content="Escapadas en Ecuador e invitaciones hoteleras en más de 130 destinos del mundo, para ti o para regalar. Obtén tu acceso al catálogo privado.">
+<meta property="og:description" content="Los regalos más bonitos no se guardan. Se viven. Escapadas en Ecuador e invitaciones hoteleras en el mundo, para disfrutar y regalar.">
 <meta property="og:url" content="https://experiencias.bookvippoints.com/acceso">
 <meta property="og:image" content="https://experiencias.bookvippoints.com/acceso/img/compartir.jpg">
 <meta property="og:image:width" content="1200">
@@ -20,79 +18,58 @@
 <meta property="og:locale" content="es_EC">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://experiencias.bookvippoints.com/acceso/img/compartir.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta content="Regala algo que se vive. Descubre escapadas en Ecuador e invitaciones hoteleras internacionales. Accede a nuestro catálogo privado y descubre experiencias para disfrutar y regalar." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Outfit:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --orange:#F07A1F; --orange-dark:#C4520A; --blue:#1F7FB8; --blue-sky:#4AA8E0; --soft:#EAF6FD;
-  --text:#17384d; --muted:#62808f; --line:#dbeaf2; --paper:#fff; --shadow:0 26px 70px rgba(19,63,86,.12);
-}
-*{box-sizing:border-box} html{scroll-behavior:smooth;scroll-padding-top:84px} body{margin:0;font-family:Inter,sans-serif;color:var(--text);background:#fff;line-height:1.65}
-a:where(:not(#pp-acceso a)){text-decoration:none;color:inherit} img:where(:not(#pp-acceso img)){display:block;width:100%;height:100%;object-fit:cover} :where(h1,h2,h3,strong,.brand-title,.ee-btn,.eyebrow):where(:not(#pp-acceso *)){font-family:Manrope,sans-serif} :where(h1,h2,h3,p):where(:not(#pp-acceso *)){margin:0 0 14px}
-.ee-wrap{width:min(1180px,calc(100% - 28px));margin:auto}
-.ee-section{padding:100px 0}.section-soft{background:linear-gradient(180deg,#fff 0%,#f7fbfe 100%)}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:#eff8fd;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.eyebrow:before{content:'✦';color:var(--orange)}
-.ee-title{font-size:clamp(2rem,4.5vw,3.6rem);line-height:1.08;letter-spacing:-.05em;font-weight:800;margin:16px 0}.ee-title em{font-style:normal;color:var(--orange-dark)}
-.ee-lede{font-size:1.06rem;color:var(--muted);max-width:740px}
-.ee-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,#ff932f,var(--orange));color:#fff;border-radius:16px;padding:16px 24px;min-height:58px;font-size:15px;font-weight:800;box-shadow:0 16px 35px rgba(240,122,31,.25);transition:.2s transform,.2s box-shadow}.ee-btn:hover{transform:translateY(-3px);box-shadow:0 24px 44px rgba(240,122,31,.33)}
-.ee-btn-outline{background:#fff;color:var(--orange-dark);box-shadow:none;border:1px solid #fff8}
-.ee-small{font-size:13px;color:var(--muted)}
-.cards-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.grid-2{display:grid;grid-template-columns:1.03fr .97fr;gap:34px;align-items:center}
-.ee-panel{background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow)}
-/* header */
-header{position:sticky;top:0;z-index:50;background:#fffffff0;backdrop-filter:blur(16px);border-bottom:1px solid #edf4f8}
-header .ee-wrap{display:flex;align-items:center;justify-content:space-between;min-height:82px;gap:18px}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}.ee-mark{width:52px;height:52px;flex:0 0 52px;border-radius:16px;background:linear-gradient(145deg,#ff912e,var(--orange-dark));display:grid;place-items:center;color:#fff;font-weight:800;font-size:22px;box-shadow:0 12px 26px rgba(240,122,31,.28)}
-.brand-copy{display:flex;flex-direction:column;line-height:1.12;min-width:0}.brand-title{font-size:14px;font-weight:800;color:var(--orange-dark)}.brand-sub{font-size:11px;font-weight:700;color:var(--blue);margin-top:4px}.ee-login{font-size:14px;font-weight:800;color:var(--blue)}
-/* hero */
-.hero{position:relative;overflow:hidden;min-height:92vh;background:#143c59;display:flex;align-items:center}
-.hero > img,.hero:before{position:absolute;inset:0;width:100%;height:100%}.hero > img{object-fit:cover;z-index:0}.hero:before{content:'';z-index:1;background:linear-gradient(90deg,rgba(9,31,45,.88) 0%,rgba(9,31,45,.72) 42%,rgba(9,31,45,.18) 74%,rgba(9,31,45,.14) 100%),linear-gradient(0deg,rgba(7,29,44,.42),rgba(7,29,44,.08))}
-.hero .ee-wrap{position:relative;z-index:2;padding:110px 0 128px;display:grid;grid-template-columns:minmax(0,650px) 1fr;gap:40px;align-items:end}
-.hero-copy{color:#fff}.hero h1{font-size:clamp(3rem,6vw,6rem);line-height:1.01;letter-spacing:-.07em;margin:18px 0 22px;font-family:Manrope,sans-serif}.hero h1 span{color:#ffb465}
-.hero p{font-size:clamp(1rem,1.8vw,1.18rem);color:#edf8ff;max-width:580px}.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}.hero-note{margin-top:16px;color:#dff3ff;font-size:14px;font-weight:600}
-.hero-aside{justify-self:end;width:min(390px,100%);display:grid;gap:16px}
-.ee-glass{background:rgba(255,255,255,.11);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:18px;color:#fff;box-shadow:0 18px 40px rgba(0,0,0,.14)}
-.ee-glass strong{display:block;font-size:1rem;margin-bottom:6px}.ee-glass p{font-size:14px;color:#eef9ff;margin:0}
-.ee-ribbon{background:#fff;box-shadow:0 20px 50px rgba(17,57,85,.08)}
-.ee-ribbon .ee-wrap{display:grid;grid-template-columns:repeat(4,1fr)}
-.ribbon-item{padding:22px 20px;border-right:1px solid var(--line);display:flex;gap:14px;align-items:flex-start}.ribbon-item:last-child{border-right:0}.ribbon-icon{width:44px;height:44px;border-radius:14px;background:#fff2e6;color:var(--orange-dark);display:grid;place-items:center;font-size:20px;flex:none}.ribbon-item:nth-child(2) .ribbon-icon,.ribbon-item:nth-child(4) .ribbon-icon{background:#eaf6fd;color:var(--blue)}
-.ribbon-item strong{display:block;font-size:15px;line-height:1.25}.ribbon-item span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
-/* visual gallery */
-.section-head{text-align:center;max-width:800px;margin:0 auto 44px}.section-head .ee-lede{margin-left:auto;margin-right:auto}
-.gallery-card{position:relative;overflow:hidden;min-height:420px;border-radius:24px;box-shadow:var(--shadow)}
-.gallery-card:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,30,44,.03) 18%,rgba(8,30,44,.72) 100%);z-index:1}
-.gallery-card img{transition:transform .7s}.gallery-card:hover img{transform:scale(1.06)}
-.gallery-copy{position:absolute;inset:auto 18px 18px;z-index:2;color:#fff}.gallery-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;opacity:.95;margin-bottom:8px}.gallery-title{font-size:24px;line-height:1.08;letter-spacing:-.04em;font-weight:800;margin:0 0 8px}.gallery-copy p{font-size:14px;color:#eef6fb;margin:0}
-/* benefits */
-.benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px}.benefit{padding:24px;border-radius:22px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 34px rgba(17,57,85,.06)}.benefit .ee-icon{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#eff8fd;color:var(--blue);font-size:22px;margin-bottom:18px}.benefit:nth-child(2) .ee-icon,.benefit:nth-child(3) .ee-icon{background:#fff2e8;color:var(--orange-dark)}.benefit h3{font-size:18px;line-height:1.25;letter-spacing:-.03em;margin-bottom:10px}.benefit p{font-size:14px;color:var(--muted);margin:0}
-.story-photo{height:460px;border-radius:28px;overflow:hidden;box-shadow:var(--shadow)}
-.ee-story-copy ul{padding:0;list-style:none;margin:18px 0 0;display:grid;gap:14px}.ee-story-copy li{position:relative;padding-left:28px;color:var(--muted)}.ee-story-copy li:before{content:'✓';position:absolute;left:0;top:-1px;color:var(--blue);font-weight:900}
-/* video */
-.video-wrap{display:grid;grid-template-columns:1.02fr .98fr;gap:28px;align-items:center}.video-frame{position:relative;overflow:hidden;border-radius:26px;box-shadow:var(--shadow);background:#dbeef8;aspect-ratio:16/9}.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.video-points{display:grid;gap:14px}.mini-tip{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:0 12px 30px rgba(17,57,85,.05)}.mini-tip strong{display:block;font-size:15px;margin-bottom:5px}.mini-tip p{font-size:14px;color:var(--muted);margin:0}
-/* points */
-.points-box{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:center;border-radius:30px;background:linear-gradient(135deg,#123c5c,#1F7FB8);color:#fff;padding:30px;box-shadow:0 28px 70px rgba(17,57,85,.16)}
-.points-box .eyebrow{background:#ffffff1c;color:#e8f6ff}.points-box .eyebrow:before{color:#ffd09d}.points-box h3{font-size:clamp(2rem,3vw,3rem);line-height:1.08;letter-spacing:-.05em;margin:14px 0}.points-box p{color:#e7f5fd}
-.points-media{border-radius:24px;overflow:hidden;min-height:100%;box-shadow:0 20px 50px rgba(0,0,0,.14)}
-.ee-demo{margin-top:18px;background:#fff;color:var(--text);border-radius:24px;padding:22px;box-shadow:0 16px 38px rgba(0,0,0,.12)}.demo-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--blue);display:block;margin-bottom:8px}.demo-title{font-family:Manrope,sans-serif;font-size:22px;line-height:1.15;letter-spacing:-.04em;font-weight:800;margin-bottom:16px}.demo-row{display:flex;justify-content:space-between;gap:14px;align-items:flex-end;padding:10px 0;border-bottom:1px solid #edf2f5}.demo-row span{font-size:14px;color:var(--muted)}.demo-row strong{font-size:20px;letter-spacing:-.02em}.ee-saved strong{color:var(--orange-dark)}.ee-final{border-bottom:0;padding-bottom:0}.ee-track{display:flex;height:12px;border-radius:999px;overflow:hidden;background:#edf4f8;margin:18px 0}.ee-track .ee-cash{background:var(--blue);width:71.43%}.ee-track .ee-points{background:var(--orange);width:28.57%}.demo-foot{font-size:12px;color:#748b99;margin-top:14px}
-/* packages */
-.package{background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}.package.featured{border:2px solid rgba(240,122,31,.48);transform:translateY(-6px)}.package-image{height:225px;position:relative}.package-image:after{content:'';position:absolute;inset:35% 0 0;background:linear-gradient(180deg,transparent,rgba(10,35,52,.66))}.package-tag{position:absolute;left:18px;bottom:16px;z-index:2;color:#fff;font-size:11px;font-weight:800;letter-spacing:.12em}.ee-badge{position:absolute;top:16px;right:16px;z-index:2;background:var(--orange);color:#fff;padding:8px 10px;border-radius:10px;font-size:11px;font-weight:800}.package-body{padding:24px}.package-body h3{font-size:24px;line-height:1.1;letter-spacing:-.04em;margin-bottom:10px}.package-body .ee-intro{color:var(--orange-dark);font-weight:700;font-size:14px}.package-body ul{list-style:none;padding:0;margin:18px 0;display:grid;gap:12px}.package-body li{position:relative;padding-left:24px;color:var(--muted);font-size:14px}.package-body li:before{content:'✓';position:absolute;left:0;color:var(--blue);font-weight:900}.ee-duration{padding-top:10px;font-size:12px;color:var(--blue);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.catalog-note{text-align:center;color:var(--orange-dark);font-weight:800;margin-top:24px}
-/* steps */
-.steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}.step-photo{height:540px;border-radius:28px;overflow:hidden;box-shadow:var(--shadow)}.step-list{display:grid;gap:18px}.ee-step{display:grid;grid-template-columns:58px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid #edf2f5}.ee-step:last-child{border-bottom:0}.ee-num{width:50px;height:50px;border-radius:16px;background:#fff1e8;color:var(--orange-dark);display:grid;place-items:center;font-weight:800;font-size:20px}.ee-step h3{font-size:18px;line-height:1.25;margin:4px 0 6px}.ee-step p{font-size:14px;color:var(--muted);margin:0}
-/* buy */
-.buy{background:radial-gradient(circle at top right,rgba(57,149,203,.45),transparent 33%),linear-gradient(180deg,#123b5b,#0f334d);color:#fff;position:relative;overflow:hidden}.buy .ee-title,.buy .ee-title em{color:#fff}.buy .ee-title em{color:#ffbd79}.buy .ee-lede{color:#d8eefb}.checkout{display:grid;grid-template-columns:.95fr 1.05fr;gap:24px;margin-top:34px}.receipt,.checkout-card{background:#fff;color:var(--text);border-radius:26px;padding:28px;border:1px solid #eef4f7;box-shadow:0 20px 60px rgba(0,0,0,.16)}.receipt-label{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--blue);margin-bottom:18px}.ee-row{display:flex;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid #edf3f6}.ee-row:last-of-type{border-bottom:0}.ee-row strong{font-size:20px;letter-spacing:-.03em}.ee-row small{display:block;color:var(--muted);font-size:13px;margin-top:4px}.ee-total{padding:16px 18px;border-radius:18px;background:#fff3e9;border:1px solid #ffd9bd;margin:18px 0}.ee-total span{display:block;font-size:13px;font-weight:800;color:var(--orange-dark);text-transform:uppercase;letter-spacing:.12em}.ee-total strong{display:block;font-size:32px;line-height:1.05;margin-top:5px;color:var(--orange-dark)}.ee-trust{display:flex;gap:12px;align-items:flex-start;background:#eff8fd;border-radius:18px;padding:14px 16px;font-size:14px;color:var(--text)}
-.checkout-card h3{font-size:28px;line-height:1.1;letter-spacing:-.04em;margin-bottom:10px}.ee-hint{font-size:14px;color:var(--muted);margin:0 0 16px}#checkout-acceso{min-height:300px;border:2px dashed #bad7e7;border-radius:22px;background:linear-gradient(180deg,#f7fbfe,#fff)}.checkout-note{font-size:13px;color:var(--muted);margin-top:16px}.buy-bottom{text-align:center;margin-top:22px;color:#eaf6fd;font-size:14px;font-weight:700}
-/* faq and final */
-.faq-media{height:340px;border-radius:28px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:24px}.faq-list{display:grid;gap:14px}.faq-list details{background:#fff;border:1px solid var(--line);border-radius:18px;padding:0 18px;box-shadow:0 12px 26px rgba(17,57,85,.05)}.faq-list summary{list-style:none;cursor:pointer;padding:20px 0;font-weight:800;font-family:Manrope,sans-serif;font-size:16px;display:flex;align-items:center;justify-content:space-between;gap:16px}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary:after{content:'+';width:34px;height:34px;border-radius:999px;background:#eff8fd;color:var(--blue);display:grid;place-items:center;font-size:22px;flex:none}.faq-list details[open] summary:after{content:'−';background:#fff2e8;color:var(--orange-dark)}.faq-list p{padding:0 0 18px;color:var(--muted);margin:0}
-.final-cta{margin-top:28px;padding:28px;border-radius:26px;background:linear-gradient(135deg,#fffaf5,#eaf6fd);border:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:var(--shadow)}.final-cta h3{font-size:clamp(1.8rem,3vw,2.6rem);line-height:1.06;letter-spacing:-.05em;margin:0 0 8px}.final-cta p{color:var(--muted);margin:0}
-/* footer */
-footer{padding:28px 0 44px;background:#fff;border-top:1px solid #edf4f8}.footer-card{border:1px solid var(--line);border-radius:24px;padding:24px;background:linear-gradient(180deg,#fff,#f7fbfe);display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.footer-card strong{display:block;font-size:17px;color:var(--orange-dark)}.footer-card small{display:block;color:var(--muted);margin-top:6px}.footer-links{display:flex;gap:16px 20px;flex-wrap:wrap;font-size:14px;font-weight:700;color:var(--blue)}
-.ee-floating{display:none}
-@media (max-width:1100px){.hero .ee-wrap,.grid-2,.video-wrap,.steps-grid,.checkout,.points-box,.cards-4,.cards-3{grid-template-columns:1fr}.hero-aside{width:100%;justify-self:start}.ee-ribbon .ee-wrap{grid-template-columns:repeat(2,1fr)}.benefits{grid-template-columns:repeat(2,1fr)}.story-photo{order:-1}.package.featured{transform:none}}
-@media (max-width:760px){.ee-section{padding:72px 0}.ee-wrap{width:min(1180px,calc(100% - 22px))}header .ee-wrap{min-height:74px}.brand-title{font-size:13px}.hero{min-height:auto}.hero .ee-wrap{grid-template-columns:1fr;padding:88px 0 92px}.hero h1{font-size:2.65rem}.hero-actions{flex-direction:column;align-items:stretch}.ee-btn,.ee-btn-outline{width:100%}.ee-ribbon .ee-wrap,.benefits{grid-template-columns:1fr}.ribbon-item{border-right:0;border-bottom:1px solid var(--line)}.ribbon-item:last-child{border-bottom:0}.gallery-card{min-height:370px}.story-photo,.step-photo,.faq-media{height:300px}.package-image{height:210px}.points-box,.receipt,.checkout-card,.final-cta,.footer-card{padding:22px}.final-cta{align-items:flex-start;flex-direction:column}.ee-floating{display:block;position:fixed;left:12px;right:12px;bottom:12px;z-index:55}.ee-floating a{width:100%}.buy .ee-wrap{padding-bottom:84px}}
+:root{--orange:#F07A1F;--burnt:#C4520A;--blue:#1F7FB8;--sky:#4AA8E0;--pale:#EAF6FD;--navy:#102D40;--ink:#203e50;--muted:#657f8f;--line:#dcebf2;--white:#fff;--shadow:0 22px 65px #112b3d1e}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:#fff;color:var(--ink);font:16px/1.62 'DM Sans',sans-serif}:where(h1,h2,h3,h4,.ee-btn,.ee-eyebrow,.ee-wordmark,.ee-number):where(:not(#pp-acceso *)){font-family:Outfit,sans-serif}:where(h1,h2,h3,p):where(:not(#pp-acceso *)){margin:0 0 15px}a:where(:not(#pp-acceso a)){color:inherit;text-decoration:none}img:where(:not(#pp-acceso img)){display:block;width:100%;height:100%;object-fit:cover}button,input,select{font:inherit}.ee-container{width:min(1220px,calc(100% - 40px));margin:auto}.ee-section{padding:98px 0}.ee-label{font-size:12px;text-transform:uppercase;letter-spacing:.17em;font-weight:800;color:var(--burnt);display:block;margin-bottom:14px}.ee-title{font-size:clamp(2.2rem,4.2vw,4rem);letter-spacing:-.055em;line-height:1.1;color:var(--navy);font-weight:800}.ee-title em{font-style:normal;color:var(--burnt)}.ee-intro{font-size:1.08rem;color:var(--muted);max-width:720px}.ee-center{text-align:center}.ee-center .ee-intro{margin-left:auto;margin-right:auto}.ee-pill{display:inline-flex;align-items:center;gap:8px;background:#fff4eb;border:1px solid #fbd9c3;color:var(--burnt);border-radius:30px;padding:6px 13px;font-size:12px;font-weight:800}.ee-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:15px 26px;border-radius:15px;background:var(--orange);color:white;font-weight:800;font-size:15px;box-shadow:0 13px 29px #ed782e50;transition:transform .25s,box-shadow .25s;border:0;cursor:pointer;text-align:center}.ee-btn:hover{transform:translateY(-3px);box-shadow:0 19px 35px #ed782e66}.ee-btn.ee-light{background:white;color:var(--burnt);box-shadow:0 10px 25px #00000016}.ee-btn.ee-ghost{background:transparent;border:1px solid #ffffff88;box-shadow:none}.ee-btn.ee-small{min-height:48px;padding:10px 18px}.ee-arrow{font-size:22px;font-weight:400}.ee-glass{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+/* HEADER */
+header{position:sticky;top:0;z-index:40;background:#fffffff2;border-bottom:1px solid #e6f0f4;backdrop-filter:blur(12px)}.ee-nav{min-height:78px;display:flex;justify-content:space-between;align-items:center;gap:12px}.ee-brand{display:flex;align-items:center;gap:11px;min-width:0}.ee-mark{width:52px;height:52px;border-radius:16px;flex:0 0 52px;display:grid;place-items:center;background:linear-gradient(145deg,#ff953e,var(--burnt));color:#fff;font:800 22px Outfit,sans-serif;box-shadow:0 10px 22px #f07a1f30}.ee-brand-name{display:block;color:var(--burnt);font:800 14px/1.2 Outfit,sans-serif;max-width:300px}.ee-brand-sub{display:block;font-size:11px;color:var(--blue);font-weight:700}.ee-nav-actions{display:flex;align-items:center;gap:22px}.ee-nav-actions a:not(.ee-btn){font-size:13px;color:var(--blue);font-weight:800}.ee-desktop-cta{min-height:44px;padding:8px 18px;border-radius:11px;font-size:13px}
+/* HERO */
+.ee-hero{min-height:745px;position:relative;background:#142f41;overflow:hidden;color:white;display:flex;align-items:center}.ee-hero-photo{position:absolute;inset:0;z-index:0}.ee-hero-photo img{object-position:center 48%}.ee-hero:after{content:'';pointer-events:none;position:absolute;inset:0;background:linear-gradient(90deg,#071b2be8 0%,#0b2638b8 42%,#0d29344b 78%,#11272b52 100%),linear-gradient(0deg,#0d253872,transparent 52%);z-index:1}.ee-hero-content{position:relative;z-index:2;padding:88px 0 115px}.ee-hero-copy{max-width:730px}.ee-hero .ee-label{color:#ffce93}.ee-hero h1{font-size:clamp(3rem,6.5vw,6.4rem);font-weight:800;letter-spacing:-.07em;line-height:1.01;max-width:820px}.ee-hero h1 span{color:#ffb777}.ee-hero p{font-size:clamp(1.03rem,1.7vw,1.24rem);max-width:590px;color:#e9f8ff}.ee-hero-actions{display:flex;flex-wrap:wrap;gap:13px;margin-top:27px}.ee-hero-note{font-size:13px;color:#eaf4fa;margin-top:18px}.ee-hero-badge{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:40px;background:#ffffff26;border:1px solid #ffffff50;font-weight:700;font-size:12px;letter-spacing:.05em;margin-bottom:23px}.ee-hero-bottom{position:absolute;bottom:25px;right:max(25px,calc((100vw - 1220px)/2));z-index:2;display:flex;align-items:center;gap:12px;background:#ffffff22;padding:10px 15px;border:1px solid #ffffff66;border-radius:14px;font-size:12px}
+/* TRUST STRIP */
+.ee-promise{background:#fff;box-shadow:0 17px 50px #11354d0b}.ee-promise-grid{display:grid;grid-template-columns:repeat(3,1fr)}.ee-promise-item{display:flex;align-items:center;gap:14px;padding:23px 16px;border-right:1px solid var(--line)}.ee-promise-item:last-child{border:0}.ee-promise-icon{height:43px;width:43px;flex:none;border-radius:14px;background:#fff0e4;color:var(--burnt);display:grid;place-items:center;font-size:23px}.ee-promise-item:nth-child(even) .ee-promise-icon{background:#eaf6fd;color:var(--blue)}.ee-promise-item strong{font-family:Outfit,sans-serif;font-size:15px;line-height:1.15;display:block}.ee-promise-item small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+/* VISUAL DESTINATIONS */
+.ee-offwhite{background:linear-gradient(180deg,#fff 0%,#f5fbff 100%)}.ee-destination-grid{display:grid;grid-template-columns:1.12fr .88fr .88fr;gap:17px;margin-top:37px}.ee-destination{min-height:465px;position:relative;border-radius:25px;overflow:hidden;box-shadow:var(--shadow);isolation:isolate}.ee-destination img{transition:transform .75s ease}.ee-destination:hover img{transform:scale(1.06)}.ee-destination:after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,#092334e8 0%,#10263820 62%)}.ee-destination-txt{position:absolute;bottom:23px;left:24px;right:20px;z-index:2;color:white}.ee-destination-txt small{font-size:12px;letter-spacing:.13em;font-weight:800;text-transform:uppercase;color:#ffe0b9}.ee-destination-txt h3{font-size:clamp(25px,3vw,38px);line-height:1.1;letter-spacing:-.04em;margin:8px 0}.ee-destination-txt p{font-size:14px;color:#ebf6fd;margin:0}.ee-destination-last{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;min-height:280px;background:var(--navy);border-radius:25px;overflow:hidden;color:#fff}.ee-destination-last img{max-height:310px}.ee-destination-last .ee-copy{padding:35px;align-self:center}.ee-destination-last h3{font-size:clamp(27px,3vw,38px);line-height:1.07;letter-spacing:-.04em}.ee-destination-last p{color:#e8f4fb}.ee-destination-last .ee-btn{margin-top:10px}
+/* VIDEO */
+.ee-video-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:42px;align-items:center}.ee-video-shell{border-radius:27px;overflow:hidden;background:#d7eef8;box-shadow:var(--shadow);aspect-ratio:16/9;position:relative}.ee-video-shell iframe{border:0;width:100%;height:100%;position:absolute;inset:0}.ee-video-tag{display:inline-flex;margin-bottom:18px}.ee-video-desc{font-size:13px;color:var(--muted);margin-top:12px}
+/* BRANDS */
+.ee-brandwall{background:#f5faff;border-block:1px solid #e0f1fa;padding:44px 0 50px}.ee-brandwall h2{font-size:clamp(25px,3vw,36px);letter-spacing:-.04em;line-height:1.1;margin:0 0 9px;text-align:center}.ee-brandwall p{margin:0 auto 23px;text-align:center;max-width:800px;color:var(--muted);font-size:14px}.ee-brand-viewport{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}.ee-brand-track{display:flex;width:max-content;gap:15px;animation:marquee 44s linear infinite}.ee-brand-viewport:hover .ee-brand-track{animation-play-state:paused}.ee-hotelwordmark{min-width:210px;min-height:84px;background:white;border:1px solid var(--line);border-radius:17px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:13px 18px;box-shadow:0 8px 24px #1749660c;text-align:center}.ee-hotelwordmark strong{font-size:19px;line-height:1.08;font-weight:800;color:#294961;letter-spacing:-.04em}.ee-hotelwordmark small{font-size:11px;color:#8298a7;line-height:1.3;margin-top:7px}.ee-brand-disclaimer{text-align:center;font-size:12px;color:#658090;margin:20px auto 0;max-width:880px}@keyframes marquee{to{transform:translateX(-50%)}}
+/* GIFT */
+.ee-gift-layout{display:grid;grid-template-columns:1.03fr .97fr;gap:60px;align-items:center}.ee-gift-image{height:650px;border-radius:28px;overflow:hidden;box-shadow:var(--shadow);position:relative}.ee-gift-image .ee-tag{position:absolute;left:22px;bottom:20px;background:#ffffffeb;color:var(--burnt);border-radius:14px;font-weight:800;font-size:14px;padding:12px 17px}.ee-gift-list{display:grid;gap:14px;margin:25px 0}.ee-gift-li{display:flex;gap:12px;color:var(--muted);font-size:15px}.ee-gift-li b{background:#fff0e4;border-radius:50%;color:var(--burnt);height:26px;width:26px;display:grid;place-items:center;font-size:12px;flex:none}
+.ee-gift-preview{background:linear-gradient(145deg,#fff9ef,#f2fbff);border:1px solid #e6edf3;padding:24px;border-radius:24px;margin-top:25px}.ee-gift-preview>strong{font:800 16px Outfit,sans-serif;color:var(--navy);display:block;margin-bottom:12px}.ee-occasion-buttons{display:flex;gap:7px;flex-wrap:wrap}.ee-occasion-buttons button{border:1px solid #d5e8f1;background:white;border-radius:99px;padding:8px 12px;color:var(--blue);font-size:12px;font-weight:800;cursor:pointer}.ee-occasion-buttons button[aria-pressed="true"]{background:var(--blue);color:#fff}.ee-gift-card{background:linear-gradient(120deg,#16476a,#287eae);color:#fff;border-radius:20px;min-height:190px;padding:24px;margin-top:14px;position:relative;overflow:hidden;box-shadow:0 15px 35px #22628b44}.ee-gift-card:before{content:'✦';position:absolute;right:-1px;top:-45px;font-size:220px;color:#ffffff14}.ee-gift-card .ee-mini-logo{font:800 12px Outfit,sans-serif;letter-spacing:.07em;color:#b7eaff}.ee-gift-card h4{font:800 clamp(23px,3vw,32px)/1.1 Outfit,sans-serif;margin:22px 0 12px;max-width:300px}.ee-gift-card p{color:#e0f5ff;font-size:13px;max-width:315px;margin:0}.ee-gift-card small{display:block;margin-top:15px;font-size:11px;color:#ffd3a8}
+/* BENEFITS + POINTS */
+.ee-benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:35px}.ee-benefit{padding:25px;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 12px 35px #1a41500a}.ee-benefit-icon{background:#eaf6fd;border-radius:17px;color:var(--blue);font-size:22px;height:54px;width:54px;display:grid;place-items:center;margin-bottom:17px}.ee-benefit h3{font-size:18px;line-height:1.22;letter-spacing:-.03em}.ee-benefit p{font-size:14px;color:var(--muted);margin:0}.ee-points-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:45px;align-items:center}.ee-points-photo{height:570px;border-radius:27px;overflow:hidden;box-shadow:var(--shadow)}.ee-points-head{font:800 clamp(54px,7vw,91px)/1 Outfit,sans-serif;letter-spacing:-.07em;color:var(--burnt)}.ee-points-head small{font-size:19px;letter-spacing:0;display:block;margin:9px 0;color:var(--blue)}.ee-math{background:#fff;border:1px solid var(--line);border-radius:24px;padding:25px;box-shadow:var(--shadow);margin:24px 0 12px}.ee-math-kicker{font-size:11px;letter-spacing:.14em;font-weight:800;color:var(--blue);text-transform:uppercase}.ee-math-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #ebf3f7;font-size:14px}.ee-math-row strong{font:800 21px Outfit,sans-serif}.ee-math-row:last-of-type{border-bottom:0}.ee-math-row.ee-saved strong{color:var(--burnt)}.ee-math-row.ee-final strong{font-size:30px;color:var(--blue)}.ee-math-bar{height:12px;display:flex;overflow:hidden;border-radius:99px;margin-top:15px}.ee-math-bar span:first-child{width:71.43%;background:var(--blue)}.ee-math-bar span:last-child{width:28.57%;background:var(--orange)}.ee-math .ee-foot{font-size:12px;color:var(--muted);margin-top:15px;margin-bottom:0}
+/* PACKAGES */
+.ee-package-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}.ee-package{border:1px solid var(--line);border-radius:24px;background:white;overflow:hidden;box-shadow:0 16px 36px #163e520f;display:flex;flex-direction:column}.ee-package.ee-featured{border:2px solid var(--orange);box-shadow:0 18px 48px #f07a1f22}.ee-package-img{height:230px;position:relative}.ee-package-img:after{content:'';position:absolute;inset:40% 0 0;background:linear-gradient(0deg,#061d2dbe,transparent)}.ee-package-img span{position:absolute;bottom:17px;left:18px;color:white;z-index:2;font-size:12px;font-weight:800;letter-spacing:.09em}.ee-package-img b{position:absolute;top:15px;right:15px;background:var(--orange);color:white;padding:7px 10px;border-radius:10px;font-size:11px;z-index:2}.ee-package-body{padding:26px;display:flex;flex-direction:column;flex:1}.ee-package-body h3{font-size:28px;letter-spacing:-.045em;line-height:1.1}.ee-package-body .ee-catch{color:var(--burnt);font-weight:800;font-size:14px}.ee-package-body ul{padding:0;list-style:none;display:grid;gap:11px;margin:15px 0 20px}.ee-package-body li{position:relative;padding-left:23px;color:var(--muted);font-size:14px}.ee-package-body li:before{content:'✓';position:absolute;left:0;font-weight:800;color:var(--blue)}.ee-package-body footer{margin-top:auto;font-weight:800;letter-spacing:.09em;text-transform:uppercase;font-size:12px;color:var(--blue)}.ee-points-extra{margin-top:27px;background:#153f5e;color:#fff;border-radius:24px;padding:25px 35px;display:flex;align-items:center;justify-content:space-between;gap:25px}.ee-points-extra h3{font-size:25px;line-height:1.1;letter-spacing:-.03em;margin-bottom:7px}.ee-points-extra p{color:#dceefa;margin:0}.ee-points-extra .ee-btn{flex:none}
+/* HOW */
+.ee-how-grid{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}.ee-how-photo{height:540px;overflow:hidden;border-radius:28px;box-shadow:var(--shadow)}.ee-steps{display:grid;gap:21px;margin:27px 0}.ee-step{display:flex;gap:17px}.ee-number{width:53px;height:53px;border-radius:17px;display:grid;place-items:center;color:var(--burnt);font-size:22px;background:#fff0e4;font-weight:800;flex:none}.ee-step h3{font-size:19px;line-height:1.2;margin:5px 0}.ee-step p{font-size:14px;color:var(--muted);margin:0}
+/* CHECKOUT */
+.ee-purchase{background:radial-gradient(circle at top right,#237a9b75,transparent 39%),linear-gradient(140deg,#0b263b,#164a6c);color:white}.ee-purchase .ee-title{color:white}.ee-purchase .ee-title em{color:#ffb679}.ee-purchase .ee-intro{color:#d8effb}.ee-checkout-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:24px;margin-top:34px}.ee-receipt,.ee-checkout-panel{background:white;color:var(--ink);padding:30px;border-radius:25px;box-shadow:0 16px 48px #061a2e44}.ee-receipt>span{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.14em;font-weight:800}.ee-receipt-row{display:flex;justify-content:space-between;gap:18px;border-bottom:1px solid #eaf2f6;padding:18px 0}.ee-receipt-row small{display:block;color:var(--muted);font-size:12px;margin-top:4px}.ee-receipt-row strong{white-space:nowrap}.ee-receipt-total{background:#fff3ea;color:var(--burnt);padding:16px 19px;border-radius:17px;display:flex;justify-content:space-between;align-items:center;margin:22px 0;font-weight:800}.ee-receipt-total strong{font-size:32px}.ee-payment-trust{padding:14px;border-radius:14px;background:#edf8ff;font-size:13px}.ee-checkout-panel h3{font-size:28px;letter-spacing:-.04em;margin-bottom:12px}#checkout-acceso{min-height:310px;border-radius:19px;background:linear-gradient(145deg,#f1faff,#fff);border:2px dashed #c4dcea}.ee-checkout-note{font-size:12px;color:var(--muted);margin:14px 0 0}
+/* FAQ */
+.ee-faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:start}.ee-faq-image{height:440px;border-radius:26px;overflow:hidden;box-shadow:var(--shadow);margin-top:18px}.ee-faqs{display:grid;gap:13px}.ee-faqs details{border:1px solid var(--line);border-radius:16px;padding:0 19px;background:#fff;box-shadow:0 10px 24px #153c5108}.ee-faqs summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:15px;align-items:center;padding:18px 0;font:800 16px Outfit,sans-serif}.ee-faqs summary::-webkit-details-marker{display:none}.ee-faqs summary:after{content:'+';width:32px;height:32px;border-radius:99px;background:#eaf6fd;color:var(--blue);display:grid;place-items:center;font-size:22px;flex:none}.ee-faqs details[open] summary:after{content:'−';background:#fff0e4;color:var(--burnt)}.ee-faqs details p{font-size:14px;color:var(--muted);margin:0;padding-bottom:20px}
+.ee-last-banner{margin-top:35px;border-radius:29px;overflow:hidden;min-height:340px;background:#133a56;display:grid;grid-template-columns:1fr 1fr}.ee-last-banner img{min-height:340px}.ee-last-banner .ee-text{padding:40px;align-self:center;color:#fff}.ee-last-banner h3{font-size:clamp(29px,3.4vw,45px);line-height:1.07;letter-spacing:-.05em}.ee-last-banner p{color:#dceef9}
+body>footer{background:#fff;padding:28px 0 44px;border-top:1px solid var(--line)}.ee-footer-wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.ee-footer-wrap strong{color:var(--burnt)}.ee-footer-wrap small{display:block;color:var(--muted)}.ee-footer-links{display:flex;gap:22px;flex-wrap:wrap;font-size:14px;font-weight:800;color:var(--blue)}.ee-floating{display:none}
+@media(max-width:1100px){.ee-destination-grid{grid-template-columns:repeat(2,1fr)}.ee-destination:first-child{grid-column:1 / -1}.ee-destination{min-height:400px}.ee-destination-last{grid-column:1 / -1}.ee-promise-grid,.ee-benefits{grid-template-columns:repeat(2,1fr)}.ee-video-layout,.ee-gift-layout,.ee-points-layout,.ee-how-grid,.ee-faq-grid{grid-template-columns:1fr}.ee-gift-image,.ee-points-photo,.ee-how-photo{height:440px}.ee-video-layout .ee-video-shell{order:-1}.ee-package-grid{grid-template-columns:1fr 1fr}.ee-package-grid article:last-child{grid-column:1/-1}.ee-hero-content{padding:90px 0}.ee-hero{min-height:670px}}
+@media(max-width:700px){.ee-container{width:calc(100% - 26px)}.ee-section{padding:68px 0}.ee-nav{min-height:72px}.ee-brand-name{font-size:12px;max-width:190px}.ee-mark{height:46px;width:46px;flex-basis:46px}.ee-nav-actions{gap:9px}.ee-nav-actions a:not(.ee-btn){font-size:11px}.ee-desktop-cta{display:none}.ee-hero{min-height:690px;align-items:end}.ee-hero:after{background:linear-gradient(0deg,#071b2bf5 0%,#092238d0 56%,#092b4260 100%)}.ee-hero-photo img{object-position:58% center}.ee-hero-content{padding:165px 0 75px}.ee-hero h1{font-size:clamp(2.65rem,10vw,4rem)}.ee-hero-actions{flex-direction:column}.ee-hero-actions .ee-btn{width:100%}.ee-hero-bottom{display:none}.ee-promise-grid,.ee-benefits,.ee-destination-grid,.ee-package-grid,.ee-checkout-grid{grid-template-columns:1fr}.ee-promise-item{padding:15px 8px;border-bottom:1px solid var(--line);border-right:0}.ee-destination,.ee-destination:first-child{grid-column:auto;min-height:390px}.ee-destination-last{grid-template-columns:1fr;grid-column:auto}.ee-destination-last img{max-height:280px}.ee-destination-last .ee-copy{padding:25px}.ee-gift-image{height:330px}.ee-gift-layout{gap:26px}.ee-gift-preview{padding:16px}.ee-points-photo{height:310px}.ee-points-head{font-size:65px}.ee-math{padding:17px}.ee-points-extra{flex-direction:column;align-items:flex-start;padding:25px}.ee-points-extra .ee-btn{width:100%}.ee-package-grid article:last-child{grid-column:auto}.ee-how-photo{height:325px;order:-1}.ee-checkout-panel,.ee-receipt{padding:22px}.ee-faq-image{height:270px}.ee-last-banner{grid-template-columns:1fr}.ee-last-banner .ee-text{padding:25px}.ee-last-banner img{min-height:225px;max-height:250px}.ee-floating{display:block;position:fixed;bottom:11px;left:11px;right:11px;z-index:60}.ee-floating .ee-btn{width:100%;box-shadow:0 8px 28px #0b253a80}.ee-purchase{padding-bottom:100px}body{padding-bottom:78px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ee-brand-track{animation:none}.ee-btn,.ee-destination img{transition:none}}
+
+/* V6 Premium gifts — BVPoints */
+.ee-brand .ee-mark{border:0;background:none;box-shadow:none;border-radius:13px;overflow:hidden;padding:0}.ee-brand .ee-mark img{width:100%;height:100%;object-fit:cover}
+.ee-nav-explore{font-weight:700;color:#355d70;font-size:13px}.ee-nav-explore:hover{text-decoration:underline}
+.ee-hero{min-height:760px;isolation:isolate;align-items:stretch;background:#072b46}.ee-hero:after{background:linear-gradient(90deg,rgba(3,30,50,.89) 0%,rgba(3,30,50,.78) 37%,rgba(3,30,50,.35) 67%,rgba(3,30,50,.22) 100%),linear-gradient(0deg,rgba(4,29,48,.61),transparent 55%);z-index:1}
+.ee-hero-world{position:absolute;inset:0;display:grid;grid-template-columns:54% 25% 21%;gap:5px;opacity:.89}.ee-hero-world .ee-hero-photo{position:relative;inset:auto;height:100%;overflow:hidden}.ee-hero-world .ee-hero-photo img{width:100%;height:100%;object-fit:cover}.ee-hero-photo-primary img{object-position:51% center}.ee-hero-photo-secondary img{object-position:55% center}.ee-hero-photo-third img{object-position:55% center}
+.ee-hero-v6{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0, 1fr) minmax(260px,.75fr);align-items:center;gap:40px;padding:120px 0 105px}.ee-hero-message{max-width:690px}.ee-hero-kicker{display:inline-flex;gap:9px;align-items:center;background:#ffffff28;border:1px solid #ffffff4f;padding:9px 15px;border-radius:999px;color:white;font-size:11px;letter-spacing:.13em;font-weight:800;margin-bottom:22px;backdrop-filter:blur(9px)}.ee-mini-star{color:#ffb769;font-size:17px}.ee-hero h1{font:800 clamp(48px,5.4vw,82px)/1.03 Outfit,sans-serif;letter-spacing:-.06em;margin:0 0 24px;text-wrap:balance}.ee-hero h1 span{color:#ffc18c}.ee-hero h1 em{font-style:normal;color:#fff}.ee-hero-message>p{color:#eef9ff;font-size:clamp(16px,1.45vw,19px);max-width:590px;line-height:1.65}.ee-hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:28px}.ee-hero-video-link{display:inline-flex;align-items:center;gap:12px;font-weight:800;color:#fff;font-size:14px}.ee-video-play{border-radius:50%;width:44px;height:44px;background:#ffffff28;border:1px solid #ffffff72;display:grid;place-items:center}.ee-hero-mini{font-size:12px;max-width:520px;color:#d7ebfa;margin-top:17px}
+.ee-hero-feature{display:flex;justify-content:end;align-items:end;min-height:500px}.ee-gift-spotlight{position:relative;width:min(390px,100%);min-height:390px;border:1px solid #ffffff80;background:linear-gradient(160deg,rgba(255,255,255,.28),rgba(255,255,255,.11));backdrop-filter:blur(21px);border-radius:30px;padding:26px;text-align:center;box-shadow:0 30px 80px #001b30a8}.ee-gift-spotlight-kicker{font-size:11px;color:#ffdfbc;letter-spacing:.13em;font-weight:800}.ee-gift-spotlight h2{font:800 26px/1.14 Outfit,sans-serif;margin:10px 0 7px;letter-spacing:-.045em}.ee-gift-spotlight-foot{font-size:12px;color:#ebf9ff}.ee-gift-hero-image{width:min(255px,84%);margin:12px auto 4px;filter:drop-shadow(0 18px 22px #061d3d78);animation:floatGift 4s ease-in-out infinite}.ee-gift-hero-image img{width:100%;height:auto;object-fit:contain}@keyframes floatGift{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}.ee-hero-bottom{z-index:3}.ee-promise{position:relative;z-index:4}
+.ee-gift-card .ee-mini-logo{display:flex;align-items:center;gap:10px}.ee-gift-card .ee-mini-logo img{height:40px;width:40px;border-radius:9px;object-fit:cover;box-shadow:0 4px 10px #0002}.ee-gift-card .ee-mini-logo span{font:800 11px Outfit,sans-serif;letter-spacing:.05em;color:#d9f3ff}
+.ee-welcome-layout{display:grid;grid-template-columns:.95fr 1.05fr;gap:60px;align-items:center}.ee-welcome-visual{min-height:510px;background:radial-gradient(circle at 50% 32%,#fff2d3,#e7f6ff 51%,#b3dcf3);border-radius:32px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:end;padding:20px;box-shadow:0 24px 65px #15445c24}.ee-welcome-visual:before{content:'';position:absolute;width:440px;height:440px;background:radial-gradient(circle,#ffdd9c8c,transparent 65%);top:-50px;left:calc(50% - 220px)}.ee-floating-stars{position:absolute;inset:0;pointer-events:none}.ee-floating-stars span{position:absolute;font-size:42px;color:#e5a64c;animation:twinkle 3.5s ease-in-out infinite}.ee-floating-stars span:nth-child(1){top:14%;left:14%}.ee-floating-stars span:nth-child(2){top:12%;right:15%;animation-delay:.8s}.ee-floating-stars span:nth-child(3){top:42%;left:10%;animation-delay:1.6s}.ee-floating-stars span:nth-child(4){top:35%;right:12%;animation-delay:2.1s}
+.ee-present-wrap{height:360px;width:330px;max-width:100%;position:relative}.ee-present-wrap-photo{display:flex;align-items:center;justify-content:center}.ee-present-wrap-photo>img{width:min(320px,100%);height:auto;object-fit:contain;filter:drop-shadow(0 23px 28px #174a6c35)}.ee-present-card{position:absolute;top:28px;left:70px;z-index:3;width:204px;height:170px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(140deg,#fffdf5,#fae8ba);border:5px solid #fff8d8;border-radius:19px;box-shadow:0 16px 30px #0f314c32;transform:rotate(8deg);animation:giftCardRise 4s ease-in-out infinite}.ee-present-card small{font:800 9px Outfit,sans-serif;letter-spacing:.06em;color:#996b29}.ee-present-card strong{font:800 52px/.99 Outfit,sans-serif;color:#d76516;letter-spacing:-.065em;margin:9px 0}.ee-present-card span{font:800 11px Outfit,sans-serif;color:#996b29;letter-spacing:.08em}@keyframes giftCardRise{0%,100%{transform:translateY(0) rotate(8deg)}50%{transform:translateY(-13px) rotate(7deg)}}.ee-welcome-caption{position:relative;z-index:5;font:800 15px Outfit,sans-serif;color:#174666;text-align:center;margin-top:8px}.ee-welcome-lead{font:800 clamp(27px,3vw,39px)/1.15 Outfit,sans-serif;margin:18px 0;color:#174661}.ee-welcome-copy .ee-intro{max-width:650px}.ee-welcome-terms{border-radius:20px;border:1px solid #dcecf5;background:#f4faff;padding:20px 23px;margin:24px 0}.ee-welcome-terms strong{font:800 15px Outfit,sans-serif;color:#164b6d;display:block;margin-bottom:8px}.ee-welcome-terms p{font-size:13px;color:#627e8d;margin:0}.ee-text-link{display:inline-flex;color:var(--orange);font-weight:800;gap:12px;border-bottom:2px solid #f07a1f;padding-bottom:3px}
+#puntos{padding-top:108px;padding-bottom:108px}
+.ee-brandwall .ee-brand-disclaimer{max-width:980px;font-size:12px}
+@media(max-width:1100px){.ee-hero-v6{grid-template-columns:1fr}.ee-hero-feature{min-height:0;justify-content:flex-start}.ee-gift-spotlight{width:min(360px,100%)}.ee-welcome-layout{grid-template-columns:1fr;gap:38px}.ee-welcome-visual{max-width:690px;width:100%;margin:auto}}
+@media(max-width:700px){.ee-nav-explore{display:none}.ee-hero{min-height:730px}.ee-hero-world{grid-template-columns:100%}.ee-hero-photo-primary{display:block}.ee-hero-photo-secondary,.ee-hero-photo-third{display:none}.ee-hero-world .ee-hero-photo-primary img{object-position:48% center}.ee-hero:after{background:linear-gradient(0deg,#051c30f5 0%,#092d48e8 48%,#092d4870 88%)}.ee-hero-v6{padding:290px 0 75px}.ee-hero h1{font-size:clamp(38px,10vw,54px)}.ee-hero-actions .ee-btn{width:100%;justify-content:center}.ee-hero-mini{font-size:11px}.ee-hero-feature{display:block}.ee-gift-spotlight{min-height:auto;width:100%;margin-top:6px}.ee-gift-hero-image{width:min(205px,72%)}.ee-welcome-visual{min-height:430px}.ee-present-wrap{transform:scale(.8);margin:-36px 0}.ee-welcome-caption{margin-top:-25px}.ee-welcome-lead{font-size:28px}}
+@media(prefers-reduced-motion:reduce){.ee-gift-hero-image,.ee-floating-stars span,.ee-present-card{animation:none}}
 /* reproductor: miniatura con play; el video se carga al tocarlo */
 .vid-facade{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;background:#0f334d center/cover no-repeat;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .vid-facade:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,31,45,.05),rgba(9,31,45,.35))}
@@ -120,260 +97,63 @@ footer{padding:28px 0 44px;background:#fff;border-top:1px solid #edf4f8}.footer-
 .co-pay__head{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:14px;color:var(--muted)}
 .co-link{background:none;border:0;color:var(--blue);font-weight:800;cursor:pointer;font-size:14px;padding:0}
 #pp-acceso{min-height:120px}
+#checkout-acceso{min-height:0;border:0;background:none;border-radius:0}
 </style>
 </head>
 <body>
-<header>
-  <div class="ee-wrap">
-    <a class="brand" href="#top" aria-label="Experiencias Ecuador y el Mundo">
-      <div class="ee-mark">EE</div>
-      <div class="brand-copy">
-        <span class="brand-title">Experiencias Ecuador y el Mundo</span>
-        <span class="brand-sub">Para disfrutar y regalar</span>
-      </div>
-    </a>
-    <a class="ee-login" href="/login">Ya tengo cuenta · Entrar</a>
-  </div>
-</header>
-
-<main id="top">
-  <section class="hero">
-    <img src="/acceso/img/portada.webp" alt="Escapadas en Ecuador y experiencias en el mundo">
-    <div class="ee-wrap">
-      <div class="hero-copy">
-        <span class="eyebrow">Catálogo privado de viajes</span>
-        <h1>Escapadas en Ecuador e invitaciones hoteleras <span>en el mundo</span></h1>
-        <p>Accede a una propuesta de viajes diseñada para emocionar. Descubre escapadas nacionales, experiencias internacionales y opciones perfectas para disfrutar o regalar.</p>
-        <div class="hero-actions">
-          <a class="ee-btn" href="#comprar">Obtener mi acceso · US$25</a>
-          <a class="ee-btn ee-btn-outline" href="#video-principal">Ver el video</a>
-        </div>
-        <div class="hero-note">Pago único con tarjeta. Tu acceso no vence.</div>
-      </div>
-      <div class="hero-aside">
-        <div class="ee-glass"><strong>Acceso que inspira a viajar</strong><p>Entras una sola vez y descubres un catálogo privado de experiencias para ti o para regalar.</p></div>
-        <div class="ee-glass"><strong>100 puntos de bienvenida</strong><p>Recibes BookVipPoints equivalentes a hasta US$100 de ahorro parcial en reservas de hotel.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="ee-ribbon">
-    <div class="ee-wrap">
-      <div class="ribbon-item"><div class="ribbon-icon">✈</div><div><strong>Catálogo privado de viajes</strong><span>Explora experiencias exclusivas desde tu portal.</span></div></div>
-      <div class="ribbon-item"><div class="ribbon-icon">★</div><div><strong>100 puntos de bienvenida</strong><span>Hasta US$100 de ahorro parcial en hoteles.</span></div></div>
-      <div class="ribbon-item"><div class="ribbon-icon">🎁</div><div><strong>También para regalar</strong><span>Envía una experiencia con dedicatoria por correo.</span></div></div>
-      <div class="ribbon-item"><div class="ribbon-icon">💬</div><div><strong>Ayuda por WhatsApp</strong><span>Te acompañamos desde la elección hasta la confirmación.</span></div></div>
-    </div>
-  </div>
-
-  <section class="ee-section section-soft">
-    <div class="ee-wrap">
-      <div class="section-head">
-        <span class="eyebrow">Ecuador y el mundo</span>
-        <h2 class="ee-title">Lo que puedes vivir <em>empieza a sentirse aquí.</em></h2>
-        <p class="ee-lede">Escapadas en Ecuador, invitaciones hoteleras en el mundo y la emoción de regalar recuerdos. Entras, sueñas, eliges y compras dentro de tu portal, cuando tú quieras.</p>
-      </div>
-      <div class="cards-4">
-        <article class="gallery-card"><img src="/acceso/img/destino-quito.webp" alt="Pareja caminando por el centro histórico de Quito al atardecer"><div class="gallery-copy"><div class="gallery-kicker">Quito, Cuenca, Loja</div><h3 class="gallery-title">Ciudades con historia</h3><p>Escapadas nacionales con encanto, arquitectura y momentos para disfrutar en pareja.</p></div></article>
-        <article class="gallery-card"><img src="/acceso/img/destino-playa.webp" alt="Pareja disfrutando una playa soleada"><div class="gallery-copy"><div class="gallery-kicker">Manta y costa</div><h3 class="gallery-title">Playa, relax y sol</h3><p>Espacios para desconectarte y vivir una escapada frente al mar.</p></div></article>
-        <article class="gallery-card"><img src="/acceso/img/destino-mundo.webp" alt="Pareja disfrutando una terraza con vista al mar en Europa"><div class="gallery-copy"><div class="gallery-kicker">Caribe y Europa</div><h3 class="gallery-title">Un mundo por descubrir</h3><p>Invitaciones hoteleras internacionales en destinos que inspiran desde el primer vistazo.</p></div></article>
-        <article class="gallery-card"><img src="/acceso/img/destino-regalo.webp" alt="Sorpresa de viaje para regalar"><div class="gallery-copy"><div class="gallery-kicker">Para regalar</div><h3 class="gallery-title">Sorprende a alguien especial</h3><p>Regala una experiencia y conviértela en un recuerdo inolvidable.</p></div></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="ee-section" id="video-principal">
-    <div class="ee-wrap video-wrap">
-      <div>
-        <span class="eyebrow">Tu siguiente destino</span>
-        <h2 class="ee-title">El mundo te está esperando. <em>¿A dónde quieres ir primero?</em></h2>
-        <p class="ee-lede">Playas de aguas turquesa, montañas nevadas, safaris, viñedos y ciudades llenas de historia. Con la invitación hotelera internacional de tu catálogo eliges entre más de 130 destinos para vivir algo así, o para regalárselo a alguien especial.</p>
-        <div class="video-points" style="margin-top:20px">
-          <div class="mini-tip"><strong>🔊 Dale play con sonido</strong><p>Son dos minutos de destinos que te van a dar ganas de viajar. Según tu celular, puede empezar en silencio.</p></div>
-          <div class="mini-tip"><strong>Para que sea claro</strong><p>Tu acceso de US$25 abre el catálogo privado e incluye 100 puntos de bienvenida. Los paquetes se compran por separado dentro del portal.</p></div>
-        </div>
-      </div>
-      <div class="video-frame ee-panel">
-        <video id="main-video" preload="none" playsinline poster="/acceso/img/siguiente-destino.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0f334d"><source src="/acceso/siguiente-destino.mp4" type="video/mp4"></video>
-        <button type="button" class="vid-facade vid-facade--local" data-local="main-video" style="background-image:url('/acceso/img/siguiente-destino.webp')" aria-label="Reproducir video: tu siguiente destino"><span class="vid-facade__play" aria-hidden="true"></span></button>
-      </div>
-    </div>
-  </section>
-
-  <section class="ee-section section-soft" id="incluye">
-    <div class="ee-wrap">
-      <div class="section-head">
-        <span class="eyebrow">Qué incluye tu acceso</span>
-        <h2 class="ee-title">El valor no está solo en entrar. <em>Está en todo lo que se abre.</em></h2>
-        <p class="ee-lede">Tu acceso te permite explorar un catálogo privado de paquetes, recibir 100 puntos de bienvenida y comprar experiencias para ti o para otra persona.</p>
-      </div>
-      <div class="benefits">
-        <article class="benefit"><div class="ee-icon">✈</div><h3>Catálogo privado de paquetes de viaje a precios exclusivos</h3><p>Entras a un portal pensado para explorar experiencias con calma y elegir la que mejor encaje contigo.</p></article>
-        <article class="benefit"><div class="ee-icon">★</div><h3>100 puntos de bienvenida BookVipPoints</h3><p>Hasta US$100 de ahorro como parte de pago parcial en hoteles de Ecuador y el mundo. No caducan.</p></article>
-        <article class="benefit"><div class="ee-icon">🎁</div><h3>Regalar experiencias</h3><p>Compras un paquete para otra persona y le llega por correo con su tarjeta de regalo y tu dedicatoria.</p></article>
-        <article class="benefit"><div class="ee-icon">💬</div><h3>Ayuda por WhatsApp</h3><p>Te guiamos desde que eliges tu experiencia hasta que confirmas tu hospedaje.</p></article>
-      </div>
-      <div class="grid-2" style="margin-top:38px">
-        <div class="story-photo"><img src="/acceso/img/acceso.webp" alt="Desayuno con vista al mar y ambiente de viaje premium"></div>
-        <div class="ee-story-copy">
-          <span class="eyebrow">Para disfrutar o regalar</span>
-          <h2 class="ee-title" style="font-size:clamp(1.9rem,3.5vw,3.1rem)">Una entrada a experiencias que se sienten <em>desde el primer clic.</em></h2>
-          <p class="ee-lede" style="max-width:none">No se trata solo de ver opciones. Se trata de imaginarte viajando, descubrir propuestas nacionales e internacionales y sentir que sí vale la pena entrar a mirar lo que hay dentro.</p>
-          <ul>
-            <li>Exploras sin presión y compras cuando realmente te enamoras de una experiencia.</li>
-            <li>Encuentras opciones pensadas para escaparte, sorprender o planear un regalo especial.</li>
-            <li>Entras desde tu celular o tu computadora, cuando quieras: tu acceso no vence.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="ee-section" id="puntos">
-    <div class="ee-wrap">
-      <div class="points-box">
-        <div>
-          <span class="eyebrow">100 puntos de bienvenida</span>
-          <h3>Hasta US$100 de ahorro parcial <br>en reservas de hotel.</h3>
-          <p>Recibes 100 puntos BookVipPoints y puedes usarlos como parte de pago parcial al reservar hoteles en Ecuador y el mundo. Es una forma concreta de sentir valor desde tu ingreso.</p>
-          <div class="ee-demo">
-            <span class="demo-kicker">Ejemplo hipotético</span>
-            <div class="demo-title">Una semana en un hotel de Ecuador</div>
-            <div class="demo-row"><span>Valor de la reserva</span><strong>US$350</strong></div>
-            <div class="demo-row ee-saved"><span>Aplicando 100 puntos</span><strong>−US$100</strong></div>
-            <div class="ee-track" aria-hidden="true"><span class="ee-cash"></span><span class="ee-points"></span></div>
-            <div class="demo-row ee-final"><span><strong style="display:block;font-size:16px;color:var(--text)">Ahora pagarías</strong><small>Si la reserva permite aplicar los 100 puntos</small></span><strong>US$250</strong></div>
-            <p class="demo-foot">Ejemplo únicamente ilustrativo. No representa una tarifa real ni una promesa de descuento fijo. El ahorro depende de cada reserva y de las condiciones de BookVipPoints.</p>
-          </div>
-        </div>
-        <div class="points-media"><img src="/acceso/img/destino-mundo.webp" alt="Pareja disfrutando una experiencia internacional"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="ee-section section-soft" id="dentro">
-    <div class="ee-wrap">
-      <div class="section-head">
-        <span class="eyebrow">Lo que encontrarás dentro</span>
-        <h2 class="ee-title">Tres formas de viajar. <em>Una misma sensación: querer entrar.</em></h2>
-        <p class="ee-lede">Esto es lo que incluye cada paquete. Sus precios los ves dentro de tu portal.</p>
-      </div>
-      <div class="cards-3">
-        <article class="package">
-          <div class="package-image"><img src="/acceso/img/acceso.webp" alt="Escapada nacional con hotel y desayuno"><span class="package-tag">Escapada nacional</span></div>
-          <div class="package-body"><h3>Escape Esencial</h3><p class="ee-intro">Una escapada para dos dentro de Ecuador.</p><ul><li>1 escapada nacional de 2 días y 1 noche para 2 personas con desayuno.</li><li>Quito, Guayaquil, Manta, Cuenca o Loja.</li><li>Vigencia 12 meses.</li></ul><div class="ee-duration">Vigencia · 12 meses</div></div>
-        </article>
-        <article class="package featured">
-          <div class="package-image"><img src="/acceso/img/portada.webp" alt="Experiencia combinada Ecuador y el mundo"><span class="ee-badge">Destacado</span><span class="package-tag">Ecuador + el mundo</span></div>
-          <div class="package-body"><h3>Escape Plus</h3><p class="ee-intro">Ecuador y el mundo en un solo paquete.</p><ul><li>1 escapada nacional de 3 días y 2 noches para 2 personas con desayuno.</li><li>1 invitación hotelera internacional en hoteles y resorts de más de 130 destinos.</li><li>Estadías de 4 días y 3 noches hasta 8 días y 7 noches, según el destino.</li><li>Vigencia 18 meses.</li></ul><div class="ee-duration">Vigencia · 18 meses</div></div>
-        </article>
-        <article class="package">
-          <div class="package-image"><img src="/acceso/img/paquetes.webp" alt="Familia disfrutando diferentes experiencias de viaje"><span class="package-tag">Más experiencias</span></div>
-          <div class="package-body"><h3>Escape Premium</h3><p class="ee-intro">El doble de experiencias para disfrutar y regalar.</p><ul><li>2 escapadas nacionales de 3 días y 2 noches.</li><li>2 invitaciones hoteleras internacionales.</li><li>Vigencia 24 meses.</li></ul><div class="ee-duration">Vigencia · 24 meses</div></div>
-        </article>
-      </div>
-      <div class="video-wrap dest-video">
-        <div class="video-frame ee-panel">
-          <video id="dest-video" preload="none" playsinline poster="/acceso/img/destinos-video.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0f334d"><source src="/acceso/destinos.mp4" type="video/mp4"></video>
-          <button type="button" class="vid-facade vid-facade--local" data-local="dest-video" style="background-image:url('/acceso/img/destinos-video.webp')" aria-label="Reproducir video: Descubre algunos de nuestros destinos"><span class="vid-facade__play" aria-hidden="true"></span></button>
-        </div>
-        <div>
-          <span class="eyebrow">Invitación hotelera internacional</span>
-          <h2 class="ee-title" style="font-size:clamp(1.9rem,3.5vw,3.1rem)">Descubre algunos de <em>nuestros destinos.</em></h2>
-          <p class="ee-lede" style="max-width:none">Hoteles y resorts en más de 130 destinos: playas del Caribe, ciudades de Europa, Asia y América. Mira el video y empieza a elegir el tuyo.</p>
-          <p class="ee-small" style="margin-top:8px">🔊 Recuerda activar el sonido del video.</p>
-        </div>
-      </div>
-      <div class="grid-2" style="margin-top:34px">
-        <div class="story-photo"><img src="/acceso/img/destino-regalo.webp" alt="Experiencia de regalo relacionada con viajes"></div>
-        <div class="ee-story-copy">
-          <span class="eyebrow">Y además</span>
-          <h2 class="ee-title" style="font-size:clamp(1.9rem,3.5vw,3.1rem)">Tarjetas BookVipPoints para seguir ahorrando <em>en hoteles.</em></h2>
-          <p class="ee-lede" style="max-width:none">Dentro del catálogo también encontrarás tarjetas de puntos BookVipPoints de 250, 500 y 1.000 puntos para ahorrar en hoteles. Cada punto equivale a hasta US$1 de ahorro como pago parcial.</p>
-          <p class="catalog-note" style="text-align:left;margin-top:16px">Los precios de cada paquete los ves dentro de tu portal.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="ee-section" id="pasos">
-    <div class="ee-wrap steps-grid">
-      <div>
-        <span class="eyebrow">Así obtienes tu acceso</span>
-        <h2 class="ee-title">Muy fácil de entender. <em>Muy fácil de comprar.</em></h2>
-        <p class="ee-lede">En pocos minutos estás dentro de tu portal, sabiendo exactamente qué incluye tu acceso.</p>
-        <div class="step-list" style="margin-top:22px">
-          <div class="ee-step"><div class="ee-num">1</div><div><h3>Paga US$25 con tarjeta</h3><p>Realiza tu pago con tarjeta de crédito o débito en el cobro seguro de PayPhone.</p></div></div>
-          <div class="ee-step"><div class="ee-num">2</div><div><h3>Crea tu contraseña</h3><p>Apenas se apruebe el pago, defines tu contraseña. También te llega un correo para ingresar.</p></div></div>
-          <div class="ee-step"><div class="ee-num">3</div><div><h3>Entra a tu portal y elige</h3><p>Activa tus 100 puntos y descubre un paquete para ti o para regalar.</p></div></div>
-        </div>
-      </div>
-      <div class="step-photo"><img src="/acceso/img/pasos.webp" alt="Pareja planificando una escapada desde una laptop"></div>
-    </div>
-  </section>
-
-  <section class="ee-section buy" id="comprar">
-    <div class="ee-wrap">
-      <span class="eyebrow">Tu acceso</span>
-      <h2 class="ee-title">Obtén tu acceso y abre tu catálogo <em>privado de viajes.</em></h2>
-      <p class="ee-lede">Un solo pago. Tu acceso no vence. Entras, activas tus 100 puntos de bienvenida y luego exploras con calma las experiencias que más te llamen.</p>
-      <div class="checkout">
-        <div class="receipt">
-          <span class="receipt-label">Resumen</span>
-          <div class="ee-row"><div><strong>Acceso al catálogo privado</strong><small>Pago único. No vence.</small></div><strong>US$25</strong></div>
-          <div class="ee-row"><div><strong>100 puntos de bienvenida</strong><small>Hasta US$100 de ahorro parcial en hoteles.</small></div><strong>Gratis</strong></div>
-          <div class="ee-total"><span>Total</span><strong>US$25</strong></div>
-          <div class="ee-trust"><span>🔒</span><div>Pago procesado por PayPhone. No guardamos los datos de tu tarjeta.</div></div>
-        </div>
-        <div class="checkout-card">
-          <h3>Completa tu compra</h3>
-          <p class="ee-hint">Escribe tus datos y paga con tarjeta de crédito o débito.</p>
-          <div id="checkout-acceso"></div>
-          <p class="checkout-note">El acceso abre el catálogo privado y te da 100 puntos de bienvenida. Los paquetes se compran por separado dentro del portal.</p>
-        </div>
-      </div>
-      <p class="buy-bottom">Pago único. Tu acceso no vence.</p>
-    </div>
-  </section>
-
-  <section class="ee-section" id="preguntas">
-    <div class="ee-wrap">
-      <div class="section-head">
-        <span class="eyebrow">Preguntas frecuentes</span>
-        <h2 class="ee-title">¿Tienes dudas? <em>Aquí las resolvemos.</em></h2>
-        <p class="ee-lede">Todo lo que necesitas saber antes de obtener tu acceso.</p>
-      </div>
-      <div class="faq-media"><img src="/acceso/img/faq.webp" alt="Ambiente acogedor de viaje y consulta por WhatsApp"></div>
-      <div class="faq-list">
-        <details open><summary>¿El acceso incluye un viaje?</summary><p>No. Te abre el catálogo privado y te da 100 puntos de bienvenida; los paquetes se compran dentro del portal.</p></details>
-        <details><summary>¿El acceso vence?</summary><p>No. Cada paquete que compres tiene su propia vigencia (12, 18 o 24 meses).</p></details>
-        <details><summary>¿Cómo funcionan los 100 puntos?</summary><p>Cada punto equivale a hasta US$1 de ahorro como pago parcial al reservar hoteles en BookVipPoints. Son para cuentas nuevas, uno por persona, y no caducan.</p></details>
-        <details><summary>¿Hay condiciones para las escapadas nacionales?</summary><p>Se piden con al menos 30 días de anticipación y no se pueden usar en temporada alta, vacaciones ni feriados.</p></details>
-        <details><summary>¿Qué pago en la invitación internacional?</summary><p>Los impuestos y tasas del hotel o resort los paga el viajero y varían según el destino y la temporada.</p></details>
-        <details><summary>¿Con qué puedo pagar?</summary><p>Con tarjeta de crédito o débito, en el pago seguro de PayPhone.</p></details>
-        <details><summary>Ya tengo cuenta, ¿qué hago?</summary><p>No necesitas comprar el acceso otra vez; entra con tu correo y contraseña.</p></details>
-      </div>
-      <div class="final-cta">
-        <div>
-          <h3>Viaja. Regala. Sorprende.</h3>
-          <p>Tu catálogo privado de viajes te está esperando.</p>
-        </div>
-        <a class="ee-btn" href="#comprar">Obtener mi acceso · US$25</a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <div class="ee-wrap">
-    <div class="footer-card">
-      <div><strong>Experiencias Ecuador y el Mundo</strong><small>Para disfrutar y regalar</small></div>
-      <div class="footer-links"><a href="https://wa.me/593981350463" target="_blank" rel="noopener noreferrer">WhatsApp +593 98 135 0463</a><a href="/terminos">Términos y condiciones</a></div>
-    </div>
-  </div>
-</footer>
-<div class="ee-floating"><a class="ee-btn" href="#comprar">Obtener mi acceso · US$25</a></div>
+<header><div class="ee-container ee-nav"><a class="ee-brand" href="#inicio"><span class="ee-mark"><img alt="BVPoints" height="52" src="/acceso/img/logo-bvpoints.webp" width="52"/></span><span><span class="ee-brand-name">Experiencias Ecuador y el Mundo</span><span class="ee-brand-sub">Para disfrutar y regalar</span></span></a><div class="ee-nav-actions"><a class="ee-nav-explore" href="#catalogo">Experiencias</a><a class="ee-nav-explore" href="#hoteles">Hoteles</a><a href="/login">Ya tengo cuenta · Entrar</a><a class="ee-btn ee-desktop-cta" href="#comprar">Descubrir experiencias</a></div></div></header>
+<main>
+<section class="ee-hero" id="inicio">
+<div aria-hidden="true" class="ee-hero-world">
+<div class="ee-hero-photo ee-hero-photo-primary"><img alt="" fetchpriority="high" src="/acceso/img/destino-regalo.webp"/></div>
+<div class="ee-hero-photo ee-hero-photo-secondary"><img alt="" fetchpriority="high" src="/acceso/img/destino-playa.webp"/></div>
+<div class="ee-hero-photo ee-hero-photo-third"><img alt="" fetchpriority="high" src="/acceso/img/destino-quito.webp"/></div>
+</div>
+<div class="ee-container ee-hero-v6">
+<div class="ee-hero-message">
+<div class="ee-hero-kicker"><span class="ee-mini-star">✦</span> EXPERIENCIAS PARA DISFRUTAR Y REGALAR</div>
+<h1>Los regalos más bonitos <span>no se guardan.</span> <em>Se viven.</em></h1>
+<p>Regala una escapada, sorprende con un viaje y convierte cualquier ocasión en una historia inolvidable. Descubre experiencias en Ecuador y el mundo.</p>
+<div class="ee-hero-actions"><a class="ee-btn" href="#catalogo">Descubrir las experiencias <span class="ee-arrow">↗</span></a></div>
+<div class="ee-hero-mini">Acceso a catálogo privado · Experiencias y paquetes se compran por separado</div>
+</div>
+<div aria-label="Regala viajes y experiencias" class="ee-hero-feature">
+<div class="ee-gift-spotlight">
+<span class="ee-gift-spotlight-kicker">LA EMOCIÓN DE SORPRENDER</span>
+<div class="ee-gift-hero-image"><img alt="Regalo elegante con gran moño" src="/acceso/img/regalo-mono-grande.webp"/></div>
+<h2>Un regalo que se convierte en recuerdos</h2>
+<span class="ee-gift-spotlight-foot">Para esa persona especial. O para ti.</span>
+</div>
+</div>
+</div>
+<div class="ee-hero-bottom ee-glass">✦ Escapadas nacionales e invitaciones hoteleras internacionales</div>
+</section>
+<div class="ee-promise"><div class="ee-container ee-promise-grid"><div class="ee-promise-item"><div class="ee-promise-icon">✦</div><div><strong>Para disfrutar y regalar</strong><small>Sorprende con recuerdos</small></div></div><div class="ee-promise-item"><div class="ee-promise-icon">∞</div><div><strong>Tu acceso no vence</strong><small>Pago único · Sin vencimiento</small></div></div><div class="ee-promise-item"><div class="ee-promise-icon">♡</div><div><strong>Te ayudamos por WhatsApp</strong><small>Hasta confirmar tu hospedaje</small></div></div></div></div>
+<section class="ee-section ee-offwhite" id="descubre"><div class="ee-container"><div class="ee-center"><span class="ee-label">Un regalo, infinitas emociones</span><h2 class="ee-title">Regala algo que se vive. <em>Regala un recuerdo.</em></h2><p class="ee-intro">Para escapar de la rutina, celebrar una fecha especial o sorprender a alguien que quieres. Hay experiencias que merecen vivirse.</p></div><div class="ee-destination-grid"><article class="ee-destination"><img alt="Pareja recorriendo el centro histórico de Quito" loading="lazy" src="/acceso/img/destino-quito.webp"/><div class="ee-destination-txt"><small>Quito · Cuenca · Loja</small><h3>Ciudades para enamorarse</h3><p>Historia, rincones únicos y tiempo para dos.</p></div></article><article class="ee-destination"><img alt="Pareja disfrutando de una playa" loading="lazy" src="/acceso/img/destino-playa.webp"/><div class="ee-destination-txt"><small>Manta y costa ecuatoriana</small><h3>Una pausa junto al mar</h3><p>Sol, descanso y una escapada especial.</p></div></article><article class="ee-destination"><img alt="Viajeros en terraza mediterránea con vistas al mar" loading="lazy" src="/acceso/img/destino-mundo.webp"/><div class="ee-destination-txt"><small>Más de 130 destinos</small><h3>El mundo te espera</h3><p>Invitaciones hoteleras internacionales.</p></div></article><div class="ee-destination-last"><img alt="Mujer sorprendida al recibir un regalo de viaje" loading="lazy" src="/acceso/img/destino-regalo.webp"/><div class="ee-copy"><span class="ee-label" style="color:#ffca90">La emoción de sorprender</span><h3>Ese momento en que alguien descubre que le regalaste una experiencia.</h3><p>Elige un paquete dentro del portal, añade tu dedicatoria y haz que la sorpresa llegue por correo.</p><a class="ee-btn ee-light ee-small" href="#regalar">Imagina su regalo <span class="ee-arrow">→</span></a></div></div></div></div></section>
+<section class="ee-section" id="video"><div class="ee-container ee-video-layout"><div><span class="ee-label">Descubre las experiencias</span><h2 class="ee-title">Viajes que inspiran. <em>Momentos que quedan.</em></h2><p class="ee-intro">Mira una muestra de destinos y experiencias que podrás encontrar dentro del catálogo privado.</p><p class="ee-video-desc">Este video muestra destinos y experiencias de viaje. Los detalles, condiciones y precios de cada paquete están en el portal privado.</p><a class="ee-btn ee-small" href="#comprar">Quiero descubrir el catálogo <span class="ee-arrow">→</span></a></div><div><div class="ee-video-shell"><video id="main-video" preload="none" playsinline poster="/acceso/img/siguiente-destino.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0f334d"><source src="/acceso/siguiente-destino.mp4" type="video/mp4"></video><button type="button" class="vid-facade vid-facade--local" data-local="main-video" style="background-image:url('/acceso/img/siguiente-destino.webp')" aria-label="Reproducir video de destinos y experiencias"><span class="vid-facade__play" aria-hidden="true"></span></button></div><p class="ee-video-desc">🔊 Dale play con sonido. Según tu celular, puede empezar en silencio.</p></div></div></section>
+<section aria-label="Algunos hoteles incluidos en el catálogo de escapadas nacionales" class="ee-brandwall" id="hoteles"><div class="ee-container"><h2>Nombres que reconocerás en nuestras escapadas</h2><p>Algunos hoteles incluidos en el catálogo nacional de la promoción, sujetos a disponibilidad y condiciones de cada reserva.</p></div><div class="ee-brand-viewport"><div class="ee-brand-track">
+<div class="ee-hotelwordmark"><strong>Hilton Colón Quito</strong><small>Quito</small></div><div class="ee-hotelwordmark"><strong>Hampton by Hilton</strong><small>Quito La Carolina Park</small></div><div class="ee-hotelwordmark"><strong>Wyndham Manta Sail Plaza</strong><small>Manta</small></div><div class="ee-hotelwordmark"><strong>Four Points by Sheraton</strong><small>Cuenca</small></div><div class="ee-hotelwordmark"><strong>Oro Verde</strong><small>Guayaquil · Loja</small></div><div class="ee-hotelwordmark"><strong>Sonesta Hotel</strong><small>Loja</small></div><div class="ee-hotelwordmark"><strong>Holiday Inn Express</strong><small>Quito</small></div><div class="ee-hotelwordmark"><strong>Ibis Styles</strong><small>Guayaquil Malecón</small></div>
+<div aria-hidden="true" class="ee-hotelwordmark"><strong>Hilton Colón Quito</strong><small>Quito</small></div><div aria-hidden="true" class="ee-hotelwordmark"><strong>Hampton by Hilton</strong><small>Quito La Carolina Park</small></div><div aria-hidden="true" class="ee-hotelwordmark"><strong>Wyndham Manta Sail Plaza</strong><small>Manta</small></div><div aria-hidden="true" class="ee-hotelwordmark"><strong>Four Points by Sheraton</strong><small>Cuenca</small></div><div aria-hidden="true" class="ee-hotelwordmark"><strong>Oro Verde</strong><small>Guayaquil · Loja</small></div><div aria-hidden="true" class="ee-hotelwordmark"><strong>Sonesta Hotel</strong><small>Loja</small></div><div aria-hidden="true" class="ee-hotelwordmark"><strong>Holiday Inn Express</strong><small>Quito</small></div><div aria-hidden="true" class="ee-hotelwordmark"><strong>Ibis Styles</strong><small>Guayaquil Malecón</small></div>
+</div></div><p class="ee-brand-disclaimer">Nombres referenciales de hoteles recogidos en el catálogo nacional de la promoción. No implican patrocinio ni alianza directa de las cadenas hoteleras con este sitio. Sujetos a disponibilidad y a las condiciones de cada experiencia.</p></section>
+<section class="ee-section" id="regalar"><div class="ee-container ee-gift-layout"><div class="ee-gift-image"><img alt="Persona emocionada recibiendo una sorpresa de viaje" loading="lazy" src="/acceso/img/destino-regalo.webp"/><span class="ee-tag">Un recuerdo que empieza con una sorpresa ♡</span></div><div><span class="ee-label">Para quien más quieres</span><h2 class="ee-title">Haz que su próximo «¡wow!» <em>sea inolvidable.</em></h2><p class="ee-intro">Elige una experiencia dentro del catálogo, cómprala para esa persona especial y haz que reciba su regalo por correo junto con tu dedicatoria.</p><div class="ee-gift-list"><div class="ee-gift-li"><b>1</b><span>Escoge una experiencia del catálogo privado.</span></div><div class="ee-gift-li"><b>2</b><span>Indica a quién deseas regalarla y escribe tu dedicatoria.</span></div><div class="ee-gift-li"><b>3</b><span>La persona recibe por correo su tarjeta de regalo.</span></div></div><div class="ee-gift-preview"><strong>Imagina cómo se sentirá su regalo</strong><div aria-label="Selecciona una ocasión" class="ee-occasion-buttons" role="group"><button aria-pressed="true" data-occasion="cumple" type="button">Cumpleaños</button><button aria-pressed="false" data-occasion="aniv" type="button">Aniversario</button><button aria-pressed="false" data-occasion="sorpresa" type="button">Sorpresa</button></div><div aria-live="polite" class="ee-gift-card"><div class="ee-mini-logo"><img alt="BVPoints" height="40" src="/acceso/img/logo-bvpoints.webp" width="40"/><span>EXPERIENCIAS ECUADOR Y EL MUNDO</span></div><h4 id="gift-title">¡Feliz cumpleaños!</h4><p id="gift-message">Te mereces momentos increíbles. Que esta experiencia se convierta en uno de tus mejores recuerdos.</p><small>PARA DISFRUTAR Y REGALAR</small></div><p class="ee-small" style="margin:12px 0 0;color:var(--muted)">Vista ilustrativa de una dedicatoria. La tarjeta real se genera al comprar el paquete correspondiente.</p></div></div></div></section>
+<section class="ee-section ee-offwhite" id="beneficios"><div class="ee-container"><div class="ee-center"><span class="ee-label">Todo comienza con tu acceso</span><h2 class="ee-title">Mucho más que mirar viajes. <em>Descubre posibilidades.</em></h2><p class="ee-intro">Con un único acceso obtienes estos beneficios para explorar, ahorrar y elegir qué experiencia quieres disfrutar o regalar.</p></div><div class="ee-benefits"><article class="ee-benefit"><div class="ee-benefit-icon">✈</div><h3>Catálogo privado de viajes</h3><p>Encuentra paquetes de experiencias a precios exclusivos dentro del portal.</p></article><article class="ee-benefit"><div class="ee-benefit-icon">★</div><h3>Un regalo de bienvenida</h3><p>Recibe US$100 en ahorro hotelero para usar como pago parcial en una o varias reservaciones, sujeto a condiciones.</p></article><article class="ee-benefit"><div class="ee-benefit-icon">🎁</div><h3>Regala una experiencia</h3><p>Compra un paquete para otra persona y haz que reciba su tarjeta de regalo y dedicatoria por correo.</p></article><article class="ee-benefit"><div class="ee-benefit-icon">♡</div><h3>Ayuda por WhatsApp</h3><p>Te acompañamos desde que eliges hasta que confirmas tu hospedaje.</p></article></div></div></section>
+<section class="ee-section" id="puntos"><div class="ee-container ee-welcome-layout">
+<div aria-label="Regalo de bienvenida de cien dólares en ahorro hotelero" class="ee-welcome-visual">
+<div class="ee-floating-stars"><span>✦</span><span>✧</span><span>✦</span><span>✧</span></div>
+<div class="ee-present-wrap ee-present-wrap-photo"><img alt="Regalo naranja con gran moño dorado" src="/acceso/img/regalo-mono-grande.webp"/><div class="ee-present-card"><small>BONO DE BIENVENIDA</small><strong>US$100</strong><span>EN AHORRO HOTELERO</span></div></div>
+<div class="ee-welcome-caption">Tu próxima experiencia comienza con una sorpresa</div>
+</div>
+<div class="ee-welcome-copy"><span class="ee-label">Un detalle de bienvenida</span><h2 class="ee-title">¡Tenemos un <em>regalo para ti!</em></h2><p class="ee-welcome-lead">Recibe <strong>US$100 para ahorrar en hoteles.</strong></p><p class="ee-intro">Porque los mejores viajes comienzan con una buena sorpresa. Al adquirir tu acceso, recibirás un beneficio de bienvenida para futuras reservas hoteleras.</p><div class="ee-welcome-terms"><strong>¿Cómo funciona este obsequio?</strong><p>Este beneficio corresponde a 100 puntos BookVipPoints equivalentes a US$100 de ahorro acumulado, utilizables como parte de pago parcial en una o varias reservaciones de hotel, según las condiciones de cada reserva. Para cuentas nuevas. No canjeables por efectivo.</p></div><a class="ee-text-link" href="#comprar">Conoce tu acceso <span aria-hidden="true">↗</span></a></div>
+</div></section>
+<section class="ee-section ee-offwhite" id="catalogo"><div class="ee-container"><div class="ee-center"><span class="ee-label">Un catálogo para disfrutar y regalar</span><h2 class="ee-title">Tres maneras de crear <em>recuerdos inolvidables.</em></h2><p class="ee-intro">Estas son algunas de las experiencias que encontrarás. Sus precios se muestran exclusivamente dentro del portal.</p></div><div class="ee-package-grid"><article class="ee-package"><div class="ee-package-img"><img alt="Escapada nacional a una ciudad ecuatoriana" loading="lazy" src="/acceso/img/destino-quito.webp"/><span>ECUADOR</span></div><div class="ee-package-body"><h3>Escape Esencial</h3><p class="ee-catch">Un respiro para dos, dentro de Ecuador.</p><ul><li>1 escapada nacional de 2 días y 1 noche para 2 personas.</li><li>Desayuno incluido.</li><li>Quito, Guayaquil, Manta, Cuenca o Loja.</li></ul><footer>Vigencia: 12 meses</footer></div></article><article class="ee-package ee-featured"><div class="ee-package-img"><img alt="Experiencia internacional con vista al mar" loading="lazy" src="/acceso/img/destino-mundo.webp"/><b>DESTACADO</b><span>ECUADOR + EL MUNDO</span></div><div class="ee-package-body"><h3>Escape Plus</h3><p class="ee-catch">Ecuador y el mundo en un solo paquete.</p><ul><li>1 escapada nacional de 3 días y 2 noches para 2 personas con desayuno.</li><li>1 invitación hotelera internacional en hoteles y resorts de más de 130 destinos.</li><li>Estadías internacionales de 4 días y 3 noches hasta 8 días y 7 noches, según destino.</li></ul><footer>Vigencia: 18 meses</footer></div></article><article class="ee-package"><div class="ee-package-img"><img alt="Familia viajera ante paisajes de ciudad y mar" loading="lazy" src="/acceso/img/paquetes.webp"/><span>EL DOBLE DE EXPERIENCIAS</span></div><div class="ee-package-body"><h3>Escape Premium</h3><p class="ee-catch">Más experiencias para disfrutar y regalar.</p><ul><li>2 escapadas nacionales de 3 días y 2 noches.</li><li>2 invitaciones hoteleras internacionales.</li></ul><footer>Vigencia: 24 meses</footer></div></article></div><p class="ee-center" style="font-size:14px;color:var(--burnt);font-weight:800;margin:25px 0 0">Los precios de cada paquete los ves dentro de tu portal.</p></div></section>
+<section class="ee-section" id="como-funciona"><div class="ee-container ee-how-grid"><div><span class="ee-label">Simple y seguro</span><h2 class="ee-title">Tu próxima experiencia comienza <em>en tres pasos.</em></h2><div class="ee-steps"><div class="ee-step"><div class="ee-number">01</div><div><h3>Obtén tu acceso con tarjeta</h3><p>Con tarjeta de crédito o débito a través del pago seguro de PayPhone.</p></div></div><div class="ee-step"><div class="ee-number">02</div><div><h3>Crea tu contraseña</h3><p>Apenas se aprueba el pago, defines tu contraseña. También recibes un correo.</p></div></div><div class="ee-step"><div class="ee-number">03</div><div><h3>Entra y elige</h3><p>Activa tus 100 puntos, explora el catálogo y compra un paquete para ti o para regalar.</p></div></div></div><a class="ee-btn" href="#comprar">Explorar experiencias <span class="ee-arrow">→</span></a></div><div class="ee-how-photo"><img alt="Pareja planificando una escapada desde su computadora" loading="lazy" src="/acceso/img/pasos.webp"/></div></div></section>
+<section class="ee-section ee-purchase" id="comprar"><div class="ee-container"><span class="ee-label" style="color:#ffbb82">La puerta de entrada a tus experiencias</span><h2 class="ee-title">Obtén tu acceso. <em>Regala nuevas historias.</em></h2><p class="ee-intro">Abre tu catálogo privado con un pago único. Tu acceso no vence.</p><div class="ee-checkout-grid"><div class="ee-receipt"><span>Resumen de tu acceso</span><div class="ee-receipt-row"><div><strong>Acceso al catálogo privado</strong><small>Pago único. Tu acceso no vence.</small></div><strong>US$25</strong></div><div class="ee-receipt-row"><div><strong>100 puntos de bienvenida</strong><small>Para cuentas nuevas; no caducan.</small></div><strong>Gratis</strong></div><div class="ee-receipt-total"><span>Total</span><strong>US$25</strong></div><div class="ee-payment-trust">🔒 Pago procesado por PayPhone. No guardamos los datos de tu tarjeta.</div></div><div class="ee-checkout-panel"><h3>Completa tu compra</h3><div id="checkout-acceso"></div><p class="ee-checkout-note">El acceso abre el catálogo privado y te da 100 puntos de bienvenida. Los paquetes se compran por separado dentro del portal.</p></div></div></div></section>
+<section class="ee-section" id="preguntas"><div class="ee-container ee-faq-grid"><div><span class="ee-label">Respuestas claras</span><h2 class="ee-title">Resolvemos tus dudas <em>antes de viajar.</em></h2><p class="ee-intro">Queremos que sepas exactamente qué estás adquiriendo.</p><div class="ee-faq-image"><img alt="Viajera consultando información de su próxima escapada" loading="lazy" src="/acceso/img/faq.webp"/></div></div><div class="ee-faqs"><details open=""><summary>¿El acceso incluye un viaje?</summary><p>No. Te abre el catálogo privado y te da 100 puntos de bienvenida; los paquetes se compran dentro del portal.</p></details><details><summary>¿El acceso vence?</summary><p>No. Cada paquete que compres tiene su propia vigencia (12, 18 o 24 meses).</p></details><details><summary>¿Cómo funcionan los 100 puntos?</summary><p>Recibes 100 puntos BookVipPoints equivalentes a US$100 de ahorro acumulado. Se utilizan como pago parcial en una o más reservas de hotel según sus condiciones. Son para usuarios nuevos, no caducan y no se pueden retirar en efectivo.</p></details><details><summary>¿Hay condiciones para las escapadas nacionales?</summary><p>Se piden con al menos 30 días de anticipación y no se pueden usar en temporada alta, vacaciones ni feriados.</p></details><details><summary>¿Qué pago en la invitación internacional?</summary><p>Los impuestos y tasas del hotel o resort los paga el viajero y varían según el destino y la temporada.</p></details><details><summary>¿Con qué puedo pagar?</summary><p>Con tarjeta de crédito o débito, en el pago seguro de PayPhone.</p></details><details><summary>Ya tengo cuenta, ¿qué hago?</summary><p>No necesitas comprar el acceso otra vez; entra con tu correo y contraseña.</p></details></div></div><div class="ee-container"><div class="ee-last-banner"><img alt="Emoción al recibir un regalo de viaje" loading="lazy" src="/acceso/img/destino-regalo.webp"/><div class="ee-text"><h3>Regala experiencias. <span style="color:#ffb577">Colecciona recuerdos.</span></h3><p>Una escapada puede convertirse en una historia que recordarán para siempre.</p><a class="ee-btn" href="#comprar">Explorar experiencias <span class="ee-arrow">→</span></a></div></div></div></section>
+</main><footer><div class="ee-container ee-footer-wrap"><div><strong>Experiencias Ecuador y el Mundo</strong><small>Para disfrutar y regalar</small></div><div class="ee-footer-links"><a href="https://wa.me/593981350463" rel="noopener noreferrer" target="_blank">WhatsApp +593 98 135 0463</a><a href="/terminos">Términos y condiciones</a></div></div></footer><div class="ee-floating"><a class="ee-btn" href="#comprar">Explorar experiencias <span class="ee-arrow">→</span></a></div>
 <script>
+const messages={cumple:['¡Feliz cumpleaños!','Te mereces momentos increíbles. Que esta experiencia se convierta en uno de tus mejores recuerdos.'],aniv:['Por muchos momentos juntos','Hay viajes que se vuelven parte de nuestra historia. Que este sea uno de ellos.'],sorpresa:['¡Tengo una sorpresa para ti!','Porque mereces una experiencia especial. Espero que disfrutes cada instante.']};
+document.querySelectorAll('[data-occasion]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-occasion]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));const [title,msg]=messages[btn.dataset.occasion];document.getElementById('gift-title').textContent=title;document.getElementById('gift-message').textContent=msg;}));
+</script><script>
 (function(){
   // Reproductor
   document.querySelectorAll('.vid-facade--local').forEach(function(el){
@@ -468,5 +248,4 @@ footer{padding:28px 0 44px;background:#fff;border-top:1px solid #edf4f8}.footer-
   renderForm('');
 })();
 </script>
-</body>
-</html>
+</body></html>
