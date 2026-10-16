@@ -17,7 +17,16 @@ export type StartAccessResult =
   | { ok: true; box: Record<string, unknown> }
   | { ok: false; error: string; code?: "exists" };
 
-export async function startAccessPurchase(input: { name?: string; email?: string; email2?: string; phone?: string; terms?: boolean }): Promise<StartAccessResult> {
+/** Identificadores de clic de Google Ads: solo letras, números, guion y guion bajo. */
+function clickId(v: unknown): string | null {
+  const s = String(v ?? "").trim();
+  return /^[A-Za-z0-9_-]{6,200}$/.test(s) ? s : null;
+}
+
+export async function startAccessPurchase(input: {
+  name?: string; email?: string; email2?: string; phone?: string; terms?: boolean;
+  gclid?: string; gbraid?: string; wbraid?: string; landing?: string;
+}): Promise<StartAccessResult> {
   if (!payphoneBoxEnabled()) return { ok: false, error: "La venta en línea todavía no está activa. Escríbenos por WhatsApp." };
   const name = String(input.name ?? "").trim().replace(/\s+/g, " ").slice(0, 120);
   const email = String(input.email ?? "").trim().toLowerCase();
@@ -38,7 +47,12 @@ export async function startAccessPurchase(input: { name?: string; email?: string
 
   const cents = Math.round(accessPriceUsd() * 100);
   const tx = (ACCESS_TX_PREFIX + randomBytes(15).toString("base64url")).slice(0, 50);
-  const { error } = await admin.from("access_purchases").insert({ client_tx_id: tx, full_name: name, email, phone, amount_cents: cents });
+  const landing = String(input.landing ?? "").slice(0, 500);
+  const { error } = await admin.from("access_purchases").insert({
+    client_tx_id: tx, full_name: name, email, phone, amount_cents: cents,
+    gclid: clickId(input.gclid), gbraid: clickId(input.gbraid), wbraid: clickId(input.wbraid),
+    landing_url: landing.startsWith("https://experiencias.bookvippoints.com/") || landing.startsWith("http://localhost") ? landing : null,
+  });
   if (error) return { ok: false, error: "No se pudo preparar el pago. Intenta de nuevo." };
   return {
     ok: true,
@@ -170,4 +184,38 @@ export async function accessActivationUrl(tx: string): Promise<string> {
   } catch {
     return `${appUrl()}/login`;
   }
+}
+
+/** Ventana durante la cual una compra recién aprobada puede enviarse como conversión. */
+const ADS_CONVERSION_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+
+export interface AccessConversion {
+  transactionId: string;
+  value: number;
+  currency: "USD";
+}
+
+/**
+ * Decide en el servidor si esta compra debe medirse en Google Ads. Nunca usa el
+ * parámetro "estado" de la dirección: revisa la compra guardada y la respuesta
+ * de confirmación de PayPhone (estado aprobado, misma referencia y mismo monto).
+ */
+export async function accessConversionFor(tx: string, expectedValueUsd: number): Promise<AccessConversion | null> {
+  if (!tx.startsWith(ACCESS_TX_PREFIX) || tx.length > 50) return null;
+  const { data: p } = await createAdminClient()
+    .from("access_purchases")
+    .select("client_tx_id, status, amount_cents, response, confirmed_at, ads_conversion_sent_at")
+    .eq("client_tx_id", tx)
+    .maybeSingle();
+  if (!p || p.status !== "approved" || p.ads_conversion_sent_at) return null;
+  const expectedCents = Math.round(expectedValueUsd * 100);
+  const r = (p.response ?? {}) as { statusCode?: number; amount?: number; clientTransactionId?: string; transactionId?: number };
+  const verified =
+    p.amount_cents === expectedCents &&
+    r.statusCode === 3 &&
+    Number(r.amount) === p.amount_cents &&
+    r.clientTransactionId === p.client_tx_id;
+  if (!verified) return null;
+  if (!p.confirmed_at || Date.now() - new Date(p.confirmed_at).getTime() > ADS_CONVERSION_WINDOW_MS) return null;
+  return { transactionId: p.client_tx_id, value: p.amount_cents / 100, currency: "USD" };
 }

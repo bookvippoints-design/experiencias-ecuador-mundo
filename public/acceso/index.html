@@ -4,6 +4,16 @@
 <head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#F07A1F" name="theme-color"/>
 <title>Experiencias Ecuador y el Mundo | Para disfrutar y regalar</title>
+<!-- Google Ads: etiqueta principal (una sola vez) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-614254713"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+if(!window.gtag){window.gtag=function(){window.dataLayer.push(arguments);};}
+if(!window.__eeGtagConfigured){window.__eeGtagConfigured=true;gtag('js',new Date());gtag('config','AW-614254713');}
+// Guarda el identificador del clic de Google Ads (gclid/gbraid/wbraid) para enviarlo con la compra.
+(function(){try{var q=new URLSearchParams(location.search),c={};['gclid','gbraid','wbraid'].forEach(function(k){var v=q.get(k);if(v&&/^[A-Za-z0-9_-]{6,200}$/.test(v))c[k]=v;});
+if(Object.keys(c).length){c.ts=Date.now();c.landing=location.href.slice(0,500);localStorage.setItem('ee_ads_click',JSON.stringify(c));}}catch(e){}})();
+</script>
 <link rel="icon" type="image/webp" href="/acceso/img/logo-bvpoints.webp">
 <link rel="icon" type="image/png" sizes="32x32" href="/acceso/img/logo-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/acceso/img/logo-180.png">
@@ -209,7 +219,8 @@ document.querySelectorAll('[data-occasion]').forEach(btn=>btn.addEventListener('
     };
     var btn=document.getElementById('co-submit');
     btn.disabled=true; btn.textContent='Preparando el pago…';
-    fetch('/api/acceso/iniciar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(saved)})
+    var ads={};try{var c=JSON.parse(localStorage.getItem('ee_ads_click')||'null');if(c&&Date.now()-c.ts<90*864e5)ads={gclid:c.gclid,gbraid:c.gbraid,wbraid:c.wbraid,landing:c.landing};}catch(e){}
+    fetch('/api/acceso/iniciar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},saved,ads))})
       .then(function(r){return r.json()})
       .then(function(res){
         if(!res.ok){

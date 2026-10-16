@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { APP_NAME, APP_SLOGAN, whatsappUrl } from "@/lib/brand";
+import { APP_NAME, APP_SLOGAN, whatsappUrl, GOOGLE_ADS_ID, GOOGLE_ADS_ACCESS_LABEL, GOOGLE_ADS_ACCESS_VALUE } from "@/lib/brand";
+import { accessConversionFor } from "@/lib/access-sale";
+import { GoogleAdsTag } from "@/components/GoogleAdsTag";
 
 export const dynamic = "force-dynamic";
 
@@ -95,9 +97,15 @@ async function AccessResult({ tx, estado }: { tx: string; estado: string }) {
     .maybeSingle();
   const status = !p ? estado : p.status === "approved" ? (p.credited_at ? "approved" : "pending_credit") : p.status === "canceled" ? "canceled" : p.status === "failed" ? "error" : estado;
   const first = p?.full_name?.split(" ")[0] ?? "";
+  // Conversión de Google Ads: la decide el servidor con los datos verificados de PayPhone.
+  const conv = status === "approved" || status === "pending_credit" ? await accessConversionFor(tx, GOOGLE_ADS_ACCESS_VALUE) : null;
+  const conversion = conv
+    ? { sendTo: `${GOOGLE_ADS_ID}/${GOOGLE_ADS_ACCESS_LABEL}`, value: conv.value, currency: conv.currency, transactionId: conv.transactionId }
+    : null;
   const help = whatsappUrl(`Hola, compré el acceso a Experiencias Ecuador y el Mundo (referencia ${tx}) y necesito ayuda`);
   return (
     <main className="login-page">
+      <GoogleAdsTag adsId={GOOGLE_ADS_ID} conversion={conversion} />
       <div className="login-card pay-result">
         <h1>{APP_NAME}</h1>
         <p className="tagline">{APP_SLOGAN}</p>

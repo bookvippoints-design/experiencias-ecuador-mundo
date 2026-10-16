@@ -54,3 +54,9 @@ export function accessPriceUsd(): number {
   const n = Number(process.env.ACCESS_PRICE_USD || "25");
   return Number.isFinite(n) && n > 0 ? n : 25;
 }
+
+/** Google Ads: conversión "Compra acceso Experiencias US$25". No son datos secretos. */
+export const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-614254713";
+export const GOOGLE_ADS_ACCESS_LABEL = process.env.NEXT_PUBLIC_GOOGLE_ADS_ACCESS_LABEL || "FTT_CPim3p4dEPmQ86QC";
+/** Valor esperado de la conversión del acceso (US$). Solo se mide si el pago verificado coincide. */
+export const GOOGLE_ADS_ACCESS_VALUE = 25;
