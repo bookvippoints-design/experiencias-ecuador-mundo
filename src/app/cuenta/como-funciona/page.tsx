@@ -123,8 +123,7 @@ export default async function ComoFunciona() {
           <Steps
             tone="orange"
             items={[
-              { title: "Obtén tus puntos", text: `Gratis con el bono de bienvenida (${WELCOME_BONUS_POINTS} puntos) o con una tarjeta de 250, 500 o 1.000 puntos.` },
-              { title: "Canjea tu tarjeta", text: 'Si compraste una tarjeta, toca "Canjear mis puntos" y escribe el correo de tu cuenta BookVipPoints; te avisamos al acreditarlos.' },
+              { title: "Obtén tus puntos gratis", text: `Regístrate en BookVipPoints y recibe tu bono de bienvenida de ${WELCOME_BONUS_POINTS} puntos.` },
               { title: "Reserva y ahorra", text: "En BookVipPoints busca tu hotel y aplica tus puntos como parte del pago." },
             ]}
           />
@@ -139,7 +138,7 @@ export default async function ComoFunciona() {
           <ul className="check-list">
             <li>Los puntos no caducan.</li>
             <li>No son efectivo ni pagan el total de una reserva; el ahorro depende del hotel y la disponibilidad.</li>
-            <li>Las tarjetas de puntos se regalan completas. El bono de bienvenida no se puede regalar.</li>
+            <li>El bono de bienvenida es uno por persona, solo para cuentas nuevas, y no se puede regalar.</li>
           </ul>
           <div className="btn-row">
             <PointsLoginButton />

@@ -64,7 +64,6 @@ export default function TerminosPage() {
           Cada punto equivale a hasta US$1 de ahorro como pago parcial en reservas de hotel nacionales o internacionales,
           sujeto a disponibilidad. Los puntos no son efectivo ni saldo para pagar íntegramente una reserva. Los puntos no caducan.
         </li>
-        <li>Las tarjetas de puntos se acreditan manualmente en la cuenta BookVipPoints del cliente tras confirmar el pago, y se regalan completas.</li>
         <li>
           Bono de bienvenida: BookVipPoints otorga 100 puntos a las cuentas nuevas que se registran en su sitio. Es uno por
           persona, no se puede regalar y no aplica a cuentas BookVipPoints ya existentes.

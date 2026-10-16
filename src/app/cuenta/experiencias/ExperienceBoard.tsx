@@ -139,7 +139,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
             nextExpiry={intls[0]?.valid_until ?? null} actionLabel="Pedir una"
             onAction={intls[0] ? () => setBooking(intls[0]) : undefined}
             onGift={() => giftNow(intls, "invitaciones internacionales")} canGift={intls.some(giftable)} />
-          <GroupCard icon="⭐" title="Puntos por canjear" available={points.reduce((sum, e) => sum + (e.points ?? 0), 0)} inProcess={inProc("points")}
+          {(points.length > 0 || inProc("points") > 0) && <GroupCard icon="⭐" title="Puntos por canjear" available={points.reduce((sum, e) => sum + (e.points ?? 0), 0)} inProcess={inProc("points")}
             nextExpiry={null} actionLabel="" canGift={false}>
             {points.length > 0 && (
               <ul className="group-card__list">
@@ -156,7 +156,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
             )}
             <div className="group-card__meta">Los puntos no caducan.</div>
             <div><PointsLoginButton /></div>
-          </GroupCard>
+          </GroupCard>}
         </div>
       )}
 

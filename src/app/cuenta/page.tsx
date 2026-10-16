@@ -53,7 +53,7 @@ export default async function CuentaHome() {
             <span className="quick-card__icon" aria-hidden="true">🧳</span>
             <span className="quick-card__text">
               <strong>Usar o regalar lo que ya tengo</strong>
-              <span>{nationals} {nationals === 1 ? "escapada" : "escapadas"} · {internationals} {internationals === 1 ? "invitación" : "invitaciones"} · {pointsAvailable.toLocaleString("es-EC")} puntos</span>
+              <span>{nationals} {nationals === 1 ? "escapada" : "escapadas"} · {internationals} {internationals === 1 ? "invitación" : "invitaciones"}{pointsAvailable > 0 ? ` · ${pointsAvailable.toLocaleString("es-EC")} puntos` : ""}</span>
             </span>
             <span className="quick-card__go" aria-hidden="true">→</span>
           </Link>
@@ -97,11 +97,15 @@ export default async function CuentaHome() {
           los paga el viajero y varían por destino y temporada.
         </p>
 
-        {/* 3. Puntos */}
-        <div className="section-title"><h2>⭐ Tarjetas de puntos</h2><PointsLoginButton /></div>
-        <p className="content-lead">Ahorra en hoteles de Ecuador y el mundo: cada punto equivale a hasta US$1 de ahorro.</p>
-        <div className="product-grid">{cards.map((p) => <ProductCard key={p.id} product={p} />)}</div>
-        <p className="field-hint" style={{ marginTop: ".75rem" }}>{POINTS_VALUE_NOTE}</p>
+        {/* 3. Puntos (solo si hay tarjetas activas en el catálogo) */}
+        {cards.length > 0 && (
+          <>
+            <div className="section-title"><h2>⭐ Tarjetas de puntos</h2><PointsLoginButton /></div>
+            <p className="content-lead">Ahorra en hoteles de Ecuador y el mundo: cada punto equivale a hasta US$1 de ahorro.</p>
+            <div className="product-grid">{cards.map((p) => <ProductCard key={p.id} product={p} />)}</div>
+            <p className="field-hint" style={{ marginTop: ".75rem" }}>{POINTS_VALUE_NOTE}</p>
+          </>
+        )}
 
         {/* 4. Mis experiencias */}
         <div className="section-title">
@@ -117,10 +121,12 @@ export default async function CuentaHome() {
             <span className="stat-card__value">{internationals}</span>
             <span className="stat-card__label">{internationals === 1 ? "Invitación internacional por pedir" : "Invitaciones internacionales por pedir"}</span>
           </Link>
-          <Link href="/cuenta/puntos" className="stat-card" style={{ textDecoration: "none" }}>
-            <span className="stat-card__value">{pointsAvailable.toLocaleString("es-EC")}</span>
-            <span className="stat-card__label">Puntos por canjear</span>
-          </Link>
+          {pointsAvailable > 0 && (
+            <Link href="/cuenta/puntos" className="stat-card" style={{ textDecoration: "none" }}>
+              <span className="stat-card__value">{pointsAvailable.toLocaleString("es-EC")}</span>
+              <span className="stat-card__label">Puntos por canjear</span>
+            </Link>
+          )}
           <Link href="/cuenta/pedidos" className="stat-card" style={{ textDecoration: "none" }}>
             <span className="stat-card__value">{pending?.length ?? 0}</span>
             <span className="stat-card__label">Pedidos en proceso</span>

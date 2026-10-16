@@ -3,7 +3,6 @@ import Link from "next/link";
 const TABS = [
   { href: "/cuenta/experiencias", label: "Mis experiencias" },
   { href: "/cuenta/reservas", label: "Canjes y reservas" },
-  { href: "/cuenta/puntos", label: "Mis puntos" },
   { href: "/cuenta/pedidos", label: "Mis pedidos" },
   { href: "/cuenta/regalos", label: "Regalos" },
 ];

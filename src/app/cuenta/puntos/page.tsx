@@ -28,7 +28,6 @@ export default async function MisPuntos() {
           </div>
           <div className="btn-row">
             <Link href="/cuenta/experiencias" className="btn-orange">Canjear mis puntos</Link>
-            <Link href="/cuenta/catalogo" className="btn-ghost">Comprar tarjetas de puntos</Link>
             <PointsLoginButton small={false} />
           </div>
         </section>

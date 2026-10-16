@@ -36,9 +36,13 @@ export default async function Catalogo() {
         </div>
         <div className="product-grid">{escapes.map((p) => <ProductCard key={p.id} product={p} />)}</div>
 
-        <div className="section-title"><h2>Tarjetas de puntos hoteleros</h2><PointsLoginButton /></div>
-        <p className="info-box">{POINTS_VALUE_NOTE}</p>
-        <div className="product-grid">{cards.map((p) => <ProductCard key={p.id} product={p} />)}</div>
+        {cards.length > 0 && (
+          <>
+            <div className="section-title"><h2>Tarjetas de puntos hoteleros</h2><PointsLoginButton /></div>
+            <p className="info-box">{POINTS_VALUE_NOTE}</p>
+            <div className="product-grid">{cards.map((p) => <ProductCard key={p.id} product={p} />)}</div>
+          </>
+        )}
 
         <div className="section-title"><h2>Destinos nacionales</h2></div>
         <p className="content-lead">
