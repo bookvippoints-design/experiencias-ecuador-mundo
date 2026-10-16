@@ -3,21 +3,30 @@ import { createAdminClient } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
 
+const OUTCOMES = new Set(["sent", "blocked", "timeout", "offline"]);
+
 /**
- * El navegador avisa que Google Ads ya recibió la conversión de esta compra.
- * Solo marca compras de acceso aprobadas y solo la primera vez: así no se vuelve
- * a enviar si el cliente recarga o abre de nuevo el enlace.
+ * El navegador informa el resultado del envío de la conversión de una compra de acceso.
+ * - "sent": gtag despachó el envío; se marca la compra y no se vuelve a enviar.
+ * - otros: solo se anota el intento; la conversión se reintentará en la próxima visita.
+ * Solo afecta compras aprobadas; nunca cambia el pago ni la cuenta.
  */
 export async function POST(request: NextRequest) {
-  let tx = "";
-  try { tx = String((await request.json())?.tx ?? ""); } catch { /* cuerpo vacío */ }
-  if (!tx.startsWith("ACC-") || tx.length > 50) return NextResponse.json({ ok: false }, { status: 400 });
-  const { data } = await createAdminClient()
-    .from("access_purchases")
-    .update({ ads_conversion_sent_at: new Date().toISOString() })
-    .eq("client_tx_id", tx)
-    .eq("status", "approved")
-    .is("ads_conversion_sent_at", null)
-    .select("id");
-  return NextResponse.json({ ok: true, marked: (data ?? []).length === 1 }, { headers: { "Cache-Control": "no-store" } });
+  let tx = "", outcome = "";
+  try { const b = await request.json(); tx = String(b?.tx ?? ""); outcome = String(b?.outcome ?? "sent"); } catch { /* cuerpo vacío */ }
+  if (!tx.startsWith("ACC-") || tx.length > 50 || !OUTCOMES.has(outcome)) return NextResponse.json({ ok: false }, { status: 400 });
+  const admin = createAdminClient();
+  const now = new Date().toISOString();
+  await admin.from("access_purchases")
+    .update({ ads_conversion_last_attempt_at: now, ads_conversion_last_outcome: outcome })
+    .eq("client_tx_id", tx).eq("status", "approved").is("ads_conversion_sent_at", null);
+  let marked = false;
+  if (outcome === "sent") {
+    const { data } = await admin.from("access_purchases")
+      .update({ ads_conversion_sent_at: now })
+      .eq("client_tx_id", tx).eq("status", "approved").is("ads_conversion_sent_at", null)
+      .select("id");
+    marked = (data ?? []).length === 1;
+  }
+  return NextResponse.json({ ok: true, marked }, { headers: { "Cache-Control": "no-store" } });
 }

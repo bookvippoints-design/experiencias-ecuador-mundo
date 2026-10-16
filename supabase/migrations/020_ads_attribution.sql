@@ -7,3 +7,8 @@ alter table public.access_purchases
   add column if not exists wbraid text,
   add column if not exists landing_url text,
   add column if not exists ads_conversion_sent_at timestamptz;
+-- Último intento de envío y su resultado ('sent' confirmado, 'blocked' etiqueta bloqueada,
+-- 'timeout' sin confirmación, 'offline' sin conexión). Solo 'sent' detiene los reintentos.
+alter table public.access_purchases
+  add column if not exists ads_conversion_last_attempt_at timestamptz,
+  add column if not exists ads_conversion_last_outcome text;
