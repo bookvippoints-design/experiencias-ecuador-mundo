@@ -30,7 +30,7 @@ export async function flushPendingMessageEmails(limit = 25): Promise<number> {
         html: emailLayout(
           `<h2 style="margin:0 0 8px;color:${BRAND.orangeDark}">${escapeHtml(m.title)}</h2>
            <p>Hola, ${escapeHtml(person.full_name.split(" ")[0] ?? "")}:</p>
-           <p style="white-space:pre-line">${escapeHtml(m.body)}</p>`,
+           <p style="white-space:pre-line">${escapeHtml(m.body).replace(/(https:\/\/[^\s<]+)/g, (u) => `<a href="${u}" style="color:#c4520a;font-weight:bold">${u.includes("manual_usuario") ? "Ver los videos" : u}</a>`)}</p>`,
           { label: "Ver mis mensajes", url: `${appUrl()}/cuenta/mensajes` },
           `<p style="font-size:13px;color:#5b6570;margin-top:16px">¿Quieres responder? Escríbenos por WhatsApp al <a href="${whatsappUrl()}" style="color:${BRAND.orangeDark}">${whatsappDisplay()}</a>.</p>`
         ),

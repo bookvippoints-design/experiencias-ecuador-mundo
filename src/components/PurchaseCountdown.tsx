@@ -101,9 +101,10 @@ export function PurchaseCountdown({ endsAt, variant, bonusPoints }: {
         <div><b>+500 Puntos</b><small>con Escape Plus</small></div>
         <div><b>+1.000 Puntos</b><small>con Escape Premium</small></div>
       </div>
-      <p className="pw-fine">Los puntos de regalo son para quien compra, no caducan y no se pueden regalar. <a href={MANUAL_URL} target="_blank" rel="noreferrer">Mira cómo usar tus puntos (videos)</a></p>
+      <p className="pw-fine">Los puntos de regalo son para quien compra, no caducan y no se pueden regalar.</p>
       <div className="btn-row">
         <Link href="/cuenta/catalogo" className="btn-orange">Ver paquetes</Link>
+        <a href={MANUAL_URL} target="_blank" rel="noreferrer" className="btn-blue">▶ Videos: cómo usar tus puntos</a>
       </div>
     </section>
   );

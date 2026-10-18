@@ -158,7 +158,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
             )}
             <div className="group-card__meta">Los puntos no caducan.</div>
             <div><PointsLoginButton /></div>
-            <div className="group-card__meta"><a href={POINTS_MANUAL_URL} target="_blank" rel="noreferrer">▶ Videos: cómo usar tus puntos</a></div>
+            <div><a className="btn-blue btn-small" href={POINTS_MANUAL_URL} target="_blank" rel="noreferrer">▶ Videos: cómo usar tus puntos</a></div>
           </GroupCard>}
         </div>
       )}
@@ -398,6 +398,14 @@ function BookingDialog({ item, userEmail, userName, destinations, initialDestina
           </span>
         </div>
         <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
+        <div className="video-cta">
+          <span className="video-cta__icon" aria-hidden="true">▶</span>
+          <div className="video-cta__text">
+            <strong>Aprende a sacarle el máximo provecho a tus puntos</strong>
+            <span>8 videos cortos: desde crear tu cuenta hasta tu primera reserva con ahorro.</span>
+          </div>
+          <a className="btn-orange btn-small" href={POINTS_MANUAL_URL} target="_blank" rel="noreferrer">Ver los videos</a>
+        </div>
         <p><PointsLoginButton label="Ver mi cuenta BookVipPoints" /></p>
         <p className="info-box">Cada punto equivale a hasta US$1 de ahorro como pago parcial. No son efectivo ni pagan una reserva completa, y no caducan. Una vez acreditados ya no se pueden regalar.</p>
         {error && <p className="field-error">{error}</p>}

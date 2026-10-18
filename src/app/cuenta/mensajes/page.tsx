@@ -43,7 +43,13 @@ export default async function Mensajes() {
                     <time className="inbox__date">{when(m.created_at)}</time>
                   </div>
                   <h2 className="inbox__title">{m.title}</h2>
-                  <p className="inbox__body">{m.body}</p>
+                  <p className="inbox__body">
+                    {String(m.body ?? "").split(/(https:\/\/[^\s]+)/g).map((part, i) =>
+                      /^https:\/\//.test(part)
+                        ? <a key={i} href={part} target="_blank" rel="noreferrer" style={{ color: "var(--naranja-oscuro)", fontWeight: 700 }}>{part.includes("manual_usuario") ? "Ver los videos" : part}</a>
+                        : part
+                    )}
+                  </p>
                   <div className="inbox__actions">
                     {m.link && <Link className="btn-ghost btn-small" href={m.link}>Ver</Link>}
                     <a className="btn-small inbox__wa" href={whatsappUrl(`Hola, sobre su mensaje "${m.title}": `)} target="_blank" rel="noreferrer">Responder por WhatsApp</a>

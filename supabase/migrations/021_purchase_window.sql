@@ -62,7 +62,7 @@ begin
   insert into public.entitlements (code, order_id, kind, seq, owner_id, purchaser_id, points, product_name, is_bonus)
     values (new.code || '-REG', new.id, 'points', 99, new.buyer_id, new.buyer_id, v_points, 'Regalo por tu compra: ' || v_name, true);
   perform public.post_message(new.buyer_id, 'auto', '🎁 Recibiste ' || v_points || ' puntos de regalo',
-    'Por comprar ' || v_name || ' dentro de tu plazo de 14 días. Canjéalos en "Lo que tengo" y úsalos como pago parcial en tus próximas reservas de hotel. Los puntos no caducan.',
+    'Por comprar ' || v_name || ' dentro de tu plazo de 14 días. Canjéalos en "Lo que tengo" y úsalos como pago parcial en tus próximas reservas de hotel. Los puntos no caducan. Aprende a sacarles el máximo provecho con los videos: https://go.bookvippoints.com/manual_usuario_bvpoints',
     '/cuenta/experiencias', null, true);
   return new;
 end; $$;
