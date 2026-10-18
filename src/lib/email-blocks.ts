@@ -29,7 +29,7 @@ export function accessFooterHtml(email: string, linkExpires: boolean) {
 export function purchaseWindowHtml() {
   return `<div style="background:#fff1e6;border-radius:12px;padding:14px 18px;margin:18px 0">
     <strong>⏳ Tienes ${PURCHASE_WINDOW_DAYS} días para elegir tu experiencia.</strong><br>
-    Desde que actives tu cuenta, tienes ${PURCHASE_WINDOW_DAYS} días para comprar paquetes con precios especiales y recibir además puntos de regalo: 250 con el Escape Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium.
+    Desde que actives tu cuenta, tienes ${PURCHASE_WINDOW_DAYS} días para comprar paquetes con precios especiales y recibir además de regalo hasta US$1.000 de ahorro en hoteles: 250 puntos con el Escape Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium. Cada punto equivale a hasta US$1 de descuento como pago parcial al reservar hoteles; no son efectivo.
     <div style="font-size:13px;color:#5b6570;margin-top:6px">${escapeHtml(PURCHASE_WINDOW_REASON)}</div>
   </div>`;
 }

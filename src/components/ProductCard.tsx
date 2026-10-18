@@ -22,7 +22,7 @@ export function ProductCard({ product, canBuy = true }: { product: Product; canB
           {product.purchasable && product.category === "escape" && <small> precio total</small>}
         </div>
         {product.international_count > 0 && <span className="fee-badge">Fee de emisión US$0</span>}
-        {bonus ? <span className="pw-bonus-tag">🎁 +{bonus.toLocaleString("es-EC")} puntos de regalo si lo compras en tu plazo</span> : null}
+        {bonus ? <span className="pw-bonus-tag">🎁 Regalo: hasta US${bonus.toLocaleString("es-EC")} de ahorro en hoteles<small>{bonus.toLocaleString("es-EC")} puntos si lo compras dentro de tu plazo</small></span> : null}
         <ul className="check-list">
           {inclusions(product).map((line) => (
             <li key={line}>{line}</li>
