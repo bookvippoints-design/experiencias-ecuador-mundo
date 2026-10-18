@@ -8,7 +8,9 @@ import {
   INVITATION_DESTINATIONS_MAP_URL,
   POINTS_MANUAL_URL,
   BONUS_REGISTER_URL,
-  WELCOME_BONUS_POINTS,
+  GALAPAGOS_NOTE,
+  PURCHASE_WINDOW_DAYS,
+  PURCHASE_WINDOW_REASON,
   NATIONAL_RULE,
   NATIONAL_MIN_DAYS,
   NATIONAL_RESPONSE,
@@ -50,7 +52,7 @@ export default async function ComoFunciona() {
         <section id="nacional" className="how-block">
           <span className="how-block__eyebrow">Ecuador</span>
           <h2>Escapadas nacionales</h2>
-          <p className="content-lead">Hospedaje para 2 personas con desayuno en Quito, Guayaquil, Manta, Cuenca o Loja.</p>
+          <p className="content-lead">Hospedaje para 2 personas con desayuno en Quito, Guayaquil, Manta, Cuenca, Loja o Galápagos (Puerto Ayora).</p>
           <NationalGallery />
           <Steps
             items={[
@@ -64,6 +66,7 @@ export default async function ComoFunciona() {
             <li>Mientras tu solicitud está pendiente puedes cambiar las fechas. Si no hay disponibilidad, no la pierdes: te ofrecemos otras fechas.</li>
             <li><strong>{NATIONAL_NO_CANCEL}</strong></li>
             <li>{NATIONAL_RULE}</li>
+            <li>{GALAPAGOS_NOTE}</li>
             <li>Se solicitan y usan dentro de la vigencia del paquete: 12, 18 o 24 meses desde el pago aprobado.</li>
           </ul>
           <div className="btn-row">
@@ -123,7 +126,8 @@ export default async function ComoFunciona() {
           <Steps
             tone="orange"
             items={[
-              { title: "Obtén tus puntos gratis", text: `Regístrate en BookVipPoints y recibe tu bono de bienvenida de ${WELCOME_BONUS_POINTS} puntos.` },
+              { title: "Compra en tus primeros días", text: `Si compras un paquete dentro de tu plazo de ${PURCHASE_WINDOW_DAYS} días recibes puntos de regalo: 250 con el Escape Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium.` },
+              { title: "Canjéalos", text: 'En "Mis experiencias" toca "Canjear" y escribe el correo de tu cuenta BookVipPoints (si no tienes, regístrate gratis).' },
               { title: "Reserva y ahorra", text: "En BookVipPoints busca tu hotel y aplica tus puntos como parte del pago." },
             ]}
           />
@@ -138,11 +142,12 @@ export default async function ComoFunciona() {
           <ul className="check-list">
             <li>Los puntos no caducan.</li>
             <li>No son efectivo ni pagan el total de una reserva; el ahorro depende del hotel y la disponibilidad.</li>
-            <li>El bono de bienvenida es uno por persona, solo para cuentas nuevas, y no se puede regalar.</li>
+            <li>Los puntos de regalo por tu compra son solo para ti: no se pueden regalar a otra persona.</li>
+            <li>{PURCHASE_WINDOW_REASON}</li>
           </ul>
           <div className="btn-row">
             <PointsLoginButton />
-            <a className="btn-blue btn-small" href={BONUS_REGISTER_URL} target="_blank" rel="noreferrer">Obtener mis {WELCOME_BONUS_POINTS} puntos gratis</a>
+            <a className="btn-blue btn-small" href={BONUS_REGISTER_URL} target="_blank" rel="noreferrer">Crear mi cuenta BookVipPoints</a>
           </div>
         </section>
 

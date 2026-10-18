@@ -10,6 +10,9 @@ import { PRODUCT_FIELDS, inclusions, exclusions, conditionLines, type Product } 
 import { money } from "@/lib/format";
 import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL } from "@/lib/brand";
 import { BuyPanel } from "./BuyPanel";
+import { PurchaseCountdown } from "@/components/PurchaseCountdown";
+import { loadPurchaseWindow } from "@/lib/purchase-window";
+import { BONUS_POINTS_BY_SLUG, GALAPAGOS_NOTE } from "@/lib/brand";
 
 export default async function ProductoDetalle({
   params,
@@ -25,6 +28,7 @@ export default async function ProductoDetalle({
   const { data } = await supabase.from("products").select(PRODUCT_FIELDS).eq("slug", slug).eq("active", true).maybeSingle();
   if (!data) notFound();
   const p = data as Product;
+  const win = await loadPurchaseWindow(supabase, profile.userId);
 
   return (
     <>
@@ -56,19 +60,29 @@ export default async function ProductoDetalle({
               )}
             </section>
           </div>
-          <BuyPanel
-            slug={p.slug}
-            priceLabel={money(p.price)}
-            purchasable={p.purchasable}
-            initialMode={modo === "gift" ? "gift" : "self"}
-            hasInternational={p.international_count > 0}
-          />
+          <div className="buy-col">
+            {win.open ? (
+              <>
+                <PurchaseCountdown endsAt={win.endsAt} variant="product" bonusPoints={BONUS_POINTS_BY_SLUG[p.slug]} />
+                <BuyPanel
+                  slug={p.slug}
+                  priceLabel={money(p.price)}
+                  purchasable={p.purchasable}
+                  initialMode={modo === "gift" ? "gift" : "self"}
+                  hasInternational={p.international_count > 0}
+                />
+              </>
+            ) : (
+              <PurchaseCountdown endsAt={win.endsAt} variant="bar" />
+            )}
+          </div>
         </div>
 
         {p.national_count > 0 && (
           <>
             <div className="section-title"><h2>Elige tu destino en Ecuador</h2></div>
             <NationalGallery />
+            <p className="field-hint">{GALAPAGOS_NOTE}</p>
           </>
         )}
         {p.international_count > 0 && (

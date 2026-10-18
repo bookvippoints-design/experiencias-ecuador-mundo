@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
-import { appUrl, BRAND, NATIONAL_RULE, NATIONAL_MIN_DAYS } from "@/lib/brand";
+import { appUrl, BRAND, NATIONAL_RULE, NATIONAL_MIN_DAYS, PURCHASE_WINDOW_REASON } from "@/lib/brand";
 import { flushPendingMessageEmails } from "@/lib/message-emails";
 
 export const dynamic = "force-dynamic";
@@ -102,7 +102,65 @@ export async function GET(req: Request) {
     }
   }
 
+  const windowReminders = await purchaseWindowReminders(admin, now).catch((e) => {
+    failures.push(`plazo: ${e instanceof Error ? e.message : "error"}`);
+    return 0;
+  });
+
   // Repesca de correos de mensajes que hayan quedado pendientes.
   const messageEmails = await flushPendingMessageEmails(100).catch(() => 0);
-  return NextResponse.json({ checked: data?.length ?? 0, emails: sent, messageEmails, failures });
+  return NextResponse.json({ checked: data?.length ?? 0, emails: sent, windowReminders, messageEmails, failures });
+}
+
+/**
+ * Recordatorios del plazo de 14 días para comprar: día 7, día 12 y último día.
+ * Solo a quienes todavía no compraron un paquete dentro de su plazo.
+ */
+const WINDOW_STAGES = [
+  { stage: 3, maxDays: 1, subject: "Último día para comprar tu paquete con puntos de regalo" },
+  { stage: 2, maxDays: 2, subject: "Te quedan 2 días para comprar tu paquete" },
+  { stage: 1, maxDays: 7, subject: "Te quedan 7 días para elegir tu experiencia" },
+] as const;
+
+async function purchaseWindowReminders(admin: ReturnType<typeof createAdminClient>, now: number): Promise<number> {
+  const { data, error } = await admin
+    .from("profiles")
+    .select("user_id, full_name, email, purchase_window_started_at, purchase_window_ends_at, purchase_window_reminder")
+    .eq("role", "user")
+    .not("purchase_window_ends_at", "is", null)
+    .gt("purchase_window_ends_at", new Date(now).toISOString())
+    .lte("purchase_window_ends_at", new Date(now + 7 * DAY).toISOString())
+    .lt("purchase_window_reminder", 3);
+  if (error) throw new Error(error.message);
+  let sent = 0;
+  for (const p of data ?? []) {
+    const days = (new Date(p.purchase_window_ends_at as string).getTime() - now) / DAY;
+    const st = WINDOW_STAGES.find((x) => days <= x.maxDays);
+    if (!st || (p.purchase_window_reminder ?? 0) >= st.stage || !p.email) continue;
+    const { count } = await admin
+      .from("orders")
+      .select("id", { count: "exact", head: true })
+      .eq("buyer_id", p.user_id)
+      .eq("status", "approved")
+      .gte("created_at", p.purchase_window_started_at as string);
+    // Ya compró en este plazo: no se le insiste, solo se marca.
+    if ((count ?? 0) === 0) {
+      const until = new Date(p.purchase_window_ends_at as string).toLocaleString("es-EC", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: "America/Guayaquil" });
+      const body = `Tu plazo para comprar paquetes con precios especiales termina el ${until}. Si compras antes recibes además puntos de regalo: 250 con el Escape Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium.`;
+      await sendMail({
+        to: p.email,
+        subject: st.subject,
+        html: emailLayout(
+          `<h2 style="margin:0 0 8px;color:${BRAND.orangeDark}">Hola, ${escapeHtml((p.full_name ?? "").split(" ")[0] ?? "")}</h2>
+           <p>${escapeHtml(body)}</p>
+           <p style="font-size:13px;color:#5b6570">${escapeHtml(PURCHASE_WINDOW_REASON)}</p>`,
+          { label: "Ver paquetes", url: `${appUrl()}/cuenta/catalogo` }
+        ),
+      });
+      await admin.from("messages").insert({ user_id: p.user_id, kind: "auto", email_status: "none", link: "/cuenta/catalogo", title: st.subject, body });
+      sent++;
+    }
+    await admin.from("profiles").update({ purchase_window_reminder: st.stage }).eq("user_id", p.user_id);
+  }
+  return sent;
 }

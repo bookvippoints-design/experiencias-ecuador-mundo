@@ -7,7 +7,9 @@ import { ProductCard } from "@/components/ProductCard";
 import { NationalGallery, InternationalGallery } from "@/components/DestinationGallery";
 import { PRODUCT_FIELDS, type Product } from "@/lib/products";
 import { unsplashUrl, NATIONAL_DESTINATIONS } from "@/lib/destinations";
-import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL, POINTS_VALUE_NOTE } from "@/lib/brand";
+import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL, POINTS_VALUE_NOTE, GALAPAGOS_NOTE } from "@/lib/brand";
+import { PurchaseCountdown } from "@/components/PurchaseCountdown";
+import { loadPurchaseWindow } from "@/lib/purchase-window";
 
 export default async function Catalogo() {
   const profile = await requireRole("user");
@@ -16,11 +18,13 @@ export default async function Catalogo() {
   const products = (data ?? []) as Product[];
   const escapes = products.filter((p) => p.category === "escape");
   const cards = products.filter((p) => p.category === "points");
+  const win = await loadPurchaseWindow(supabase, profile.userId);
 
   return (
     <>
       <TopBar profile={profile} eyebrow="PARA TI O PARA REGALAR" title="Paquetes" />
       <main className="portal-content">
+        <PurchaseCountdown endsAt={win.endsAt} variant="bar" />
         <section className="hero" style={{ backgroundImage: `url('${unsplashUrl(NATIONAL_DESTINATIONS[0].imageId, 1600, 600)}')`, minHeight: 200 }}>
           <div className="hero__content">
             <span className="hero__eyebrow">Catálogo privado</span>
@@ -34,24 +38,25 @@ export default async function Catalogo() {
           <h2>Paquetes de experiencias</h2>
           <Link href="/cuenta/comparar">Comparar paquetes →</Link>
         </div>
-        <div className="product-grid">{escapes.map((p) => <ProductCard key={p.id} product={p} />)}</div>
+        <div className="product-grid">{escapes.map((p) => <ProductCard key={p.id} product={p} canBuy={win.open} />)}</div>
 
         {cards.length > 0 && (
           <>
             <div className="section-title"><h2>Tarjetas de puntos hoteleros</h2><PointsLoginButton /></div>
             <p className="info-box">{POINTS_VALUE_NOTE}</p>
-            <div className="product-grid">{cards.map((p) => <ProductCard key={p.id} product={p} />)}</div>
+            <div className="product-grid">{cards.map((p) => <ProductCard key={p.id} product={p} canBuy={win.open} />)}</div>
           </>
         )}
 
         <div className="section-title"><h2>Destinos nacionales</h2></div>
         <p className="content-lead">
-          Quito, Guayaquil, Manta, Cuenca y Loja, en hoteles seleccionados con desayuno.{" "}
+          Quito, Guayaquil, Manta, Cuenca, Loja y Galápagos (Puerto Ayora), en hoteles seleccionados con desayuno.{" "}
           <a href="/catalogo-hoteles-nacional.pdf" target="_blank" rel="noreferrer" style={{ color: "var(--naranja-oscuro)", fontWeight: 700 }}>
             Ver hoteles participantes (PDF)
           </a>
         </p>
         <NationalGallery />
+        <p className="field-hint">{GALAPAGOS_NOTE}</p>
 
         <div className="section-title" id="invitacion"><h2>Invitación hotelera internacional</h2></div>
         <div className="panel">

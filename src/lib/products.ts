@@ -1,4 +1,4 @@
-import { NATIONAL_RULE, NATIONAL_MIN_DAYS, NATIONAL_RESPONSE, NATIONAL_NO_CANCEL } from "@/lib/brand";
+import { NATIONAL_RULE, NATIONAL_MIN_DAYS, NATIONAL_RESPONSE, NATIONAL_NO_CANCEL, GALAPAGOS_NOTE } from "@/lib/brand";
 
 export interface Product {
   id: string;
@@ -64,6 +64,7 @@ export function conditionLines(p: Product): string[] {
       NATIONAL_RULE,
       `Se solicitan con un mínimo de ${NATIONAL_MIN_DAYS} días de anticipación. ${NATIONAL_RESPONSE}`,
       NATIONAL_NO_CANCEL,
+      GALAPAGOS_NOTE,
     ].filter((r) => !lines.some((l) => l.toLowerCase() === r.toLowerCase()));
     lines.splice(Math.min(1, lines.length), 0, ...rules);
   }

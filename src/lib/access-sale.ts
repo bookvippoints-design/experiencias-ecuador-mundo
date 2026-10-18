@@ -4,7 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { payphoneBoxEnabled, amountBreakdown, confirmPayphone } from "@/lib/payphone-box";
 import { ensureAccountAndLink, findAuthUserByEmail, passwordLink } from "@/lib/auth/access-links";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
-import { activationStepsHtml, welcomeBonusHtml, accessFooterHtml } from "@/lib/email-blocks";
+import { activationStepsHtml, purchaseWindowHtml, accessFooterHtml } from "@/lib/email-blocks";
 import { APP_NAME, BRAND, accessPriceUsd, appUrl } from "@/lib/brand";
 import { flushPendingMessageEmails } from "@/lib/message-emails";
 
@@ -132,6 +132,7 @@ async function creditAccess(purchaseId: string): Promise<AccessOutcome> {
   if (!p || p.status !== "approved") return "error";
   if (p.credited_at) return "approved";
   const card = [p.card_brand, p.last_digits ? `**** ${p.last_digits}` : null].filter(Boolean).join(" ");
+  if (p.kind === "reactivation") return creditReactivation(p, card);
   try {
     const link = await ensureAccountAndLink(p.email, p.full_name);
     const { error } = await admin.rpc("access_finalize", { p_purchase_id: p.id, p_user_id: link.userId });
@@ -143,10 +144,11 @@ async function creditAccess(purchaseId: string): Promise<AccessOutcome> {
         subject: `Tu acceso a ${APP_NAME} está listo`,
         html: emailLayout(
           `<h2 style="margin:0 0 8px;color:${BRAND.orangeDark}">¡Bienvenido, ${escapeHtml(p.full_name)}!</h2>
-           <p>Confirmamos tu pago. Tu acceso al catálogo privado de ${APP_NAME} ya está activo y <strong>no vence</strong>.</p>
+           <p>Confirmamos tu pago. Tu acceso al catálogo privado de ${APP_NAME} ya está activo.</p>
+           ${purchaseWindowHtml()}
            ${link.mustSetPassword ? activationStepsHtml("Crear mi contraseña") : "<p>Entra con tu correo y tu contraseña.</p>"}`,
           { label: link.mustSetPassword ? "Crear mi contraseña" : "Entrar a mi portal", url: link.url },
-          welcomeBonusHtml() + accessFooterHtml(p.email, link.mustSetPassword)
+          accessFooterHtml(p.email, link.mustSetPassword)
         ),
       });
     } catch (e) {
@@ -204,10 +206,11 @@ export async function accessConversionFor(tx: string, expectedValueUsd: number):
   if (!tx.startsWith(ACCESS_TX_PREFIX) || tx.length > 50) return null;
   const { data: p } = await createAdminClient()
     .from("access_purchases")
-    .select("client_tx_id, status, amount_cents, response, confirmed_at, ads_conversion_sent_at")
+    .select("client_tx_id, kind, status, amount_cents, response, confirmed_at, ads_conversion_sent_at")
     .eq("client_tx_id", tx)
     .maybeSingle();
-  if (!p || p.status !== "approved" || p.ads_conversion_sent_at) return null;
+  // La reactivación de un cliente existente no se mide como venta de Google Ads.
+  if (!p || p.kind !== "new" || p.status !== "approved" || p.ads_conversion_sent_at) return null;
   const expectedCents = Math.round(expectedValueUsd * 100);
   const r = (p.response ?? {}) as { statusCode?: number; amount?: number; clientTransactionId?: string; transactionId?: number };
   const verified =
@@ -218,4 +221,37 @@ export async function accessConversionFor(tx: string, expectedValueUsd: number):
   if (!verified) return null;
   if (!p.confirmed_at || Date.now() - new Date(p.confirmed_at).getTime() > ADS_CONVERSION_WINDOW_MS) return null;
   return { transactionId: p.client_tx_id, value: p.amount_cents / 100, currency: "USD" };
+}
+
+/** Reactivación pagada: abre 14 días nuevos para comprar paquetes. */
+async function creditReactivation(p: { id: string; full_name: string; email: string; phone: string | null; amount_cents: number; payphone_id: number | null; authorization_code: string | null }, card: string): Promise<AccessOutcome> {
+  const admin = createAdminClient();
+  const { data: ends, error } = await admin.rpc("access_reactivate", { p_purchase_id: p.id });
+  if (error) {
+    await alertAdmin(`⚠️ Reactivación pagada sin aplicar · ${p.email}`, "PayPhone aprobó la reactivación pero no se abrió el plazo", [
+      ["Cliente", `${p.full_name} · ${p.email}`], ["Transacción PayPhone", String(p.payphone_id)], ["Error", error.message],
+    ]);
+    return "pending_credit";
+  }
+  const until = ends ? new Date(ends as string).toLocaleString("es-EC", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: "America/Guayaquil" }) : "";
+  let warning: string | null = null;
+  try {
+    await sendMail({
+      to: p.email,
+      subject: `Tu acceso a ${APP_NAME} está reactivado`,
+      html: emailLayout(
+        `<h2 style="margin:0 0 8px;color:${BRAND.orangeDark}">¡Listo, ${escapeHtml(p.full_name)}!</h2>
+         <p>Confirmamos tu pago. Tienes <strong>14 días${until ? `, hasta el ${escapeHtml(until)}` : ""}</strong> para comprar tus paquetes con precios especiales y recibir además puntos de regalo: 250 con el Escape Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium.</p>`,
+        { label: "Ver paquetes", url: `${appUrl()}/cuenta/catalogo` }
+      ),
+    });
+  } catch (e) {
+    warning = e instanceof Error ? e.message : "no se pudo enviar";
+  }
+  await alertAdmin(`Reactivación de acceso · ${p.full_name} · US$${(p.amount_cents / 100).toFixed(2)}`, "Un cliente reactivó su acceso (14 días nuevos)", [
+    ["Cliente", `${p.full_name} · ${p.email}`], ["Celular", p.phone], ["Valor", `US$${(p.amount_cents / 100).toFixed(2)}`],
+    ["Transacción PayPhone", String(p.payphone_id)], ["Autorización", p.authorization_code], ["Tarjeta", card],
+    ["Aviso", warning ? `El correo no salió: ${warning}` : null],
+  ]);
+  return "approved";
 }

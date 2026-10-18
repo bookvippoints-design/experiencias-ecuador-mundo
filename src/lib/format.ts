@@ -44,6 +44,7 @@ export interface EntitlementRow {
   owner_id: string;
   purchaser_id: string;
   order_id: string;
+  is_bonus?: boolean | null;
 }
 
 export type EffectiveStatus = "available" | "requested" | "used" | "expired";
