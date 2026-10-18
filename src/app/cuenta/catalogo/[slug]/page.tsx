@@ -13,6 +13,7 @@ import { BuyPanel } from "./BuyPanel";
 import { PurchaseCountdown } from "@/components/PurchaseCountdown";
 import { loadPurchaseWindow } from "@/lib/purchase-window";
 import { BONUS_POINTS_BY_SLUG, GALAPAGOS_NOTE } from "@/lib/brand";
+import { ExtraTravelersNote } from "@/components/ExtraTravelersNote";
 
 export default async function ProductoDetalle({
   params,
@@ -83,6 +84,7 @@ export default async function ProductoDetalle({
             <div className="section-title"><h2>Elige tu destino en Ecuador</h2></div>
             <NationalGallery />
             <p className="field-hint">{GALAPAGOS_NOTE}</p>
+            <ExtraTravelersNote />
           </>
         )}
         {p.international_count > 0 && (

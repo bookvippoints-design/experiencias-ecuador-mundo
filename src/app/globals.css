@@ -2723,3 +2723,4 @@ body { background: #f3f8fc; }
 .points-explainer { background: #fff7ef; border: 1px solid #fde1c8; border-radius: 12px; padding: .7rem .9rem; font-size: .88rem; color: #3d4752; margin-top: .9rem; }
 .points-explainer a { color: var(--naranja-oscuro); font-weight: 700; white-space: nowrap; }
 .pw-bonus-tag { border-radius: 12px; padding: .35rem .7rem; }
+.extra-travelers { background: #fff; border: 1px solid #dbe8f0; border-radius: 12px; padding: .7rem .9rem; font-size: .88rem; color: #3d4752; margin-top: .75rem; text-align: justify; }
