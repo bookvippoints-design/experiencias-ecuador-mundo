@@ -39,7 +39,16 @@ export default async function Reactivar() {
             <Link href="/cuenta" className="field-hint">← Volver a Inicio</Link>
           </section>
           <section className="checkout__pay">
-            <h3>Datos de pago</h3>
+            <h3>Condiciones de la reactivación</h3>
+            <ul className="check-list" style={{ fontSize: ".9rem" }}>
+              <li>La reactivación abre un nuevo plazo de 14 días, contados desde que se aprueba el pago, para comprar paquetes con los precios especiales vigentes.</li>
+              <li>No incluye ningún paquete: los paquetes se compran por separado dentro del plazo.</li>
+              <li>Los puntos de regalo (250, 500 o 1.000 según el paquete) aplican a las compras pagadas dentro del nuevo plazo. Son para quien compra, no caducan y no se pueden regalar.</li>
+              <li>Los precios y la disponibilidad de los paquetes pueden cambiar a lo largo del año.</li>
+              <li>Al terminar el nuevo plazo, tu cuenta sigue abierta para ver, usar y regalar lo que compraste, y puedes volver a reactivarla.</li>
+              <li>El pago de la reactivación no es reembolsable una vez aprobado.</li>
+            </ul>
+            <h3 style={{ marginTop: "1.5rem" }}>Datos de pago</h3>
             {payphoneBoxEnabled() ? (
               <ReactivationPayBox />
             ) : (

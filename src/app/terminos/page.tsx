@@ -30,7 +30,6 @@ export default function TerminosPage() {
         <li>{PURCHASE_WINDOW_REASON}</li>
         <li>Desde que el titular crea su contraseña y entra por primera vez a su portal, tiene 14 días para comprar paquetes.</li>
         <li>Terminado el plazo, la cuenta sigue abierta: puede ver, usar y regalar lo que ya compró, pero no comprar paquetes nuevos.</li>
-        <li>El titular puede reactivar el plazo desde su portal, con el pago que allí se indica. Cada reactivación abre 14 días nuevos.</li>
         <li>Una vez comprado un paquete, rige su propia vigencia de 12, 18 o 24 meses.</li>
       </ul>
 
