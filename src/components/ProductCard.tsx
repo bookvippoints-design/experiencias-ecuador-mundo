@@ -2,8 +2,11 @@ import Link from "next/link";
 import type { Product } from "@/lib/products";
 import { inclusions } from "@/lib/products";
 import { money } from "@/lib/format";
+import { BONUS_POINTS_BY_SLUG } from "@/lib/brand";
 
-export function ProductCard({ product }: { product: Product }) {
+/** canBuy=false: el plazo de compra terminó (se ve el paquete pero no los botones de compra). */
+export function ProductCard({ product, canBuy = true }: { product: Product; canBuy?: boolean }) {
+  const bonus = canBuy ? BONUS_POINTS_BY_SLUG[product.slug] : 0;
   const featured = Boolean(product.highlight);
   return (
     <article className={`product-card${featured ? " product-card--featured" : ""}`}>
@@ -19,6 +22,7 @@ export function ProductCard({ product }: { product: Product }) {
           {product.purchasable && product.category === "escape" && <small> precio total</small>}
         </div>
         {product.international_count > 0 && <span className="fee-badge">Fee de emisión US$0</span>}
+        {bonus ? <span className="pw-bonus-tag">🎁 +{bonus.toLocaleString("es-EC")} puntos de regalo si lo compras en tu plazo</span> : null}
         <ul className="check-list">
           {inclusions(product).map((line) => (
             <li key={line}>{line}</li>
@@ -28,7 +32,7 @@ export function ProductCard({ product }: { product: Product }) {
           <Link href={`/cuenta/catalogo/${product.slug}`} className="btn-ghost btn-small">
             Ver detalle
           </Link>
-          {product.purchasable && (
+          {product.purchasable && canBuy && (
             <>
               <Link href={`/cuenta/catalogo/${product.slug}?modo=self`} className="btn-blue btn-small">
                 Lo quiero para mí

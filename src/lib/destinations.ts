@@ -10,6 +10,7 @@ export const NATIONAL_DESTINATIONS: DestinationInfo[] = [
   { name: "Manta", imageId: "photo-1603854690030-13b18ce2a495", caption: "Playa y mar del Pacífico" },
   { name: "Cuenca", imageId: "photo-1660962256234-4ea4f38d444b", caption: "Patrimonio y arquitectura" },
   { name: "Loja", imageId: "photo-1675809367383-ccee004bfab4", caption: "Música, naturaleza y tradición" },
+  { name: "Galápagos", imageId: "photo-1595517930215-d2778a56ac93", caption: "Puerto Ayora, isla Santa Cruz" },
 ];
 
 /**

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { APP_NAME, INVITATION_INFO_URL, INVITATION_TERMS_URL } from "@/lib/brand";
+import { APP_NAME, INVITATION_INFO_URL, INVITATION_TERMS_URL, GALAPAGOS_NOTE, PURCHASE_WINDOW_REASON } from "@/lib/brand";
 
 export const metadata = { title: `Términos y condiciones · ${APP_NAME}` };
 
@@ -22,13 +22,22 @@ export default function TerminosPage() {
       <p>
         Cada paquete indica en su ficha qué incluye, su precio y su vigencia (12, 18 o 24 meses contados desde la
         aprobación del pago). La vigencia es el plazo para solicitar y usar las escapadas nacionales y para solicitar
-        las invitaciones hoteleras internacionales. Los paquetes no incluyen puntos.
+        las invitaciones hoteleras internacionales.
       </p>
+
+      <h2>2.1. Plazo de 14 días para comprar</h2>
+      <ul>
+        <li>{PURCHASE_WINDOW_REASON}</li>
+        <li>Desde que el titular crea su contraseña y entra por primera vez a su portal, tiene 14 días para comprar paquetes.</li>
+        <li>Terminado el plazo, la cuenta sigue abierta: puede ver, usar y regalar lo que ya compró, pero no comprar paquetes nuevos.</li>
+        <li>Una vez comprado un paquete, rige su propia vigencia de 12, 18 o 24 meses.</li>
+      </ul>
 
       <h2>3. Escapadas nacionales</h2>
       <ul>
         <li><strong>Las escapadas nacionales NO se pueden usar en temporada alta, vacaciones ni feriados.</strong></li>
-        <li>Son para 2 personas, con desayuno, en Quito, Guayaquil, Manta, Cuenca o Loja, en los hoteles del catálogo vigente.</li>
+        <li>Son para 2 personas, con desayuno, en Quito, Guayaquil, Manta, Cuenca, Loja o Galápagos (Puerto Ayora), en los hoteles del catálogo vigente.</li>
+        <li>{GALAPAGOS_NOTE}</li>
         <li>Se solicitan con un mínimo de 30 días de anticipación. Respondemos en 24 a 48 horas hábiles.</li>
         <li>Mientras la solicitud está pendiente se pueden cambiar las fechas. Si no hay disponibilidad, se ofrecen otras fechas.</li>
         <li><strong>Una vez confirmado el hospedaje, no se puede anular ni se reintegra el paquete.</strong> Cancelar o no presentarse significa perder la escapada.</li>
@@ -58,16 +67,18 @@ export default function TerminosPage() {
         </li>
       </ul>
 
-      <h2>5. Puntos y bono de bienvenida</h2>
+      <h2>5. Puntos de regalo</h2>
       <ul>
         <li>
           Cada punto equivale a hasta US$1 de ahorro como pago parcial en reservas de hotel nacionales o internacionales,
           sujeto a disponibilidad. Los puntos no son efectivo ni saldo para pagar íntegramente una reserva. Los puntos no caducan.
         </li>
         <li>
-          Bono de bienvenida: BookVipPoints otorga 100 puntos a las cuentas nuevas que se registran en su sitio. Es uno por
-          persona, no se puede regalar y no aplica a cuentas BookVipPoints ya existentes.
+          Por cada paquete comprado dentro del plazo de 14 días, el comprador recibe puntos de regalo: 250 con el Escape
+          Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium. También aplica si el paquete se compra para regalar,
+          pero los puntos quedan siempre para quien compra y no se pueden regalar.
         </li>
+        <li>Los puntos se acreditan en la cuenta BookVipPoints del titular cuando este los canjea desde su portal.</li>
       </ul>
 
       <h2>6. Regalos</h2>
@@ -78,7 +89,7 @@ export default function TerminosPage() {
           El regalo es definitivo: al enviarse pasa a la cuenta del destinatario y quien lo regala no puede cancelarlo
           ni recuperarlo. Regalar no cambia la fecha de vencimiento.
         </li>
-        <li>Los puntos se regalan completos. Una invitación internacional ya registrada no puede regalarse.</li>
+        <li>Los puntos de regalo por compra no se pueden regalar. Una invitación internacional ya registrada no puede regalarse.</li>
         <li>Los regalos comprados se entregan apenas se confirma el pago.</li>
       </ul>
 

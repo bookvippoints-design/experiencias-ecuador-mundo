@@ -4,6 +4,9 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getCurrentProfile } from "@/lib/auth/identity";
 import { payphoneBoxEnabled, toCents, amountBreakdown, newClientTxId } from "@/lib/payphone-box";
+import { loadPurchaseWindow, PAYMENT_GRACE_MS } from "@/lib/purchase-window";
+import { accessPriceUsd, APP_NAME } from "@/lib/brand";
+import { randomBytes } from "crypto";
 
 export interface BoxParams {
   token: string;
@@ -44,6 +47,11 @@ export async function startOrderPayment(orderId: string): Promise<StartResult> {
     .maybeSingle();
   if (!o) return { ok: false, error: "Pedido no encontrado" };
   if (!["pending_payment", "payment_reported"].includes(o.status)) return { ok: false, error: "Este pedido ya no está pendiente de pago." };
+  // Se respeta un pedido creado dentro del plazo, con un margen para terminar de pagarlo.
+  const win = await loadPurchaseWindow(supabase, profile.userId);
+  if (win.endsAt && Date.now() > new Date(win.endsAt).getTime() + PAYMENT_GRACE_MS) {
+    return { ok: false, error: "Tu periodo de 14 días para comprar paquetes terminó. Puedes reactivar tu acceso desde Inicio." };
+  }
 
   const cents = toCents(o.price);
   const tx = newClientTxId(o.code);
@@ -75,4 +83,23 @@ export async function startQuotaPayment(planKey: string): Promise<StartResult> {
   });
   if (error) return { ok: false, error: "No se pudo preparar el pago. Intenta de nuevo." };
   return { ok: true, box: params(tx, cents, `${plan.name} · ${plan.quantity} cupos · ${company.name}`, profile.email) };
+}
+
+/** Reactivación pagada: el plazo de compra terminó y el cliente abre 14 días nuevos. */
+export async function startReactivationPayment(): Promise<StartResult> {
+  if (!payphoneBoxEnabled()) return { ok: false, error: "El pago con tarjeta todavía no está activo. Escríbenos por WhatsApp." };
+  const profile = await getCurrentProfile();
+  if (profile?.role !== "user") return { ok: false, error: "Acceso no autorizado" };
+  const supabase = await createClient();
+  const win = await loadPurchaseWindow(supabase, profile.userId);
+  if (win.open) return { ok: false, error: "Tu plazo para comprar paquetes todavía está abierto." };
+  const { data: me } = await supabase.from("profiles").select("full_name, email, phone").eq("user_id", profile.userId).single();
+  const cents = Math.round(accessPriceUsd() * 100);
+  const tx = ("ACC-" + randomBytes(15).toString("base64url")).slice(0, 50);
+  const { error } = await createAdminClient().from("access_purchases").insert({
+    client_tx_id: tx, kind: "reactivation", user_id: profile.userId,
+    full_name: me?.full_name ?? profile.fullName, email: (me?.email ?? profile.email).toLowerCase(), phone: me?.phone ?? null, amount_cents: cents,
+  });
+  if (error) return { ok: false, error: "No se pudo preparar el pago. Intenta de nuevo." };
+  return { ok: true, box: params(tx, cents, `Reactivación de acceso · ${APP_NAME}`, profile.email) };
 }

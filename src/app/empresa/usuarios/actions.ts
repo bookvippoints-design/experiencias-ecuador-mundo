@@ -7,7 +7,7 @@ import { getCurrentProfile } from "@/lib/auth/identity";
 import { ensureAccountAndLink, passwordLink } from "@/lib/auth/access-links";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
 import { APP_NAME } from "@/lib/brand";
-import { activationStepsHtml, welcomeBonusHtml, accessFooterHtml } from "@/lib/email-blocks";
+import { activationStepsHtml, purchaseWindowHtml, accessFooterHtml } from "@/lib/email-blocks";
 
 export interface CreateUserState {
   error: string | null;
@@ -71,7 +71,7 @@ export async function createUserAction(_prev: CreateUserState, formData: FormDat
     await sendMail({
       to: email,
       subject: `${company?.name ?? "Tu empresa"} te invita a ${APP_NAME}`,
-      html: emailLayout(invitationHtml(name, company?.name ?? "", company?.logo_url ?? null), { label: "Activar mi cuenta", url: link.url }, welcomeBonusHtml() + accessFooterHtml(email, true)),
+      html: emailLayout(invitationHtml(name, company?.name ?? "", company?.logo_url ?? null), { label: "Activar mi cuenta", url: link.url }, purchaseWindowHtml() + accessFooterHtml(email, true)),
     });
   } catch (e) {
     warning = ` El usuario se creó, pero el correo no se pudo enviar; usa "Reenviar invitación". (${e instanceof Error ? e.message : ""})`;
@@ -99,7 +99,7 @@ export async function resendInvitationAction(userId: string): Promise<{ error: s
     await sendMail({
       to: email as string,
       subject: `Recordatorio: ${company?.name ?? "Tu empresa"} te invita a ${APP_NAME}`,
-      html: emailLayout(invitationHtml(person?.full_name ?? "", company?.name ?? "", company?.logo_url ?? null), { label: "Activar mi cuenta", url }, welcomeBonusHtml() + accessFooterHtml(email as string, true)),
+      html: emailLayout(invitationHtml(person?.full_name ?? "", company?.name ?? "", company?.logo_url ?? null), { label: "Activar mi cuenta", url }, purchaseWindowHtml() + accessFooterHtml(email as string, true)),
     });
   } catch (e) {
     return { error: e instanceof Error ? e.message : "No se pudo reenviar" };

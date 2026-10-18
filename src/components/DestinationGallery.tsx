@@ -2,7 +2,7 @@ import { NATIONAL_DESTINATIONS, INTERNATIONAL_INSPIRATION, unsplashUrl } from "@
 
 export function NationalGallery() {
   return (
-    <div className="gallery">
+    <div className="gallery gallery--national">
       {NATIONAL_DESTINATIONS.map((d) => (
         <div key={d.name} className="gallery__item" style={{ backgroundImage: `url('${unsplashUrl(d.imageId, 500, 360)}')` }}>
           <span className="gallery__ref">Imagen referencial</span>

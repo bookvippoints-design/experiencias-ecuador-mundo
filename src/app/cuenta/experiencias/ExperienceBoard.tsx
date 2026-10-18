@@ -12,9 +12,9 @@ import { notifyAdmin } from "@/app/alert-actions";
 import Link from "next/link";
 import { effectiveStatus, entitlementTitle, KIND_LABEL, type EntitlementRow } from "@/lib/format";
 import { destinationLabel, usd, TAX_NOTE, type IntlDestination } from "@/lib/intl-destinations";
-import { NATIONAL_MIN_DAYS, NATIONAL_RESPONSE, BONUS_REGISTER_URL } from "@/lib/brand";
+import { NATIONAL_MIN_DAYS, NATIONAL_RESPONSE, BONUS_REGISTER_URL, POINTS_MANUAL_URL, GALAPAGOS_NOTE } from "@/lib/brand";
 
-const NATIONAL = ["Quito", "Guayaquil", "Manta", "Cuenca", "Loja"];
+const NATIONAL = ["Quito", "Guayaquil", "Manta", "Cuenca", "Loja", "Galápagos (Puerto Ayora)"];
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 export interface BoardItem extends EntitlementRow {
@@ -30,13 +30,14 @@ function longDate(v: string | null) {
 function giftable(e: BoardItem) {
   const s = effectiveStatus(e);
   if (s !== "available") return false;
+  if (e.is_bonus) return false;
   if (e.kind === "points") return !e.points_credited_at;
   if (e.kind === "international") return !e.invitation_registered_at;
   return true;
 }
 
 function describeKind(e: BoardItem): string {
-  if (e.kind === "national") return `Hospedaje para 2 personas con desayuno en Quito, Guayaquil, Manta, Cuenca o Loja. Pídela con al menos ${NATIONAL_MIN_DAYS} días de anticipación.`;
+  if (e.kind === "national") return `Hospedaje para 2 personas con desayuno en Quito, Guayaquil, Manta, Cuenca, Loja o Galápagos (Puerto Ayora). Pídela con al menos ${NATIONAL_MIN_DAYS} días de anticipación. ${GALAPAGOS_NOTE}`;
   if (e.kind === "international") return "Más de 130 destinos, de 4 días y 3 noches hasta 8 días y 7 noches según destino. Fee de emisión US$0; impuestos y tasas a cargo del viajero.";
   return "Cada punto equivale a hasta US$1 de ahorro como pago parcial en hoteles. Se acreditan en tu cuenta BookVipPoints.";
 }
@@ -149,6 +150,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
                     <span className="group-card__mini">
                       <button className="btn-blue btn-small" onClick={() => setBooking(e)}>Canjear</button>
                       {giftable(e) && <button className="btn-orange btn-small" onClick={() => { setSelected([e.id]); setGiftOpen(true); }}>Regalar</button>}
+                      {e.is_bonus && !e.points_credited_at && <span className="pw-bonus-tag">Regalo · no se puede regalar</span>}
                     </span>
                   </li>
                 ))}
@@ -156,6 +158,7 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
             )}
             <div className="group-card__meta">Los puntos no caducan.</div>
             <div><PointsLoginButton /></div>
+            <div className="group-card__meta"><a href={POINTS_MANUAL_URL} target="_blank" rel="noreferrer">▶ Videos: cómo usar tus puntos</a></div>
           </GroupCard>}
         </div>
       )}
@@ -391,7 +394,7 @@ function BookingDialog({ item, userEmail, userName, destinations, initialDestina
           <label htmlFor="bk-email">Correo de tu cuenta BookVipPoints</label>
           <input id="bk-email" type="email" value={destination} onChange={(e) => setDestination(e.target.value)} />
           <span className="field-hint">
-            ¿Aún no tienes cuenta? <a href={BONUS_REGISTER_URL} target="_blank" rel="noreferrer" style={{ color: "var(--naranja-oscuro)", fontWeight: 700 }}>Regístrate gratis aquí</a> y recibe además 100 puntos de bienvenida.
+            ¿Aún no tienes cuenta? <a href={BONUS_REGISTER_URL} target="_blank" rel="noreferrer" style={{ color: "var(--naranja-oscuro)", fontWeight: 700 }}>Regístrate gratis aquí</a>.
           </span>
         </div>
         <div className="field"><label htmlFor="bk-notes">Comentarios (opcional)</label><textarea id="bk-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></div>

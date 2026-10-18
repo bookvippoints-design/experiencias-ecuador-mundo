@@ -4,7 +4,7 @@ import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
 import { generateGiftCardPdf, describeGiftItem, type GiftCardItem } from "@/lib/pdf/render";
 import { appUrl, INVITATION_INFO_URL } from "@/lib/brand";
 import type { AccessLink } from "@/lib/auth/access-links";
-import { activationStepsHtml, welcomeBonusHtml, accessFooterHtml } from "@/lib/email-blocks";
+import { activationStepsHtml, purchaseWindowHtml, accessFooterHtml } from "@/lib/email-blocks";
 
 /** Lee un regalo con la llave de servidor (para correos y la tarjeta). */
 export async function loadGift(giftId: string) {
@@ -83,7 +83,7 @@ export async function sendGiftEmails(giftId: string, access: AccessLink): Promis
          ${accessText}${international}
          <p style="font-size:13px">Te adjuntamos tu tarjeta de regalo en PDF.</p>`,
         { label: buttonLabel, url: access.url },
-        (access.mustSetPassword ? welcomeBonusHtml() : "") + accessFooterHtml(gift.recipient_email, access.mustSetPassword)
+        (access.mustSetPassword ? purchaseWindowHtml() : "") + accessFooterHtml(gift.recipient_email, access.mustSetPassword)
       ),
       attachments: [{ filename: `regalo-${gift.code}.pdf`, content: pdf }],
     });
