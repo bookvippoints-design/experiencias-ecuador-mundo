@@ -97,9 +97,9 @@ export function PurchaseCountdown({ endsAt, variant, bonusPoints }: {
       </div>
       <div className="pw-progress" aria-hidden="true"><span style={{ width: `${pct}%` }} /></div>
       <div className="pw-gifts">
-        <div><b>+250</b><small>con Escape Esencial</small></div>
-        <div><b>+500</b><small>con Escape Plus</small></div>
-        <div><b>+1.000</b><small>con Escape Premium</small></div>
+        <div><b>+250 Puntos</b><small>con Escape Esencial</small></div>
+        <div><b>+500 Puntos</b><small>con Escape Plus</small></div>
+        <div><b>+1.000 Puntos</b><small>con Escape Premium</small></div>
       </div>
       <p className="pw-fine">Los puntos de regalo son para quien compra, no caducan y no se pueden regalar. <a href={MANUAL_URL} target="_blank" rel="noreferrer">Mira cómo usar tus puntos (videos)</a></p>
       <div className="btn-row">
