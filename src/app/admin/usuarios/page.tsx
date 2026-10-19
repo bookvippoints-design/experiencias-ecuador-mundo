@@ -56,7 +56,7 @@ export default async function AdminUsuarios({ searchParams }: { searchParams: Pr
                 <tr key={u.user_id}>
                   <td>{u.full_name}</td>
                   <td>{u.email}{u.phone && <div className="exp-card__meta">{u.phone}</div>}</td>
-                  <td>{ROLE[u.role]}</td>
+                  <td>{ROLE[u.role]}{u.role === "user" && <div><a className="btn-ghost btn-small" href={`/admin/usuarios/${u.user_id}/invitacion`} target="_blank" rel="noreferrer" style={{ marginTop: ".3rem", display: "inline-block" }}>🖨 Invitación</a></div>}</td>
                   <td>{(u.companies as unknown as { name: string } | null)?.name ?? "—"}</td>
                   <td>{VIA[u.created_via]}</td>
                   <td>{shortDate(u.created_at)}</td>

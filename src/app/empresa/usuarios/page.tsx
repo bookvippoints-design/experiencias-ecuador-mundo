@@ -49,7 +49,7 @@ export default async function EmpresaUsuarios() {
                     <td>{u.phone ?? "—"}</td>
                     <td>{shortDate(u.created_at)}</td>
                     <td>{u.activated ? <span className="pill pill--available">Cuenta activa</span> : <span className="pill pill--orange">Invitación enviada</span>}</td>
-                    <td>{!u.activated && <ResendButton userId={u.user_id} />}</td>
+                    <td><div style={{ display: "flex", gap: ".4rem", flexWrap: "wrap" }}>{!u.activated && <ResendButton userId={u.user_id} />}<a className="btn-ghost btn-small" href={`/empresa/usuarios/${u.user_id}/invitacion`} target="_blank" rel="noreferrer">🖨 Imprimir invitación</a></div></td>
                   </tr>
                 ))}
               </tbody>

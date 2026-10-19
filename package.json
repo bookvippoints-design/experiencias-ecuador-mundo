@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prebuild": "node scripts/fetch-invite-images.mjs"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",
@@ -17,7 +18,8 @@
     "qrcode": "^1.5.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "sharp": "^0.35.4"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

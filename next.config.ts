@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
     "/admin/regalos/[id]/tarjeta": ["./node_modules/pdfkit/js/**/*"],
     "/admin/pedidos": ["./node_modules/pdfkit/js/**/*"],
     "/cuenta/experiencias": ["./node_modules/pdfkit/js/**/*"],
+    "/empresa/usuarios/[id]/invitacion": ["./node_modules/pdfkit/js/**/*", "./public/invitacion/**/*"],
+    "/admin/usuarios/[id]/invitacion": ["./node_modules/pdfkit/js/**/*", "./public/invitacion/**/*"],
   },
   images: { remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }] },
   // Página pública de venta del acceso (HTML estático en public/acceso).
