@@ -116,7 +116,7 @@ export function InvitationDocument({ data }: { data: InvitationData }) {
         <View style={s.ribbonRow}><Text style={s.ribbon}>INVITACIÓN PERSONAL</Text></View>
 
         <View style={s.intro}>
-          <Text style={s.greeting}>Querida/Querido {data.recipientName}:</Text>
+          <Text style={s.greeting}>Querid@ {data.recipientName}:</Text>
           <Text style={s.title}>
             Hay viajes que se recuerdan toda la vida. <Text style={s.titleAccent}>El tuyo empieza aquí.</Text>
           </Text>

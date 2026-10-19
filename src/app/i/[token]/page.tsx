@@ -33,7 +33,7 @@ export default async function InvitePage({ params }: { params: Promise<{ token: 
         <p className="tagline">{APP_SLOGAN}</p>
         {state === "pending" && (
           <>
-            <h2 className="step-title">¡Bienvenida/o{firstName ? `, ${firstName}` : ""}!</h2>
+            <h2 className="step-title">¡Bienvenid@{firstName ? `, ${firstName}` : ""}!</h2>
             <p className="step-text">Para proteger tu invitación, confirma tu correo. Luego crearás tu propia contraseña y entrarás a tu catálogo privado.</p>
             <InviteForm token={token} />
           </>
