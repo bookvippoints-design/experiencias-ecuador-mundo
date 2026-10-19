@@ -2,7 +2,7 @@ import "server-only";
 import { randomBytes } from "crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { payphoneBoxEnabled, amountBreakdown, confirmPayphone } from "@/lib/payphone-box";
-import { ensureAccountAndLink, findAuthUserByEmail, passwordLink } from "@/lib/auth/access-links";
+import { ensureAccountAndLink, findAuthUserByEmail, passwordLink, hasPassword } from "@/lib/auth/access-links";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
 import { activationStepsHtml, purchaseWindowHtml, accessFooterHtml } from "@/lib/email-blocks";
 import { APP_NAME, BRAND, accessPriceUsd, appUrl } from "@/lib/brand";
@@ -179,8 +179,7 @@ export async function accessActivationUrl(tx: string): Promise<string> {
   const { data: p } = await admin.from("access_purchases").select("email, status, credited_at, confirmed_at, user_id").eq("client_tx_id", tx).maybeSingle();
   if (!p || p.status !== "approved" || !p.credited_at || !p.user_id) return `${appUrl()}/login`;
   if (Date.now() - new Date(p.confirmed_at ?? p.credited_at).getTime() > ACTIVATION_WINDOW_MS) return `${appUrl()}/login`;
-  const { data: u } = await admin.auth.admin.getUserById(p.user_id);
-  if (!u?.user || u.user.last_sign_in_at) return `${appUrl()}/login`;
+  if (await hasPassword(p.user_id)) return `${appUrl()}/login`;
   try {
     return (await passwordLink(p.email)).url;
   } catch {

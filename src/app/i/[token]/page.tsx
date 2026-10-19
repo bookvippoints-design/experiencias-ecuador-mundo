@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { APP_NAME, APP_SLOGAN, whatsappUrl } from "@/lib/brand";
 import { InviteForm } from "./InviteForm";
+import { hasPassword } from "@/lib/auth/access-links";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: `Activa tu invitación · ${APP_NAME}`, robots: { index: false } };
@@ -17,12 +18,12 @@ export default async function InvitePage({ params }: { params: Promise<{ token: 
   let state: "invalid" | "active" | "pending" = "invalid";
   let firstName = "";
   if (inv) {
-    const [{ data: auth }, { data: person }] = await Promise.all([
-      admin.auth.admin.getUserById(inv.user_id),
+    const [active, { data: person }] = await Promise.all([
+      hasPassword(inv.user_id),
       admin.from("profiles").select("full_name").eq("user_id", inv.user_id).maybeSingle(),
     ]);
     firstName = person?.full_name?.split(" ")[0] ?? "";
-    state = auth.user?.last_sign_in_at ? "active" : "pending";
+    state = active ? "active" : "pending";
   }
   const help = whatsappUrl("Hola, necesito ayuda para activar mi invitación impresa de Experiencias Ecuador y el Mundo");
 

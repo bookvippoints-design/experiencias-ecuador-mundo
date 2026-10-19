@@ -2,7 +2,8 @@
 
 import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { passwordLink } from "@/lib/auth/access-links";
+import { createClient } from "@/lib/supabase/server";
+import { hasPassword, recoveryTokenHash } from "@/lib/auth/access-links";
 
 export interface InviteState {
   error: string | null;
@@ -25,9 +26,11 @@ export async function confirmInviteAction(token: string, _prev: InviteState, for
     await admin.from("print_invites").update({ failed_attempts: inv.failed_attempts + 1 }).eq("token", token);
     return { error: "Ese correo no coincide con esta invitación. Escribe el correo que aparece en tu invitación impresa." };
   }
-  const { data: auth } = await admin.auth.admin.getUserById(inv.user_id);
-  if (auth.user?.last_sign_in_at) redirect("/login");
-  const { url } = await passwordLink(person.email);
+  if (await hasPassword(inv.user_id)) redirect("/login");
+  // Se verifica aquí mismo para que la sesión quede guardada antes de ir a crear la contraseña.
+  const supabase = await createClient();
+  const { error } = await supabase.auth.verifyOtp({ type: "recovery", token_hash: await recoveryTokenHash(person.email) });
+  if (error) return { error: "No pudimos abrir tu invitación. Inténtalo de nuevo en un momento o escríbenos por WhatsApp." };
   await admin.from("print_invites").update({ used_at: new Date().toISOString(), failed_attempts: 0 }).eq("token", token);
-  redirect(url);
+  redirect("/set-password");
 }

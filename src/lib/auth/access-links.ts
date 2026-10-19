@@ -54,11 +54,25 @@ export async function ensureAccountAndLink(email: string, fullName: string): Pro
     };
   }
 
-  if (!existing.last_sign_in_at) {
+  if (!(await hasPassword(existing.id))) {
     return { userId: existing.id, ...(await passwordLink(normalized)), isNew: false, mustSetPassword: true };
   }
 
   return { userId: existing.id, url: `${appUrl()}/login`, isNew: false, mustSetPassword: false };
+}
+
+/** La cuenta ya creó su contraseña (entrar con un enlace no basta). */
+export async function hasPassword(userId: string): Promise<boolean> {
+  const { data } = await createAdminClient().rpc("auth_user_has_password", { p_user_id: userId });
+  return data === true;
+}
+
+/** Token de recuperación para verificarlo en el servidor y abrir sesión ahí mismo. */
+export async function recoveryTokenHash(email: string): Promise<string> {
+  const admin = createAdminClient();
+  const { data, error } = await admin.auth.admin.generateLink({ type: "recovery", email: email.trim().toLowerCase() });
+  if (error) throw new Error(error.message);
+  return data.properties.hashed_token;
 }
 
 /** Enlace para crear o restablecer contraseña de una cuenta existente. */
