@@ -7,6 +7,7 @@ import { getCurrentProfile } from "@/lib/auth/identity";
 import { ensureAccountAndLink, passwordLink } from "@/lib/auth/access-links";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/email";
 import { APP_NAME } from "@/lib/brand";
+import { emailDomainAccepts } from "@/lib/email-domain";
 import { activationStepsHtml, purchaseWindowHtml, accessFooterHtml } from "@/lib/email-blocks";
 
 export interface CreateUserState {
@@ -36,6 +37,11 @@ export async function createUserAction(_prev: CreateUserState, formData: FormDat
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const phone = String(formData.get("phone") || "").trim();
   const supabase = await createClient();
+
+  // 0. El dominio del correo debe existir y recibir correos (así no se pierde un cupo por un error de tipeo)
+  if (!(await emailDomainAccepts(email))) {
+    return { error: `El correo ${email} no puede recibir mensajes: su dominio (después de la @) no existe o no tiene correo. Revisa que esté bien escrito. No se usó ningún cupo.`, success: null };
+  }
 
   // 1. Validar sin efectos: correo único, saldo, empresa activa
   const { error: checkError } = await supabase.rpc("company_check_new_user", { p_name: name, p_email: email });
@@ -74,12 +80,15 @@ export async function createUserAction(_prev: CreateUserState, formData: FormDat
       html: emailLayout(invitationHtml(name, company?.name ?? "", company?.logo_url ?? null), { label: "Activar mi cuenta", url: link.url }, purchaseWindowHtml() + accessFooterHtml(email, true)),
     });
   } catch (e) {
-    warning = ` El usuario se creó, pero el correo no se pudo enviar; usa "Reenviar invitación". (${e instanceof Error ? e.message : ""})`;
+    warning = e instanceof Error ? e.message : "error desconocido";
   }
 
   revalidatePath("/empresa/usuarios");
   revalidatePath("/empresa");
-  return { error: null, success: `Usuario creado e invitación enviada a ${email}. Se usó 1 cupo.${warning}` };
+  if (warning) {
+    return { error: null, success: `Usuario creado (se usó 1 cupo), pero el correo de invitación a ${email} no se pudo entregar (${warning}). Puedes usar "Imprimir invitación" o "Reenviar invitación".` };
+  }
+  return { error: null, success: `Usuario creado e invitación enviada a ${email}. Se usó 1 cupo.` };
 }
 
 /** Reenvía la invitación con un enlace nuevo. No consume cupos. */
