@@ -119,7 +119,6 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
   const inProc = (kind: string) => items.filter((e) => e.kind === kind && effectiveStatus(e) === "requested").length;
   const nationals = avail("national");
   const intls = avail("international");
-  const points = avail("points").filter((e) => !e.points_credited_at);
   const giftNow = (pool: BoardItem[], label: string) => {
     const g = pool.filter(giftable);
     if (g.length === 1) { setSelected([g[0].id]); setGiftOpen(true); }
@@ -140,26 +139,6 @@ export function ExperienceBoard({ items, readOnly = false, userEmail = "", userN
             nextExpiry={intls[0]?.valid_until ?? null} actionLabel="Pedir una"
             onAction={intls[0] ? () => setBooking(intls[0]) : undefined}
             onGift={() => giftNow(intls, "invitaciones internacionales")} canGift={intls.some(giftable)} />
-          {(points.length > 0 || inProc("points") > 0) && <GroupCard icon="⭐" title="Puntos por canjear" available={points.reduce((sum, e) => sum + (e.points ?? 0), 0)} inProcess={inProc("points")}
-            nextExpiry={null} actionLabel="" canGift={false}>
-            {points.length > 0 && (
-              <ul className="group-card__list">
-                {points.map((e) => (
-                  <li key={e.id}>
-                    <span><strong>{(e.points ?? 0).toLocaleString("es-EC")}</strong> · {e.productName}</span>
-                    <span className="group-card__mini">
-                      <button className="btn-blue btn-small" onClick={() => setBooking(e)}>Canjear</button>
-                      {giftable(e) && <button className="btn-orange btn-small" onClick={() => { setSelected([e.id]); setGiftOpen(true); }}>Regalar</button>}
-                      {e.is_bonus && !e.points_credited_at && <span className="pw-bonus-tag">Regalo · no se puede regalar</span>}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <div className="group-card__meta">Los puntos no caducan.</div>
-            <div><PointsLoginButton /></div>
-            <div><a className="btn-blue btn-small" href={POINTS_MANUAL_URL} target="_blank" rel="noreferrer">▶ Videos: cómo usar tus puntos</a></div>
-          </GroupCard>}
         </div>
       )}
 

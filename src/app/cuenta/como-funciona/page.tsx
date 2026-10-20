@@ -34,7 +34,7 @@ export default async function ComoFunciona() {
       <TopBar profile={profile} eyebrow="AYUDA" title="Cómo funcionan tus beneficios" />
       <main className="portal-content">
         <p className="content-lead" style={{ marginTop: 0 }}>
-          Todo lo que necesitas saber para disfrutar o regalar tus escapadas, invitaciones y puntos.
+          Todo lo que necesitas saber para disfrutar o regalar tus escapadas e invitaciones.
         </p>
         <nav className="how-tabs" aria-label="Secciones">
           <a href="#nacional">Escapadas nacionales</a>

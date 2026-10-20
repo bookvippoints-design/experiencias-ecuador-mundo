@@ -18,7 +18,7 @@ function photoFor(e: EntitlementRow): string {
 export async function loadMyExperiences(): Promise<BoardItem[]> {
   const supabase = await createClient();
   const [{ data: ents }, { data: senders }] = await Promise.all([
-    supabase.from("entitlements").select("*").order("created_at", { ascending: false }),
+    supabase.from("entitlements").select("*").neq("kind", "points").order("created_at", { ascending: false }),
     supabase.rpc("my_gift_senders"),
   ]);
   const senderByGift = new Map(((senders ?? []) as { gift_id: string; sender_name: string }[]).map((s) => [s.gift_id, s.sender_name]));

@@ -44,7 +44,6 @@ export default async function MisExperiencias({ searchParams }: { searchParams: 
               <ol>
                 <li><strong>Escapada nacional:</strong> toca &quot;Reservar una&quot;, elige ciudad y fecha con al menos 30 días de anticipación. Te confirmamos hotel y fecha en 24 a 48 horas hábiles. No se puede usar en temporada alta, vacaciones ni feriados.</li>
                 <li><strong>Invitación internacional:</strong> toca &quot;Pedir una&quot; y elige el destino de la <Link href="/cuenta/destinos">lista de destinos</Link>. Te emitimos la invitación; la registras en 30 días y pagas impuestos y tasas en 7 días.</li>
-                <li><strong>Puntos:</strong> toca &quot;Canjear&quot; y los acreditamos en tu cuenta BookVipPoints.</li>
                 <li><strong>Regalar:</strong> toca &quot;Regalar&quot; y elige cuántas. El regalo es definitivo.</li>
               </ol>
               <Link href="/cuenta/como-funciona">Ver la guía completa</Link>
