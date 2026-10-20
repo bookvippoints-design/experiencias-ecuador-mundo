@@ -7,6 +7,7 @@ import { ProgressBar } from "@/components/ProgressBar";
 import { PlanCards } from "./PlanCards";
 import { loadPlans } from "@/lib/plans";
 import { shortDate } from "@/lib/format";
+import { MemberHome } from "./MemberHome";
 
 interface Dash {
   company_name: string;
@@ -19,6 +20,8 @@ interface Dash {
 
 export default async function EmpresaHome() {
   const profile = await requireRole("company");
+  if (profile.companyRole === "member") return <MemberHome profile={profile} />;
+  const isOwner = profile.companyRole === "owner";
   const supabase = await createClient();
   const [{ data, error }, { data: users }, plans] = await Promise.all([
     supabase.rpc("company_dashboard"),
@@ -53,15 +56,16 @@ export default async function EmpresaHome() {
               <div className="gauge-stat"><span className="gauge-stat__value">{available}</span><span className="gauge-stat__label">Disponibles</span></div>
             </div>
             <ProgressBar value={used} max={Math.max(purchased, 1)} />
-            <p className="modal__note">Cada cuenta nueva usa un cupo. Reenviar una invitación no usa cupos.</p>
+            <p className="modal__note">Cada acceso nuevo para un cliente usa un cupo. Reenviar una invitación no usa cupos. Todo tu equipo usa este mismo saldo.</p>
             <div className="btn-row">
-              <Link href="/empresa/usuarios" className="btn-orange">Crear usuario</Link>
-              <Link href="/empresa/compras" className="btn-ghost">Comprar más cupos</Link>
+              <Link href="/empresa/usuarios" className="btn-orange">Crear acceso para un cliente</Link>
+              <Link href="/empresa/equipo" className="btn-ghost">Mi equipo</Link>
+              {isOwner && <Link href="/empresa/compras" className="btn-ghost">Comprar más cupos</Link>}
             </div>
           </div>
         </section>
 
-        {(low || purchased === 0) && d?.access_status === "active" && (
+        {isOwner && (low || purchased === 0) && d?.access_status === "active" && (
           <section className="panel">
             <h2>{purchased === 0 ? "Compra tu primer plan de cupos" : "Te quedan pocos cupos"}</h2>
             <PlanCards plans={plans} />
@@ -69,9 +73,9 @@ export default async function EmpresaHome() {
         )}
 
         <section className="panel">
-          <h2>Últimos usuarios creados</h2>
+          <h2>Últimos clientes con acceso</h2>
           {recent.length === 0 ? (
-            <p className="empty-state">Todavía no has creado usuarios.</p>
+            <p className="empty-state">Todavía no se han creado accesos.</p>
           ) : (
             <ul className="activity-list">
               {recent.map((u) => (

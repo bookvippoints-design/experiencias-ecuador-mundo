@@ -24,7 +24,7 @@ async function companyInfo(companyId: string) {
 function invitationHtml(name: string, companyName: string, logoUrl: string | null) {
   return `${logoUrl ? `<p><img src="${logoUrl}" alt="${escapeHtml(companyName)}" style="max-width:160px;max-height:60px"></p>` : ""}
     <h2 style="margin:0 0 8px;color:#c4520a">¡Hola, ${escapeHtml(name)}!</h2>
-    <p><strong>${escapeHtml(companyName)}</strong> te da acceso a ${APP_NAME}, un catálogo privado de experiencias de viaje para disfrutar y regalar: escapadas en Ecuador, invitaciones hoteleras en más de 130 destinos del mundo y puntos para ahorrar en hoteles.</p>
+    <p><strong>${escapeHtml(companyName)}</strong> te da acceso a ${APP_NAME}, un catálogo privado de experiencias de viaje para disfrutar y regalar: escapadas en Ecuador e invitaciones hoteleras en más de 130 destinos del mundo.</p>
     <p>Tu acceso ya está habilitado.</p>
     ${activationStepsHtml("Activar mi cuenta")}`;
 }
@@ -33,6 +33,7 @@ export async function createUserAction(_prev: CreateUserState, formData: FormDat
   const profile = await getCurrentProfile();
   if (profile?.role !== "company" || !profile.companyId) return { error: "Acceso no autorizado", success: null };
 
+  if (profile.memberStatus === "paused") return { error: "Tu usuario está pausado. Habla con el administrador de tu empresa.", success: null };
   const name = String(formData.get("name") || "").trim();
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const phone = String(formData.get("phone") || "").trim();
@@ -88,7 +89,7 @@ export async function createUserAction(_prev: CreateUserState, formData: FormDat
   if (warning) {
     return { error: null, success: `Usuario creado (se usó 1 cupo), pero el correo de invitación a ${email} no se pudo entregar (${warning}). Puedes usar "Imprimir invitación" o "Reenviar invitación".` };
   }
-  return { error: null, success: `Usuario creado e invitación enviada a ${email}. Se usó 1 cupo.` };
+  return { error: null, success: `Acceso creado e invitación enviada a ${email}. Se usó 1 cupo de la empresa.` };
 }
 
 /** Reenvía la invitación con un enlace nuevo. No consume cupos. */

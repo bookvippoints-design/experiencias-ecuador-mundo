@@ -10,7 +10,7 @@ function Submit({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus();
   return (
     <button type="submit" className="btn-orange" disabled={pending || disabled}>
-      {pending ? "Creando..." : "Crear usuario y enviar invitación"}
+      {pending ? "Creando..." : "Crear acceso y enviar invitación"}
     </button>
   );
 }
@@ -25,12 +25,12 @@ export function CreateUserForm({ available, enabled }: { available: number; enab
         <div className="field"><label htmlFor="phone">Teléfono (opcional)</label><input id="phone" name="phone" /></div>
       </div>
       <p className="field-hint">
-        Se usará 1 de tus {available} cupos disponibles. Cada correo puede registrarse una sola vez en la plataforma.
+        Se usará 1 de los {available} cupos disponibles de la empresa. Cada correo puede registrarse una sola vez en la plataforma.
       </p>
       {state.error && <p className="field-error">{state.error}</p>}
       {state.success && <p className="success-box">{state.success}</p>}
       <Submit disabled={!enabled || available <= 0} />
-      {available <= 0 && enabled && <p className="field-hint">No tienes cupos disponibles. Compra un plan en &quot;Comprar cupos&quot;.</p>}
+      {available <= 0 && enabled && <p className="field-hint">La empresa no tiene cupos disponibles.</p>}
     </form>
   );
 }

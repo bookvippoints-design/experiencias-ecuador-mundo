@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { requireRole } from "@/lib/auth/identity";
+import { requireCompanyOwner } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
 import { payphoneBoxEnabled } from "@/lib/payphone-box";
@@ -8,7 +8,7 @@ import { money } from "@/lib/format";
 import { QuotaPayBox } from "./QuotaPayBox";
 
 export default async function PagarPlan({ params }: { params: Promise<{ plan: string }> }) {
-  const profile = await requireRole("company");
+  const profile = await requireCompanyOwner();
   const { plan: key } = await params;
   if (!payphoneBoxEnabled()) redirect("/empresa/compras");
   const supabase = await createClient();

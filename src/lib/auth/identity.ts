@@ -14,6 +14,10 @@ export interface CurrentProfile {
   email: string;
   companyId: string | null;
   initials: string;
+  /** Dentro de una empresa: dueño, administrador o usuario de departamento. */
+  companyRole: "owner" | "admin" | "member" | null;
+  department: string | null;
+  memberStatus: "active" | "paused";
 }
 
 /**
@@ -29,7 +33,7 @@ export async function getCurrentProfile(): Promise<CurrentProfile | null> {
 
   const { data: profile, error } = await supabase
     .from("profiles")
-    .select("user_id, role, full_name, email, company_id")
+    .select("user_id, role, full_name, email, company_id, company_role, department, member_status")
     .eq("user_id", user.id)
     .single();
 
@@ -42,6 +46,9 @@ export async function getCurrentProfile(): Promise<CurrentProfile | null> {
     email: profile.email,
     companyId: profile.company_id,
     initials: getInitials(profile.full_name),
+    companyRole: (profile.company_role ?? null) as CurrentProfile["companyRole"],
+    department: profile.department ?? null,
+    memberStatus: profile.member_status === "paused" ? "paused" : "active",
   };
 }
 
@@ -49,5 +56,24 @@ export async function getCurrentProfile(): Promise<CurrentProfile | null> {
 export async function requireRole(role: AppRole): Promise<CurrentProfile> {
   const profile = await getCurrentProfile();
   if (!profile || profile.role !== role) redirect("/login");
+  return profile;
+}
+
+/** Dueño o administrador de la empresa (maneja el equipo). */
+export function isCompanyManager(p: CurrentProfile | null): boolean {
+  return p?.role === "company" && (p.companyRole === "owner" || p.companyRole === "admin");
+}
+
+/** Exige dueño o administrador de empresa; si no, vuelve al inicio de la empresa. */
+export async function requireCompanyManager(): Promise<CurrentProfile> {
+  const profile = await requireRole("company");
+  if (!isCompanyManager(profile)) redirect("/empresa");
+  return profile;
+}
+
+/** Exige al dueño de la cuenta (por ejemplo, para comprar cupos). */
+export async function requireCompanyOwner(): Promise<CurrentProfile> {
+  const profile = await requireRole("company");
+  if (profile.companyRole !== "owner") redirect("/empresa");
   return profile;
 }

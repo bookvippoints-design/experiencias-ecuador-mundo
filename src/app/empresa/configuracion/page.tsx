@@ -1,12 +1,10 @@
-import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getCurrentProfile } from "@/lib/auth/identity";
+import { requireCompanyManager } from "@/lib/auth/identity";
 import { TopBar } from "@/components/TopBar";
 import { CompanyLogoUploader } from "@/components/CompanyLogoUploader";
 
 export default async function EmpresaConfiguracionPage() {
-  const profile = await getCurrentProfile();
-  if (!profile) redirect("/login");
+  const profile = await requireCompanyManager();
 
   const supabase = await createClient();
   const { data: company, error } = await supabase

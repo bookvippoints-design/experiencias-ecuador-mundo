@@ -6,6 +6,13 @@ const ROLE_LABEL: Record<CurrentProfile["role"], string> = {
   user: "Mi cuenta",
 };
 
+function roleLabel(p: CurrentProfile) {
+  if (p.role !== "company") return ROLE_LABEL[p.role];
+  if (p.companyRole === "owner") return "Dueño de la cuenta";
+  if (p.companyRole === "admin") return "Administrador";
+  return p.department ? `Departamento: ${p.department}` : "Equipo";
+}
+
 /** Barra superior. Nombre e iniciales siempre vienen del perfil autenticado. */
 export function TopBar({ profile, eyebrow, title }: { profile: CurrentProfile; eyebrow: string; title: string }) {
   return (
@@ -22,7 +29,7 @@ export function TopBar({ profile, eyebrow, title }: { profile: CurrentProfile; e
       <div className="topbar__user">
         <div className="topbar__user-text">
           <span className="topbar__name">{profile.fullName}</span>
-          <span className="topbar__role">{ROLE_LABEL[profile.role]}</span>
+          <span className="topbar__role">{roleLabel(profile)}</span>
         </div>
         <span className="topbar__avatar" aria-hidden="true">
           {profile.initials}

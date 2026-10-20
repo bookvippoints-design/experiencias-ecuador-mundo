@@ -1,4 +1,4 @@
-import { requireRole } from "@/lib/auth/identity";
+import { requireCompanyOwner } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
 import { PlanCards } from "../PlanCards";
@@ -9,7 +9,7 @@ import { payphoneBoxEnabled } from "@/lib/payphone-box";
 const STATUS: Record<string, string> = { pending: "En revisión", approved: "Aprobada", rejected: "Rechazada" };
 
 export default async function EmpresaCompras() {
-  const profile = await requireRole("company");
+  const profile = await requireCompanyOwner();
   const supabase = await createClient();
   const [plans, { data: company }, { data: purchases }, { data: ledger }] = await Promise.all([
     loadPlans(),
