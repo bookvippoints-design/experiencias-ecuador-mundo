@@ -33,6 +33,7 @@ export default async function ComoFunciona() {
     <>
       <TopBar profile={profile} eyebrow="AYUDA" title="Cómo funcionan tus beneficios" />
       <main className="portal-content">
+        <a href="/cuenta/manual" className="manual-cta">Ver el manual de usuario completo, paso a paso</a>
         <p className="content-lead" style={{ marginTop: 0 }}>
           Todo lo que necesitas saber para disfrutar o regalar tus escapadas e invitaciones.
         </p>

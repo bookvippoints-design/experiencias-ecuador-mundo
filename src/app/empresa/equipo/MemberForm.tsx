@@ -50,7 +50,7 @@ export function MemberForm({ action, departments, initial, isNew }: {
         </label>
         <label className="radio-line">
           <input type="radio" name="role" value="admin" checked={role === "admin"} onChange={() => setRole("admin")} />
-          <span><strong>Administrador</strong><br /><small>Maneja el equipo, sus límites y ve todos los accesos. No compra cupos.</small></span>
+          <span><strong>Administrador</strong><br /><small>Maneja el equipo, sus límites y ve todos los accesos. Solo el administrador principal compra cupos.</small></span>
         </label>
       </fieldset>
 

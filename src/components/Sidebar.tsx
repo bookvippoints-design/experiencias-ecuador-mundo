@@ -25,6 +25,7 @@ export const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
     { href: "/empresa/equipo", label: "Mi equipo" },
     { href: "/empresa/compras", label: "Comprar cupos", also: ["/empresa/pagar"] },
     { href: "/empresa/configuracion", label: "Mi empresa" },
+    { href: "/empresa/manual", label: "Manual de usuario" },
   ],
   user: [
     { href: "/cuenta", label: "Inicio", icon: "home" },
@@ -32,6 +33,7 @@ export const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
     { href: "/cuenta/experiencias", label: "Mis beneficios", icon: "suitcase", also: ["/cuenta/reservas", "/cuenta/pedidos", "/cuenta/regalos"] },
     { href: "/cuenta/mensajes", label: "Mensajes", icon: "mail" },
     { href: "/cuenta/como-funciona", label: "Ayuda", icon: "help" },
+    { href: "/cuenta/manual", label: "Manual de usuario", icon: "book" },
   ],
 };
 
@@ -50,11 +52,10 @@ export function Sidebar({ role, badges = {}, items: custom }: { role: AppRole; b
 
       <nav className="sidebar__nav">
         <SidebarLinks items={items} badges={badges} />
+        <div className="sidebar__signout-row">
+          <SignOutButton />
+        </div>
       </nav>
-
-      <div className="sidebar__footer">
-        <SignOutButton />
-      </div>
     </aside>
   );
 }
@@ -67,5 +68,6 @@ export function companyNav(companyRole: string | null): NavItem[] {
   return [
     { href: "/empresa", label: "Inicio" },
     { href: "/empresa/usuarios", label: "Mis clientes" },
+    { href: "/empresa/manual", label: "Manual de usuario" },
   ];
 }

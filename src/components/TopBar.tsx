@@ -8,7 +8,7 @@ const ROLE_LABEL: Record<CurrentProfile["role"], string> = {
 
 function roleLabel(p: CurrentProfile) {
   if (p.role !== "company") return ROLE_LABEL[p.role];
-  if (p.companyRole === "owner") return "Dueño de la cuenta";
+  if (p.companyRole === "owner") return "Administrador principal";
   if (p.companyRole === "admin") return "Administrador";
   return p.department ? `Departamento: ${p.department}` : "Equipo";
 }

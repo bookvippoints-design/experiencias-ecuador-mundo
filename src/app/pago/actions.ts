@@ -99,7 +99,7 @@ export async function startQuotaPayment(planKey: string): Promise<StartResult> {
   if (!payphoneBoxEnabled()) return { ok: false, error: "El pago con tarjeta todavía no está activo." };
   const profile = await getCurrentProfile();
   if (profile?.role !== "company" || !profile.companyId) return { ok: false, error: "Acceso no autorizado" };
-  if (profile.companyRole !== "owner") return { ok: false, error: "Solo el dueño de la cuenta puede comprar cupos." };
+  if (profile.companyRole !== "owner") return { ok: false, error: "Solo el administrador principal puede comprar cupos." };
   const supabase = await createClient();
   const [{ data: company }, { data: plan }] = await Promise.all([
     supabase.from("companies").select("id, name, status").eq("id", profile.companyId).single(),

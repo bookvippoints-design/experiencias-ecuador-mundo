@@ -13,4 +13,4 @@ export interface TeamMember {
   created_at: string;
 }
 
-export const ROLE_NAME = { owner: "Dueño de la cuenta", admin: "Administrador", member: "Usuario" } as const;
+export const ROLE_NAME = { owner: "Administrador principal", admin: "Administrador", member: "Usuario" } as const;
