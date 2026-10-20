@@ -64,8 +64,6 @@ export default async function CuentaHome() {
           </Link>
         </div>
 
-        <Link href="/cuenta/catalogo" className="text-link-center">Ya sé lo que quiero: ver los paquetes</Link>
-
         {(nationals > 0 || internationals > 0) && (
           <Link href="/cuenta/experiencias" className="owned-card">
             <span className="owned-card__eyebrow">{received ? "TIENES EXPERIENCIAS, ALGUNAS DE REGALO" : "YA TIENES EXPERIENCIAS"}</span>
