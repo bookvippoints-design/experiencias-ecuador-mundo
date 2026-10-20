@@ -50,7 +50,7 @@ export default async function ComoFunciona() {
           <NationalGallery />
           <Steps
             items={[
-              { title: "Elige ciudad y fechas", text: `En "Mis experiencias" toca "Canjear: reservar escapada". Pide con al menos ${NATIONAL_MIN_DAYS} días de anticipación.` },
+              { title: "Elige ciudad y fechas", text: `En "Mis beneficios activados" toca "Canjear: reservar escapada". Pide con al menos ${NATIONAL_MIN_DAYS} días de anticipación.` },
               { title: "Te confirmamos", text: `Revisamos la disponibilidad del hotel. ${NATIONAL_RESPONSE}` },
               { title: "Viaja y disfruta", text: "Presenta tu confirmación en el hotel. El desayuno está incluido." },
             ]}
@@ -88,7 +88,7 @@ export default async function ComoFunciona() {
           </p>
           <Steps
             items={[
-              { title: "Pide tu invitación", text: 'En "Mis experiencias" toca "Canjear: pedir invitación" y elige el destino.' },
+              { title: "Pide tu invitación", text: 'En "Mis beneficios activados" toca "Canjear: pedir invitación" y elige el destino.' },
               { title: "Regístrala en 30 días", text: "Recibes la invitación por correo; regístrala a tu nombre con su código QR." },
               { title: "Paga impuestos y tasas", text: "Dentro de los 7 días siguientes al registro." },
               { title: "Elige fecha y viaja", text: "Recibes tus credenciales y tienes 18 meses para viajar." },
@@ -117,7 +117,7 @@ export default async function ComoFunciona() {
           <Steps
             tone="orange"
             items={[
-              { title: "Elige qué regalar", text: 'Compra con "Regalarlo" o regala algo que ya tienes desde "Mis experiencias".' },
+              { title: "Elige qué regalar", text: 'Regala algo que ya tienes desde "Mis beneficios activados".' },
               { title: "Escribe su correo dos veces", text: "Así evitamos errores: si no coinciden, no se envía." },
               { title: "Revisa y envía", text: "El regalo es definitivo: pasa a la cuenta de la otra persona y no se puede recuperar." },
               { title: "Le llega al instante", text: "Recibe un correo con su tarjeta de regalo y crea su contraseña para usarlo." },

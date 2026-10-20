@@ -18,10 +18,12 @@ export const NATIONAL_DESTINATIONS: DestinationInfo[] = [
  * referenciales: la invitación da acceso a más de 130 destinos en el mundo.
  */
 export const INTERNATIONAL_INSPIRATION: DestinationInfo[] = [
+  { name: "Punta Cana", imageId: "photo-1692017827893-f97d95397b49" },
+  { name: "Cancún", imageId: "photo-1679599767221-4e1128c941ee" },
+  { name: "Orlando", imageId: "photo-1609184889233-eff6dd93def4" },
+  { name: "París", imageId: "photo-1632168594270-831d770aa8c3" },
+  { name: "Roma", imageId: "photo-1514896856000-91cb6de818e0" },
   { name: "Cartagena", imageId: "photo-1672984181706-68495d988419" },
-  { name: "Buenos Aires", imageId: "photo-1589909202802-8f4aadce1849" },
-  { name: "Río de Janeiro", imageId: "photo-1518639192441-8fce0a366e2e" },
-  { name: "Miami", imageId: "photo-1741023705528-2953cb652705" },
 ];
 
 /** Fotos genéricas de hotel, siempre con la etiqueta "Imagen referencial". */

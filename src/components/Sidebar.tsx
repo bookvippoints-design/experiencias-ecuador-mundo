@@ -28,7 +28,7 @@ export const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
   user: [
     { href: "/cuenta", label: "Inicio", icon: "home" },
     { href: "/cuenta/catalogo", label: "Paquetes", icon: "bag", also: ["/cuenta/comparar", "/cuenta/destinos"] },
-    { href: "/cuenta/experiencias", label: "Lo que tengo", icon: "suitcase", also: ["/cuenta/reservas", "/cuenta/puntos", "/cuenta/pedidos", "/cuenta/regalos"] },
+    { href: "/cuenta/experiencias", label: "Mis beneficios", icon: "suitcase", also: ["/cuenta/reservas", "/cuenta/puntos", "/cuenta/pedidos", "/cuenta/regalos"] },
     { href: "/cuenta/mensajes", label: "Mensajes", icon: "mail" },
     { href: "/cuenta/como-funciona", label: "Ayuda", icon: "help" },
   ],

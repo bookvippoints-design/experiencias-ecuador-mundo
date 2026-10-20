@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AccountTabs } from "@/components/AccountTabs";
+import { Crumbs } from "@/components/Crumbs";
 import { requireRole } from "@/lib/auth/identity";
 import { TopBar } from "@/components/TopBar";
 import { loadMyExperiences } from "@/lib/entitlements";
@@ -22,14 +23,18 @@ export default async function MisExperiencias({ searchParams }: { searchParams: 
 
   return (
     <>
-      <TopBar profile={profile} eyebrow="MI CUENTA" title="Lo que tengo" />
+      <TopBar profile={profile} eyebrow="MI CUENTA" title="Mis beneficios activados" />
       <main className="portal-content">
+        <Crumbs trail={[{ href: "/cuenta", label: "Inicio" }, { label: "Mis beneficios activados" }]} />
         <AccountTabs current="/cuenta/experiencias" />
-        <p className="content-lead" style={{ marginTop: 0 }}>Tus escapadas, invitaciones y puntos. Úsalos o regálalos desde aquí.</p>
+        <p className="info-box lead-justify" style={{ marginTop: 0 }}>
+          Tus experiencias son tuyas hasta su fecha de vencimiento. <strong>En cualquier momento puedes usarlas o regalarlas</strong> a una
+          persona especial. Si regalas una, conserva la misma fecha de vencimiento.
+        </p>
         {items.length === 0 ? (
           <div className="empty-card">
-            <p>Aquí verás tus escapadas, invitaciones y puntos, con el tiempo que te queda para usarlos.</p>
-            <Link href="/cuenta/catalogo" className="btn-orange">Explorar el catálogo</Link>
+            <p>Aquí verás tus escapadas e invitaciones cuando actives un paquete, con el tiempo que te queda para usarlas o regalarlas.</p>
+            <Link href="/cuenta/catalogo" className="btn-orange">Ver los paquetes</Link>
           </div>
         ) : (
           <>

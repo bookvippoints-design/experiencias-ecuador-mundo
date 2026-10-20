@@ -45,8 +45,7 @@ export default async function Comparar() {
           <div className="compare-mobile__values compare-mobile__actions" style={{ gridTemplateColumns: `repeat(${ps.length}, 1fr)` }}>
             {ps.map((p) => (
               <div key={p.id}>
-                <Link href={`/cuenta/catalogo/${p.slug}?modo=self`} className="btn-blue btn-small">Para mí</Link>
-                <Link href={`/cuenta/catalogo/${p.slug}?modo=gift`} className="btn-orange btn-small">Regalarlo</Link>
+                <Link href={`/cuenta/activar/${p.slug}`} className="btn-orange btn-small">Activar paquete</Link>
               </div>
             ))}
           </div>
@@ -73,8 +72,7 @@ export default async function Comparar() {
                 {ps.map((p) => (
                   <td key={p.id}>
                     <div style={{ display: "flex", flexDirection: "column", gap: ".4rem" }}>
-                      <Link href={`/cuenta/catalogo/${p.slug}?modo=self`} className="btn-blue btn-small">Para mí</Link>
-                      <Link href={`/cuenta/catalogo/${p.slug}?modo=gift`} className="btn-orange btn-small">Regalarlo</Link>
+                      <Link href={`/cuenta/activar/${p.slug}`} className="btn-orange btn-small">Activar paquete</Link>
                     </div>
                   </td>
                 ))}

@@ -11,6 +11,7 @@ export default async function PagoResultado({ searchParams }: { searchParams: Pr
   if (tx?.startsWith("ACC-") && tx.length <= 50) return <AccessResult tx={tx} estado={estado} />;
   let kind: "order" | "quota" = "order";
   let label = "";
+  let productName = "";
   let gift: string | null = null;
   let status = estado;
   if (tx && tx.length <= 50) {
@@ -24,7 +25,8 @@ export default async function PagoResultado({ searchParams }: { searchParams: Pr
         if (pay.kind === "order") {
           const { data: o } = await admin.from("orders").select("code, status, mode, recipient_name, product_snapshot").eq("id", pay.order_id).single();
           if (o) {
-            label = `${(o.product_snapshot as { name: string }).name} · pedido ${o.code}`;
+            productName = (o.product_snapshot as { name: string }).name;
+            label = `${productName} · pedido ${o.code}`;
             gift = o.mode === "gift" ? o.recipient_name : null;
             if (o.status !== "approved") status = "pending_credit";
           }
@@ -43,13 +45,13 @@ export default async function PagoResultado({ searchParams }: { searchParams: Pr
 
   const view = {
     approved: {
-      icon: "✓", title: "¡Pago aprobado!",
+      icon: "✓", title: kind === "order" && !gift ? "¡Felicitaciones!" : "¡Pago aprobado!",
       text: kind === "quota"
         ? "Los cupos ya se sumaron a tu empresa. Ya puedes crear las cuentas de tus usuarios."
         : gift
           ? `Tu regalo ya está en la cuenta de ${gift}. Le enviamos un correo para que lo active.`
-          : "Tus experiencias ya están en tu cuenta. Te enviamos la confirmación por correo.",
-      button: { href: home, label: kind === "quota" ? "Ver mis cupos" : gift ? "Ver mis regalos" : "Ver mis experiencias" },
+          : `Tu ${productName || "paquete"} ya está activado. Tus experiencias te esperan para disfrutarlas o regalarlas a alguien especial. Te enviamos la confirmación a tu correo.`,
+      button: { href: home, label: kind === "quota" ? "Ver mis cupos" : gift ? "Ver mis regalos" : "Ver mis beneficios activados" },
     },
     pending_credit: {
       icon: "⏳", title: "Recibimos tu pago",
@@ -82,6 +84,9 @@ export default async function PagoResultado({ searchParams }: { searchParams: Pr
         {label && <p className="step-email"><strong>{label}</strong></p>}
         <p className="step-text">{v.text}</p>
         <Link className="btn-orange" href={v.button.href} style={{ display: "block", textAlign: "center" }}>{v.button.label}</Link>
+        {status === "approved" && kind === "order" && !gift && (
+          <p className="field-hint" style={{ textAlign: "center" }}>También los encuentras siempre en el menú, en <strong>Mis beneficios</strong>.</p>
+        )}
         {tx && <p className="field-hint" style={{ textAlign: "center" }}>Referencia: {tx}</p>}
         <p className="step-help">¿Dudas? <a href={help} target="_blank" rel="noreferrer">Escríbenos por WhatsApp</a></p>
       </div>

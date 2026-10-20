@@ -2724,3 +2724,65 @@ body { background: #f3f8fc; }
 .points-explainer a { color: var(--naranja-oscuro); font-weight: 700; white-space: nowrap; }
 .pw-bonus-tag { border-radius: 12px; padding: .35rem .7rem; }
 .extra-travelers { background: #fff; border: 1px solid #dbe8f0; border-radius: 12px; padding: .7rem .9rem; font-size: .88rem; color: #3d4752; margin-top: .75rem; text-align: justify; }
+
+/* ===== Nuevo recorrido del portal (2026-10-20) ===== */
+.flow { display: flex; flex-direction: column; gap: 1rem; }
+.flow > .crumbs { margin-bottom: 0; }
+.narrow { max-width: 640px; }
+.lead-justify { text-align: justify; hyphens: auto; margin: 0; line-height: 1.55; }
+.welcome-card { background: #fff; border: 1px solid #e3eef6; border-radius: 18px; overflow: hidden; }
+.welcome-card__img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.welcome-card__body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .5rem; }
+.welcome-card__body h2 { margin: 0; font-size: 1.45rem; line-height: 1.15; color: var(--azul); }
+.welcome-card__body p { margin: 0; line-height: 1.55; color: #2c4a5c; text-align: justify; hyphens: auto; }
+.soft-note { margin: 0; background: #fff1e6; color: #8a4b0f; border-radius: 12px; padding: .6rem .8rem; font-size: .92rem; }
+.choice-title { margin: .4rem 0 0; font-size: 1.3rem; color: var(--gris-texto, #1f2937); }
+.choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; }
+.choice-card { position: relative; display: block; height: 170px; border-radius: 18px; overflow: hidden; color: #fff; text-decoration: none; }
+.choice-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.choice-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(16,45,64,.82) 0%, rgba(16,45,64,.25) 70%); }
+.choice-card__text { position: absolute; left: 1rem; right: 3.6rem; bottom: .9rem; z-index: 1; display: flex; flex-direction: column; }
+.choice-card__text strong { font-size: 1.3rem; line-height: 1.15; }
+.choice-card__text span { font-size: .85rem; opacity: .95; }
+.choice-card__go { position: absolute; right: .9rem; bottom: .9rem; z-index: 1; width: 42px; height: 42px; border-radius: 21px; background: var(--naranja); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; }
+.text-link-center { text-align: center; color: var(--naranja-oscuro); font-weight: 700; padding: .4rem 0; }
+.text-link { color: var(--naranja-oscuro); font-weight: 700; }
+.owned-card { display: flex; flex-direction: column; gap: .2rem; background: #fff; border: 1px dashed #9fb4c2; border-radius: 16px; padding: .9rem 1rem; text-decoration: none; color: inherit; }
+.owned-card__eyebrow { font-size: .7rem; letter-spacing: .08em; font-weight: 700; color: #5d7686; }
+.owned-card strong { font-size: 1.1rem; color: var(--azul); }
+.owned-card span { font-size: .88rem; color: #2c4a5c; }
+.owned-card .owned-card__go { color: var(--naranja-oscuro); font-weight: 700; margin-top: .2rem; }
+.back-link { align-self: flex-start; color: var(--azul); font-weight: 700; text-decoration: none; padding: .35rem 0; min-height: 44px; display: inline-flex; align-items: center; }
+.benefit-hero { position: relative; height: 210px; border-radius: 18px; overflow: hidden; }
+.benefit-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.benefit-hero__text { position: absolute; left: 0; right: 0; bottom: 0; padding: .9rem 1rem; background: rgba(16,45,64,.66); color: #fff; }
+.benefit-hero__text span { font-size: .72rem; letter-spacing: .1em; font-weight: 700; }
+.benefit-hero__text h2 { margin: .15rem 0 0; font-size: 1.45rem; line-height: 1.15; color: #fff; }
+.big-action { display: flex; align-items: center; justify-content: center; gap: .6rem; min-height: 54px; border-radius: 14px; background: var(--azul); color: #fff; text-decoration: none; font-weight: 700; font-size: 1rem; padding: 0 1rem; text-align: center; }
+.big-action:hover { filter: brightness(1.05); }
+.sub-title { margin: .3rem 0 0; font-size: 1.15rem; color: var(--gris-texto, #1f2937); }
+.how-use { background: #fff; border: 1px solid #e3eef6; border-radius: 14px; overflow: hidden; }
+.how-use summary { cursor: pointer; min-height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 1rem; font-weight: 700; list-style: none; }
+.how-use summary::-webkit-details-marker { display: none; }
+.how-use summary::after { content: "▼"; font-size: .75rem; color: var(--naranja-oscuro); }
+.how-use[open] summary::after { content: "▲"; }
+.how-use ol, .how-use ul { margin: 0; padding: 0 1.1rem 1rem 2.1rem; display: flex; flex-direction: column; gap: .4rem; line-height: 1.5; color: #2c4a5c; font-size: .93rem; }
+.back-big { display: flex; align-items: center; justify-content: center; min-height: 54px; border-radius: 14px; border: 2px solid var(--naranja); color: var(--naranja-oscuro); text-decoration: none; font-weight: 700; text-align: center; padding: .4rem 1rem; }
+.product-card__head { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; }
+.product-card__includes { font-size: .72rem; letter-spacing: .08em; font-weight: 700; color: #5d7686; }
+.product-card__cta { margin-top: auto; width: 100%; min-height: 50px; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+.summary-card { background: #fff; border: 1px solid #e3eef6; border-radius: 16px; padding: .9rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.summary-card strong { font-size: 1.25rem; color: var(--azul); display: block; }
+.summary-card__eyebrow { font-size: .72rem; letter-spacing: .08em; font-weight: 700; color: #5d7686; }
+.summary-card__price { font-size: 1.6rem; font-weight: 800; color: var(--naranja-oscuro); }
+.pay-card { background: #fff; border: 1px solid #e3eef6; border-radius: 16px; padding: 1rem; }
+.pay-card h3 { margin: 0 0 .6rem; }
+@media (max-width: 640px) {
+  .choice-grid { grid-template-columns: 1fr; }
+  .choice-card { height: 150px; }
+  .welcome-card__img { height: 170px; }
+  .benefit-hero { height: 180px; }
+}
+@media (max-width: 640px) {
+  .extra-travelers, .soft-note { text-align: left; }
+}

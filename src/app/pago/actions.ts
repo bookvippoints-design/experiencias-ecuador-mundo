@@ -63,6 +63,37 @@ export async function startOrderPayment(orderId: string): Promise<StartResult> {
   return { ok: true, box: params(tx, cents, `Pedido ${o.code} · ${product.name}`, profile.email) };
 }
 
+/**
+ * "Activar paquete": crea (o reutiliza) el pedido para el propio cliente y prepara el pago.
+ * El cliente decide después, desde "Mis beneficios activados", si lo usa o lo regala.
+ */
+export async function startActivationPayment(slug: string): Promise<StartResult> {
+  if (!payphoneBoxEnabled()) return { ok: false, error: "El pago con tarjeta todavía no está activo. Escríbenos por WhatsApp." };
+  const profile = await getCurrentProfile();
+  if (profile?.role !== "user") return { ok: false, error: "Acceso no autorizado" };
+  const supabase = await createClient();
+  const { data: product } = await supabase.from("products").select("id").eq("slug", slug).eq("active", true).maybeSingle();
+  if (!product) return { ok: false, error: "Paquete no encontrado" };
+  // Si ya hay un pedido sin pagar de este mismo paquete, se reutiliza (evita pedidos repetidos al recargar).
+  const { data: open } = await supabase
+    .from("orders")
+    .select("id")
+    .eq("buyer_id", profile.userId)
+    .eq("product_id", product.id)
+    .eq("mode", "self")
+    .eq("status", "pending_payment")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  let orderId = open?.id as string | undefined;
+  if (!orderId) {
+    const { data, error } = await supabase.rpc("create_order", { p_product_slug: slug, p_mode: "self", p_accept_terms: true });
+    if (error) return { ok: false, error: error.message };
+    orderId = (data as { id: string }).id;
+  }
+  return startOrderPayment(orderId);
+}
+
 /** Prepara el pago de un plan de cupos de la empresa. */
 export async function startQuotaPayment(planKey: string): Promise<StartResult> {
   if (!payphoneBoxEnabled()) return { ok: false, error: "El pago con tarjeta todavía no está activo." };
