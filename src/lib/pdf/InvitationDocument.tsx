@@ -152,7 +152,7 @@ export function InvitationDocument({ data }: { data: InvitationData }) {
             <Text style={s.stepsTitle}>Activa tu acceso en 3 pasos</Text>
             <View style={s.step}><Text style={s.stepNum}>1</Text><Text style={s.stepText}>Escanea el código con la cámara de tu celular.</Text></View>
             <View style={s.step}><Text style={s.stepNum}>2</Text><Text style={s.stepText}>Confirma tu correo y crea tu propia contraseña.</Text></View>
-            <View style={s.step}><Text style={s.stepNum}>3</Text><Text style={s.stepText}>Elige tu experiencia: tienes 14 días de precios especiales y hasta US$1.000 de ahorro en hoteles de regalo.</Text></View>
+            <View style={s.step}><Text style={s.stepNum}>3</Text><Text style={s.stepText}>Elige tu experiencia: tienes 14 días de precios especiales para activarla.</Text></View>
             <Text style={s.emailLine}>Tu correo para entrar: <Text style={[s.strong, { color: "#FFFFFF" }]}>{data.email}</Text></Text>
           </View>
         </View>

@@ -29,7 +29,7 @@ export function accessFooterHtml(email: string, linkExpires: boolean) {
 export function purchaseWindowHtml() {
   return `<div style="background:#fff1e6;border-radius:12px;padding:14px 18px;margin:18px 0">
     <strong>⏳ Tienes ${PURCHASE_WINDOW_DAYS} días para elegir tu experiencia.</strong><br>
-    Desde que actives tu cuenta, tienes ${PURCHASE_WINDOW_DAYS} días para comprar paquetes con precios especiales y recibir además de regalo hasta US$250 (Escape Esencial), US$500 (Escape Plus) o US$1.000 (Escape Premium) de ahorro en hoteles. Te lo entregamos en puntos BookVipPoints: cada punto vale hasta US$1. Los usas en la plataforma BookVipPoints como pago parcial de tus reservas de hotel en Ecuador y el mundo. No es dinero en efectivo ni un valor adicional a los puntos, y no caducan.
+    Desde que actives tu cuenta, tienes ${PURCHASE_WINDOW_DAYS} días para comprar paquetes con precios especiales.
     <div style="font-size:13px;color:#5b6570;margin-top:6px">${escapeHtml(PURCHASE_WINDOW_REASON)}</div>
   </div>`;
 }

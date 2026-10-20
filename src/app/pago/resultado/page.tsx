@@ -115,7 +115,7 @@ async function AccessResult({ tx, estado }: { tx: string; estado: string }) {
             <div className="pay-result__icon pay-result__icon--ok" aria-hidden="true">✓</div>
             <p className="step-eyebrow">PASO 2 DE 3</p>
             <h2 className="step-title">¡Pago aprobado{first ? `, ${first}` : ""}!</h2>
-            <p className="step-text">Tu acceso está activo. Ahora crea tu contraseña para entrar a tu portal: desde ese momento tienes 14 días para comprar tus paquetes con precios especiales y recibir puntos de regalo.</p>
+            <p className="step-text">Tu acceso está activo. Ahora crea tu contraseña para entrar a tu portal: desde ese momento tienes 14 días para comprar tus paquetes con precios especiales.</p>
             {p?.email && <p className="step-email">Tu correo para entrar: <strong>{p.email}</strong></p>}
             <a className="btn-orange" href={`/acceso/activar?tx=${encodeURIComponent(tx)}`} style={{ display: "block", textAlign: "center" }}>Crear mi contraseña</a>
             <p className="field-hint" style={{ textAlign: "center" }}>También te enviamos un correo con este mismo botón, por si prefieres hacerlo después.</p>
@@ -161,7 +161,7 @@ function ReactivationResult({ tx, estado, p }: { tx: string; estado: string; p: 
           <>
             <div className="pay-result__icon pay-result__icon--ok" aria-hidden="true">✓</div>
             <h2 className="step-title">¡Acceso reactivado{first ? `, ${first}` : ""}!</h2>
-            <p className="step-text">Tienes 14 días nuevos para comprar tus paquetes con precios especiales. Por cada compra en este plazo recibes además puntos de regalo: 250 con el Escape Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium.</p>
+            <p className="step-text">Tienes 14 días nuevos para comprar tus paquetes con precios especiales.</p>
             <a className="btn-orange" href="/cuenta/catalogo" style={{ display: "block", textAlign: "center" }}>Ver paquetes</a>
           </>
         ) : status === "pending_credit" ? (

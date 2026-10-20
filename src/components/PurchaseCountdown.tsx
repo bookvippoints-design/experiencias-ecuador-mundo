@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const MANUAL_URL = "https://go.bookvippoints.com/manual_usuario_bvpoints";
 const REASON =
   "Son precios especiales de hospedaje que conseguimos por tiempo limitado y que cambian a lo largo del año. Una vez comprado, cada paquete tiene de 12 a 24 meses para usarlo.";
 
@@ -21,13 +20,12 @@ function longDate(iso: string) {
  * Contador del plazo de 14 días para comprar paquetes.
  * - "home": tarjeta grande de Inicio.
  * - "bar": franja compacta para Paquetes.
- * - "product": aviso en la ficha de un paquete, con sus puntos de regalo.
+ * - "product": aviso en la ficha de un paquete.
  * Si el plazo terminó, muestra el aviso y el botón "Reactivar mi acceso" (el precio se ve solo al tocarlo).
  */
-export function PurchaseCountdown({ endsAt, variant, bonusPoints }: {
+export function PurchaseCountdown({ endsAt, variant }: {
   endsAt: string | null;
   variant: "home" | "bar" | "product";
-  bonusPoints?: number;
 }) {
   const router = useRouter();
   const [now, setNow] = useState(() => Date.now());
@@ -66,7 +64,6 @@ export function PurchaseCountdown({ endsAt, variant, bonusPoints }: {
     return (
       <div className="pw-bar" role="status">
         <span>⏳ <strong>Precios especiales:</strong> te quedan <strong>{d} {d === 1 ? "día" : "días"} y {h} h</strong> para comprar.</span>
-        <span>Compra y recibe de regalo <strong>hasta US$1.000 de ahorro en hoteles</strong>.</span>
       </div>
     );
   }
@@ -74,11 +71,8 @@ export function PurchaseCountdown({ endsAt, variant, bonusPoints }: {
   if (variant === "product") {
     return (
       <div className="pw-product">
-        <strong>🎁 {bonusPoints ? `Regalo: hasta US$${bonusPoints.toLocaleString("es-EC")} de ahorro en hoteles` : "Precio especial"}</strong>
-        <p>
-          Cómpralo antes del <strong>{longDate(endsAt!)}</strong>
-          {bonusPoints ? <> y recibe además <strong>hasta US${bonusPoints.toLocaleString("es-EC")} de ahorro en hoteles</strong>. Te lo entregamos en {bonusPoints.toLocaleString("es-EC")} puntos BookVipPoints: cada punto vale hasta US$1 y los usas en la plataforma BookVipPoints como pago parcial de tus reservas de hotel en Ecuador y el mundo. No es dinero en efectivo ni un valor adicional a los puntos, y no caducan. Son para ti y no se pueden regalar. <a href={MANUAL_URL} target="_blank" rel="noreferrer">▶ Mira cómo usarlos</a></> : "."}
-        </p>
+        <strong>⏳ Precio especial</strong>
+        <p>Cómpralo antes del <strong>{longDate(endsAt!)}</strong>.</p>
         <span className="pw-product__left">Te quedan {d} d · {h} h · {m} min</span>
       </div>
     );
@@ -88,7 +82,7 @@ export function PurchaseCountdown({ endsAt, variant, bonusPoints }: {
   return (
     <section className="pw-card">
       <span className="pw-eyebrow">⏳ Tus precios especiales están disponibles 14 días</span>
-      <h3>Elige tu experiencia y recibe de regalo hasta US$1.000 de ahorro en hoteles</h3>
+      <h3>Elige tu experiencia antes de que termine tu plazo</h3>
       <p>{REASON}</p>
       <div className="pw-clock" aria-label={`Te quedan ${d} días, ${h} horas y ${m} minutos`}>
         <div><b>{d}</b><small>{d === 1 ? "día" : "días"}</small></div>
@@ -96,15 +90,8 @@ export function PurchaseCountdown({ endsAt, variant, bonusPoints }: {
         <div><b>{String(m).padStart(2, "0")}</b><small>min</small></div>
       </div>
       <div className="pw-progress" aria-hidden="true"><span style={{ width: `${pct}%` }} /></div>
-      <div className="pw-gifts">
-        <div><b>Hasta US$250</b><small>de ahorro en hoteles · en 250 puntos</small><em>con Escape Esencial</em></div>
-        <div><b>Hasta US$500</b><small>de ahorro en hoteles · en 500 puntos</small><em>con Escape Plus</em></div>
-        <div><b>Hasta US$1.000</b><small>de ahorro en hoteles · en 1.000 puntos</small><em>con Escape Premium</em></div>
-      </div>
-      <p className="pw-fine"><strong>¿Cómo recibes tu ahorro?</strong> Te lo entregamos en puntos de BookVipPoints, nuestro programa de viajero frecuente hotelero: cada punto vale hasta US$1. Los usas en la plataforma BookVipPoints como pago parcial de tus reservas de hotel en Ecuador y el mundo. No es dinero en efectivo ni un valor adicional a los puntos, y no caducan. Son para quien compra y no se pueden regalar.</p>
       <div className="btn-row">
         <Link href="/cuenta/catalogo" className="btn-orange">Ver paquetes</Link>
-        <a href={MANUAL_URL} target="_blank" rel="noreferrer" className="btn-blue">▶ Videos: cómo usar tus puntos</a>
       </div>
     </section>
   );

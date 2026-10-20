@@ -67,16 +67,11 @@ export default function TerminosPage() {
         </li>
       </ul>
 
-      <h2>5. Puntos de regalo</h2>
+      <h2>5. Puntos BookVipPoints</h2>
       <ul>
         <li>
           Cada punto equivale a hasta US$1 de ahorro como pago parcial en reservas de hotel nacionales o internacionales,
           sujeto a disponibilidad. Los puntos no son efectivo ni saldo para pagar íntegramente una reserva. Los puntos no caducan.
-        </li>
-        <li>
-          Por cada paquete comprado dentro del plazo de 14 días, el comprador recibe puntos de regalo: 250 con el Escape
-          Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium. También aplica si el paquete se compra para regalar,
-          pero los puntos quedan siempre para quien compra y no se pueden regalar.
         </li>
         <li>Los puntos se acreditan en la cuenta BookVipPoints del titular cuando este los canjea desde su portal.</li>
       </ul>
@@ -89,7 +84,7 @@ export default function TerminosPage() {
           El regalo es definitivo: al enviarse pasa a la cuenta del destinatario y quien lo regala no puede cancelarlo
           ni recuperarlo. Regalar no cambia la fecha de vencimiento.
         </li>
-        <li>Los puntos de regalo por compra no se pueden regalar. Una invitación internacional ya registrada no puede regalarse.</li>
+        <li>Una invitación internacional ya registrada no puede regalarse.</li>
         <li>Los regalos comprados se entregan apenas se confirma el pago.</li>
       </ul>
 

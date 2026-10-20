@@ -117,7 +117,7 @@ export async function GET(req: Request) {
  * Solo a quienes todavía no compraron un paquete dentro de su plazo.
  */
 const WINDOW_STAGES = [
-  { stage: 3, maxDays: 1, subject: "Último día para comprar tu paquete con puntos de regalo" },
+  { stage: 3, maxDays: 1, subject: "Último día para comprar tu paquete con precio especial" },
   { stage: 2, maxDays: 2, subject: "Te quedan 2 días para comprar tu paquete" },
   { stage: 1, maxDays: 7, subject: "Te quedan 7 días para elegir tu experiencia" },
 ] as const;
@@ -146,7 +146,7 @@ async function purchaseWindowReminders(admin: ReturnType<typeof createAdminClien
     // Ya compró en este plazo: no se le insiste, solo se marca.
     if ((count ?? 0) === 0) {
       const until = new Date(p.purchase_window_ends_at as string).toLocaleString("es-EC", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: "America/Guayaquil" });
-      const body = `Tu plazo para comprar paquetes con precios especiales termina el ${until}. Si compras antes recibes además puntos de regalo: 250 con el Escape Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium.`;
+      const body = `Tu plazo para comprar paquetes con precios especiales termina el ${until}.`;
       await sendMail({
         to: p.email,
         subject: st.subject,

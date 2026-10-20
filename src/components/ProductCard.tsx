@@ -2,11 +2,11 @@ import Link from "next/link";
 import type { Product } from "@/lib/products";
 import { inclusions } from "@/lib/products";
 import { money } from "@/lib/format";
-import { BONUS_POINTS_BY_SLUG } from "@/lib/brand";
+import { BONUS_POINTS_BY_SLUG, BONUS_POINTS_ENABLED } from "@/lib/brand";
 
 /** canBuy=false: el plazo de compra terminó (se ve el paquete pero no los botones de compra). */
 export function ProductCard({ product, canBuy = true }: { product: Product; canBuy?: boolean }) {
-  const bonus = canBuy ? BONUS_POINTS_BY_SLUG[product.slug] : 0;
+  const bonus = canBuy && BONUS_POINTS_ENABLED ? BONUS_POINTS_BY_SLUG[product.slug] : 0;
   const featured = Boolean(product.highlight);
   return (
     <article className={`product-card${featured ? " product-card--featured" : ""}`}>

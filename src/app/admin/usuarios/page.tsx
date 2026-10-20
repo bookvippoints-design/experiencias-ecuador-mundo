@@ -68,7 +68,7 @@ export default async function AdminUsuarios({ searchParams }: { searchParams: Pr
                           <span className={w.closed ? "pill pill--orange" : undefined}>{w.text}</span>
                           {u.purchase_window_ends_at && (
                             <RpcButton fn="admin_extend_purchase_window" args={{ p_user_id: u.user_id, p_days: 14 }} label="Extender 14 días" variant="btn-ghost"
-                              confirm={`¿Dar 14 días nuevos para comprar a ${u.full_name}? Si compra en ese plazo recibe puntos de regalo.`} />
+                              confirm={`¿Dar 14 días nuevos para comprar a ${u.full_name}?`} />
                           )}
                         </>
                       );

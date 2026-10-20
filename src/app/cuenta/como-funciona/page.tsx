@@ -1,16 +1,11 @@
 import Link from "next/link";
-import { PointsLoginButton } from "@/components/PointsLoginButton";
 import { requireRole } from "@/lib/auth/identity";
 import { TopBar } from "@/components/TopBar";
 import { NationalGallery, InternationalGallery } from "@/components/DestinationGallery";
 import {
   INVITATION_INFO_URL,
   INVITATION_DESTINATIONS_MAP_URL,
-  POINTS_MANUAL_URL,
-  BONUS_REGISTER_URL,
   GALAPAGOS_NOTE,
-  PURCHASE_WINDOW_DAYS,
-  PURCHASE_WINDOW_REASON,
   NATIONAL_RULE,
   NATIONAL_MIN_DAYS,
   NATIONAL_RESPONSE,
@@ -44,7 +39,6 @@ export default async function ComoFunciona() {
         <nav className="how-tabs" aria-label="Secciones">
           <a href="#nacional">Escapadas nacionales</a>
           <a href="#internacional">Invitación internacional</a>
-          <a href="#puntos">Puntos</a>
           <a href="#regalos">Regalos</a>
         </nav>
 
@@ -114,41 +108,6 @@ export default async function ComoFunciona() {
             <a className="btn-ghost btn-small" href={INVITATION_DESTINATIONS_MAP_URL} target="_blank" rel="noreferrer">Mapa de destinos</a>
           </div>
           <InternationalGallery />
-        </section>
-
-        {/* PUNTOS */}
-        <section id="puntos" className="how-block">
-          <span className="how-block__eyebrow how-block__eyebrow--orange">Ahorro en hoteles</span>
-          <h2>Puntos BookVipPoints</h2>
-          <p className="content-lead">
-            Cada punto equivale a <strong>hasta US$1 de ahorro</strong> como pago parcial al reservar hoteles en Ecuador y el mundo.
-          </p>
-          <Steps
-            tone="orange"
-            items={[
-              { title: "Compra en tus primeros días", text: `Si compras un paquete dentro de tu plazo de ${PURCHASE_WINDOW_DAYS} días recibes puntos de regalo: 250 con el Escape Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium.` },
-              { title: "Canjéalos", text: 'En "Mis experiencias" toca "Canjear" y escribe el correo de tu cuenta BookVipPoints (si no tienes, regístrate gratis).' },
-              { title: "Reserva y ahorra", text: "En BookVipPoints busca tu hotel y aplica tus puntos como parte del pago." },
-            ]}
-          />
-          <div className="video-cta">
-            <span className="video-cta__icon" aria-hidden="true">▶</span>
-            <div className="video-cta__text">
-              <strong>Aprende a usar tus puntos en 8 videos cortos</strong>
-              <span>Desde crear tu cuenta hasta tu primera reserva.</span>
-            </div>
-            <a className="btn-orange btn-small" href={POINTS_MANUAL_URL} target="_blank" rel="noreferrer">Ver el manual en video</a>
-          </div>
-          <ul className="check-list">
-            <li>Los puntos no caducan.</li>
-            <li>No son efectivo ni pagan el total de una reserva; el ahorro depende del hotel y la disponibilidad.</li>
-            <li>Los puntos de regalo por tu compra son solo para ti: no se pueden regalar a otra persona.</li>
-            <li>{PURCHASE_WINDOW_REASON}</li>
-          </ul>
-          <div className="btn-row">
-            <PointsLoginButton />
-            <a className="btn-blue btn-small" href={BONUS_REGISTER_URL} target="_blank" rel="noreferrer">Crear mi cuenta BookVipPoints</a>
-          </div>
         </section>
 
         {/* REGALOS */}

@@ -240,7 +240,7 @@ async function creditReactivation(p: { id: string; full_name: string; email: str
       subject: `Tu acceso a ${APP_NAME} está reactivado`,
       html: emailLayout(
         `<h2 style="margin:0 0 8px;color:${BRAND.orangeDark}">¡Listo, ${escapeHtml(p.full_name)}!</h2>
-         <p>Confirmamos tu pago. Tienes <strong>14 días${until ? `, hasta el ${escapeHtml(until)}` : ""}</strong> para comprar tus paquetes con precios especiales y recibir además puntos de regalo: 250 con el Escape Esencial, 500 con el Escape Plus y 1.000 con el Escape Premium.</p>`,
+         <p>Confirmamos tu pago. Tienes <strong>14 días${until ? `, hasta el ${escapeHtml(until)}` : ""}</strong> para comprar tus paquetes con precios especiales.</p>`,
         { label: "Ver paquetes", url: `${appUrl()}/cuenta/catalogo` }
       ),
     });

@@ -12,7 +12,7 @@ import { INVITATION_INFO_URL, INVITATION_DESTINATIONS_MAP_URL } from "@/lib/bran
 import { BuyPanel } from "./BuyPanel";
 import { PurchaseCountdown } from "@/components/PurchaseCountdown";
 import { loadPurchaseWindow } from "@/lib/purchase-window";
-import { BONUS_POINTS_BY_SLUG, GALAPAGOS_NOTE } from "@/lib/brand";
+import { GALAPAGOS_NOTE } from "@/lib/brand";
 import { ExtraTravelersNote } from "@/components/ExtraTravelersNote";
 
 export default async function ProductoDetalle({
@@ -64,7 +64,7 @@ export default async function ProductoDetalle({
           <div className="buy-col">
             {win.open ? (
               <>
-                <PurchaseCountdown endsAt={win.endsAt} variant="product" bonusPoints={BONUS_POINTS_BY_SLUG[p.slug]} />
+                <PurchaseCountdown endsAt={win.endsAt} variant="product" />
                 <BuyPanel
                   slug={p.slug}
                   priceLabel={money(p.price)}

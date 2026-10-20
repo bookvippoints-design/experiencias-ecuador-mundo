@@ -4,7 +4,6 @@ import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
 import { ProductCard } from "@/components/ProductCard";
-import { PointsExplainer } from "@/components/PointsExplainer";
 import { ExtraTravelersNote } from "@/components/ExtraTravelersNote";
 import { NationalGallery, InternationalGallery } from "@/components/DestinationGallery";
 import { PRODUCT_FIELDS, type Product } from "@/lib/products";
@@ -41,7 +40,6 @@ export default async function Catalogo() {
           <Link href="/cuenta/comparar">Comparar paquetes →</Link>
         </div>
         <div className="product-grid">{escapes.map((p) => <ProductCard key={p.id} product={p} canBuy={win.open} />)}</div>
-        {win.open && <PointsExplainer />}
         <ExtraTravelersNote />
 
         {cards.length > 0 && (

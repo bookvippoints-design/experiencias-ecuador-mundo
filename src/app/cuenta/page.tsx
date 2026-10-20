@@ -4,7 +4,6 @@ import { requireRole } from "@/lib/auth/identity";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/TopBar";
 import { ProductCard } from "@/components/ProductCard";
-import { PointsExplainer } from "@/components/PointsExplainer";
 import { ExtraTravelersNote } from "@/components/ExtraTravelersNote";
 import { PRODUCT_FIELDS, type Product } from "@/lib/products";
 import { effectiveStatus, type EntitlementRow } from "@/lib/format";
@@ -74,7 +73,6 @@ export default async function CuentaHome() {
         </div>
         <p className="content-lead">Escapadas en Ecuador e invitaciones hoteleras en más de 130 destinos del mundo. Para ti o para regalar.</p>
         <div className="product-grid">{escapes.map((p) => <ProductCard key={p.id} product={p} canBuy={win.open} />)}</div>
-        {win.open && <PointsExplainer />}
         <ExtraTravelersNote />
         <p className="field-hint" style={{ marginTop: ".75rem" }}>
           Invitación internacional: fee de emisión US$0; los impuestos y tasas del hotel o resort

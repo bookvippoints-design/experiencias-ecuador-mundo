@@ -63,7 +63,9 @@ export const GOOGLE_ADS_ACCESS_VALUE = 25;
 
 /** Plazo para comprar paquetes desde que el cliente entra por primera vez a su portal. */
 export const PURCHASE_WINDOW_DAYS = 14;
-/** Puntos de regalo por comprar dentro del plazo (también guardados en products.bonus_points). */
+/** Puntos de regalo por comprar dentro del plazo. PAUSADO (2026-10-20): se quitó de la plataforma hasta ver la respuesta de los clientes. */
+export const BONUS_POINTS_ENABLED = false;
+/** Valores por paquete (también guardados en products.bonus_points). */
 export const BONUS_POINTS_BY_SLUG: Record<string, number> = { "escape-esencial": 250, "escape-plus": 500, "escape-premium": 1000 };
 /** Justificación del plazo, igual en todos lados. */
 export const PURCHASE_WINDOW_REASON =
