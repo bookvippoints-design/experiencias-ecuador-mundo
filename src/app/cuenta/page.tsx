@@ -44,24 +44,37 @@ export default async function CuentaHome() {
         )}
         {!win.open && <PurchaseCountdown endsAt={win.endsAt} variant="bar" />}
 
-        <h2 className="choice-title">¿Qué quieres conocer primero?</h2>
-        <div className="choice-grid">
+        <h2 className="choice-title">Tu camino, paso a paso</h2>
+        <div className="choice-grid choice-grid--steps">
           <Link href="/cuenta/ecuador" className="choice-card">
             <img src="/acceso/img/destino-quito.webp" alt="" />
+            <span className="choice-card__step">1</span>
             <span className="choice-card__text">
-              <strong>Beneficios en Ecuador</strong>
+              <strong>Conoce los beneficios en Ecuador</strong>
               <span>6 destinos para tu escapada</span>
             </span>
             <span className="choice-card__go" aria-hidden="true">›</span>
           </Link>
           <Link href="/cuenta/mundo" className="choice-card">
             <img src="/acceso/img/destino-mundo.webp" alt="" />
+            <span className="choice-card__step">2</span>
             <span className="choice-card__text">
-              <strong>Beneficios en el Mundo</strong>
+              <strong>Conoce los beneficios en el Mundo</strong>
               <span>Más de 130 destinos</span>
             </span>
             <span className="choice-card__go" aria-hidden="true">›</span>
           </Link>
+          {win.open && (
+            <Link href="/cuenta/catalogo" className="choice-card choice-card--activate">
+              <img src="/acceso/img/paquetes.webp" alt="" />
+              <span className="choice-card__step">3</span>
+              <span className="choice-card__text">
+                <strong>Activa un paquete de beneficios</strong>
+                <span>Elige el tuyo y actívalo</span>
+              </span>
+              <span className="choice-card__go" aria-hidden="true">›</span>
+            </Link>
+          )}
         </div>
 
         {(nationals > 0 || internationals > 0) && (
