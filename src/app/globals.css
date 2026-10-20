@@ -2790,3 +2790,6 @@ body { background: #f3f8fc; }
 @media (max-width: 640px) {
   .extra-travelers, .soft-note { text-align: left; }
 }
+
+.activate-banner { margin: 0; padding: .95rem 1.1rem; border-radius: 16px; background: linear-gradient(90deg, #f07a1f, #c4520a); color: #fff; font-size: 1.08rem; line-height: 1.45; text-align: center; box-shadow: 0 6px 18px rgba(196,82,10,.22); }
+.activate-banner strong { font-weight: 800; }

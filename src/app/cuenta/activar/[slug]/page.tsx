@@ -28,6 +28,12 @@ export default async function Activar({ params }: { params: Promise<{ slug: stri
       <main className="portal-content flow narrow">
         <Crumbs trail={[{ href: "/cuenta", label: "Inicio" }, { href: "/cuenta/catalogo", label: "Paquetes" }, { label: `Activar ${p.name}` }]} />
 
+        {p.validity_months && (
+          <p className="activate-banner">
+            <strong>Actívalo hoy</strong> y disfrútalo en los próximos {p.validity_months} meses.
+          </p>
+        )}
+
         <section className="summary-card">
           <div>
             <span className="summary-card__eyebrow">PAQUETE</span>

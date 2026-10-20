@@ -15,12 +15,19 @@ export default async function Catalogo() {
   const { data } = await supabase.from("products").select(PRODUCT_FIELDS).eq("active", true).eq("category", "escape").order("sort");
   const escapes = (data ?? []) as Product[];
   const win = await loadPurchaseWindow(supabase, profile.userId);
+  const months = [...new Set(escapes.map((p) => p.validity_months).filter((m): m is number => !!m))].sort((a, b) => a - b).map((m) => `${m} meses`);
+  const monthsText = months.length > 1 ? `${months.slice(0, -1).join(", ")} o ${months[months.length - 1]}` : months[0] ?? "";
 
   return (
     <>
       <TopBar profile={profile} eyebrow="PRECIOS ESPECIALES" title="Paquetes" />
       <main className="portal-content flow">
         <Crumbs trail={[{ href: "/cuenta", label: "Inicio" }, { label: "Paquetes" }]} />
+        {win.open && (
+          <p className="activate-banner">
+            <strong>Actívalo hoy</strong> y disfrútalo mientras dure tu paquete activado{monthsText && ` (${monthsText})`}.
+          </p>
+        )}
         <PurchaseCountdown endsAt={win.endsAt} variant="bar" />
         {win.open && <p className="lead-justify">{PURCHASE_WINDOW_REASON}</p>}
         <div className="product-grid">{escapes.map((p) => <ProductCard key={p.id} product={p} canBuy={win.open} />)}</div>
